@@ -1,0 +1,26 @@
+Git global setup
+
+git config --global user.name "Bryan Lacson"
+git config --global user.email "brmlacson@uwaterloo.ca"
+
+
+
+Create a new repository
+
+git clone gitlab@git.uwaterloo.ca:cc3kGoose/cc3k.git
+cd cc3k
+touch README.md
+git add README.md
+git commit -m "add README"
+git push -u origin master
+
+
+
+Existing folder or Git repository
+
+cd existing_folder
+git init
+git remote add origin gitlab@git.uwaterloo.ca:cc3kGoose/cc3k.git
+git add .
+git commit
+git push -u origin master
