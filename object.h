@@ -18,19 +18,19 @@ class Object {
 	virtual ~Object()=0;
 };
 
-// put const
-
-// put overload
-// remove weaknessList
-// remove ability
-// possibilty to implement attack in concrete level
+// personal notes
+	// put const
+	// put override
+	// remove weaknessList
+	// remove ability
+	// possibilty to implement attack in concrete level
 
 
 // Tile's obj is a vector of 1 or 2 object/s
 
 
 
-//pocket didn't exist
+// pocket didn't exist
 	// cna make a vector of a pocket
 
 // death
@@ -50,7 +50,6 @@ class Object {
 // tile
 	// need a function that returns the number of unoccopied neighbours
 	// need a vector of 
-
 
 
 #endif
