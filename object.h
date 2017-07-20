@@ -51,5 +51,11 @@ class Object {
 	// need a function that returns the number of unoccopied neighbours
 	// need a vector of 
 
+//npc move
+ 	// calls Tile it currently in wiht the directions to go
+ 	// TIle call the neighbour
+ 	// set Nieghtnours ptr to character
+ 	// oldTIle = nullptr
+ 	// newTile call character with itself
 
 #endif

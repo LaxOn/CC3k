@@ -6,11 +6,21 @@
 #include "pc.h"
 
 void NPC::move() {
+
+	
+ 	// calls Tile it currently in wiht the directions to go
+ 	// TIle call the neighbour
+ 	// set Nieghtnours ptr to character
+ 	// oldTIle = nullptr
+ 	// newTile call character with itself
 	if (canMove) {
 		// random number from 1 to x
 			// x is number of unoccupied adjacent tile
 		// call old tile to be removed
 		// call new tile to be in
+
+
+
 	}
 }
 

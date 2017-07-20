@@ -9,18 +9,20 @@ void Character::setStats(int hp, int atk, int def) {
 	this->hp = hp;
 }
 
-void Character::setType(std::string type) {
-	this->type = type;	
-}
+void Character::setType(std::string type) { this->type = type; }
 
 void Character::setMaxHP(int max) { hpMax = max; }
 
 void Character::setPotionMult(int max) { potionMult = max; }
 
+void Character::changeHP(int num) {
+	HP += potionMult * num;
+	if (hpMax && (HP > hpMax)) HP = hpMax;
 }
 
-void Character::healHP(int num) { HP += num; }
-void Character::damageHP(int num) { HP -= num; }
+void Character::changeAtk(int num) { Atk += potionMult * num; }
+
+void Character::changeDef(int num) { Def += potionMult * num; }
 
 int Character::getHP() { return hp; }
 
@@ -33,10 +35,6 @@ int Character::damageCalc(int aAtk, int dDef) {
 }
 
 std::string Character::getType() { return type; }
-
-void Character::nextTurn() {
-	
-}
 
 Character::Character() {}
 

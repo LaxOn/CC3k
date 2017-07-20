@@ -12,11 +12,6 @@ class NPC: public Character{
 	Gold *loot;
  public:
  	void move();
- 	// calls Tile it currently in wiht the directions to go
- 	// TIle call the neighbour
- 	// set Nieghtnours ptr to character
- 	// oldTIle = nullptr
- 	// newTile call character with itself
  	void turnHostile();
  	void cannotMove();
  	void addLoot(int money);

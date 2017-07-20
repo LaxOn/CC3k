@@ -13,6 +13,7 @@ void Object::setDisp(char charDisp) {
 }
 
 void Object::setTile(Tile *t) {
+											// change x and y from y
 	address = t;
 }
 
@@ -22,7 +23,6 @@ Info Object::getInfo();
 }
 
 bool Object::isNear(Info PCInfo, Info NPCInfo) {
-	// use grid
 	int NPCx = NPCInfo.x;
 	int NPCy = NPCInfo.y;
 	int PCx = PCInfo.x;
@@ -37,3 +37,4 @@ Object::Object() {}
 Object::~Object() {}
 
 #endif
+i

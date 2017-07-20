@@ -13,18 +13,9 @@ class Character: public Object {
 	void setType(std::string type);
 	void setMaxHP(int max);
 	void setPotionMult(int max);
-
-
 	void changeHP(int num);
-	// this will have potionMult
-	// ceiling for Max
 	void changeAtk(int num);
-	void changeDef(int num); // change HP add it
-
-	//
-	//
-
-
+	void changeDef(int num); 
 	int getHP();
 	int getAtk();
 	int getDef();
