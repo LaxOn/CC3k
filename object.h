@@ -52,9 +52,9 @@ class Object {
 	// need a vector of 
 
 //npc move
- 	// calls Tile it currently in wiht the directions to go
- 	// TIle call the neighbour
- 	// set Nieghtnours ptr to character
+ 	// calls Tile it currently in with the directions to go
+ 	// Tile call the neighbour
+ 	// set Nieghbours ptr to character
  	// oldTIle = nullptr
  	// newTile call character with itself
 

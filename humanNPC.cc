@@ -1,29 +1,36 @@
 #ifndef HUMANNPC_H
 #define HUMANNPC_H
 #include "humanNPC.h"
+#include "character.h"
+#include "object.h"
+#include "npc.h"
 
-void DwarfNPC::ability() {
-	// Vampire are allergic to Dwarf
-	// Vampire lose 5 HP instead of gain
+void HumanNPC::notify(PC &whoNotified) override {
+	if (this->isNear(this->getInfo(), whoNotified.getInfo())) {
+		attack(whoNotified);
+	}
 }
 
-void DwarfNPC::notify(PC &whoNotified) {
-	// if near Dwarf attacks
+void HumanNPC::attack(PC &player) override {
+	player.defendFrom(*this);
 }
 
-DwarfNPC::DwarfNPC(int x, int y, Tile *t, Gold *g) {
-	this->setStats(100, 20, 30);
-	this->setDisp('W');
-	this->setType("DwarfNPC");
+void HumanNPC::nextTurn() override {
+
+}
+
+HumanNPC::HumanNPC(int x, int y) {
+	// Tile *address should be set when a HumanPC is created
+	this->setStats(150, 20, 20);
+	this->setDisp('H');
+	this->setType("HumanNPC");
 	this->turnHostile();
+	this->setCoords(x,y);
 
-/*
-	void setCoords(int x, int y);
-	void setTile(Tile *t);
-	addLoot(int money)
-*/
+	// addLoot(int money)
+	// drops 2 normal piles of gold
 }
 
-DwarfNPC::~DwarfNPC() {}
+HumanNPC::~HumanNPC() {}
 
 #endif

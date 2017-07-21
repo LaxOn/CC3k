@@ -1,29 +1,37 @@
 #ifndef ORCNPC_CC
 #define ORCNPC_CC
 #include "orcNPC.h"
+#include "character.h"
+#include "object.h"
+#include "npc.h"
 
-void DwarfNPC::ability() {
-	// Vampire are allergic to Dwarf
-	// Vampire lose 5 HP instead of gain
+void OrcNPC::notify(PC &whoNotified) override {
+	if (this->isNear(this->getInfo(), whoNotified.getInfo())) {
+		attack(whoNotified);
+	}
 }
 
-void DwarfNPC::notify(PC &whoNotified) {
-	// if near Dwarf attacks
+void OrcNPC::attack(PC &player) override {
+	// gets 50% more damage to goblins
+	player.defendFrom(*this);
 }
 
-DwarfNPC::DwarfNPC(int x, int y, Tile *t, Gold *g) {
-	this->setStats(100, 20, 30);
-	this->setDisp('W');
-	this->setType("DwarfNPC");
+void OrcNPC::nextTurn() override {
+
+}
+
+OrcNPC::OrcNPC(int x, int y) {
+	// Tile *address should be set when a OrcPC is created
+	this->setStats(180, 30, 25);
+	this->setDisp('O');
+	this->setType("OrcNPC");
 	this->turnHostile();
+	this->setCoords(x,y);
 
-/*
-	void setCoords(int x, int y);
-	void setTile(Tile *t);
-	addLoot(int money)
-*/
+	// addLoot(int money)
+	// guards a treasure
 }
 
-DwarfNPC::~DwarfNPC() {}
+OrcNPC::~OrcNPC() {}
 
 #endif

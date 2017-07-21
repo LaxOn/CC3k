@@ -1,29 +1,35 @@
 #ifndef HALFLINGNPC_H
 #define HALFLINGNPC_H
 #include "halflingNPC.h"
+#include "character.h"
+#include "object.h"
+#include "npc.h"
 
-void DwarfNPC::ability() {
-	// Vampire are allergic to Dwarf
-	// Vampire lose 5 HP instead of gain
+void HalflingNPC::notify(PC &whoNotified) override {
+	if (this->isNear(this->getInfo(), whoNotified.getInfo())) {
+		attack(whoNotified);
+	}
 }
 
-void DwarfNPC::notify(PC &whoNotified) {
-	// if near Dwarf attacks
+void HalflingNPC::attack(PC &player) override {
+	player.defendFrom(*this);
 }
 
-DwarfNPC::DwarfNPC(int x, int y, Tile *t, Gold *g) {
-	this->setStats(100, 20, 30);
-	this->setDisp('W');
-	this->setType("DwarfNPC");
+void HalflingNPC::nextTurn() override {
+
+}
+
+HalflingNPC::HalflingNPC(int x, int y) {
+	// Tile *address should be set when a HalflingPC is created
+	this->setStats(100, 15, 20);
+	this->setDisp('L');
+	this->setType("HalflingNPC");
 	this->turnHostile();
+	this->setCoords(x,y);
 
-/*
-	void setCoords(int x, int y);
-	void setTile(Tile *t);
-	addLoot(int money)
-*/
+	// addLoot(int money)
 }
 
-DwarfNPC::~DwarfNPC() {}
+HalflingNPC::~HalflingNPC() {}
 
 #endif

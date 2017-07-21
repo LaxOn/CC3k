@@ -1,26 +1,35 @@
 #ifndef ELFNPC_H
 #define ELFNPC_H
 #include "elfNPC.h"
+#include "character.h"
+#include "object.h"
+#include "npc.h"
 
-void ElfNPC::ability() {
-	// gets two attacks against every race except drow
+void ElfNPC::notify(PC &whoNotified) override {
+	if (this->isNear(this->getInfo(), whoNotified.getInfo())) {
+		attack(whoNotified);
+	}
 }
 
-void ElfNPC::notify(PC &whoNotified) {
-	// if PC is near Elf, it attacks
+void ElfNPC::attack(PC &player) override {
+	// attack twice excpet against Drow
+	player.defendFrom(*this);
 }
 
-ElfNPC::ElfNPC(int x, int y, Tile *t, Gold *g) {
+void ElfNPC::nextTurn() override {
+
+}
+
+ElfNPC::ElfNPC(int x, int y) {
+	// Tile *address should be set when a ElfPC is created
 	this->setStats(140, 30, 10);
 	this->setDisp('E');
 	this->setType("ElfNPC");
 	this->turnHostile();
+	this->setCoords(x,y);
 
-/*
-	void setCoords(int x, int y);
-	void setTile(Tile *t);
-	addLoot(int money)
-*/
+	// addLoot(int money)
+	// guards a treasure
 }
 
 ElfNPC::~ElfNPC() {}

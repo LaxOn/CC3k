@@ -4,12 +4,12 @@
 
 struct Info;
 
-class ShadePC: public PC{
+class ShadePC: public PC {
  public:
  	void attack(NPC& enemy) override;
  	void defendFrom(NPC& enemy) override;
  	void nextTurn() override;
-	ShadePC();
+	ShadePC(int x, int y);
 	~ShadePC();
 };
 

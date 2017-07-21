@@ -18,7 +18,6 @@ class NPC: public Character{
  	//overload == ????
  	virtual void notify(PC &whoNotified)=0;
  	virtual void attack(PC &player)=0;
- 	virtual void defendFrom(PC &player)=0;
  	NPC();
  	virtual ~NPC()=0;
 };

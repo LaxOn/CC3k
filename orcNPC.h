@@ -7,10 +7,9 @@ class PC;
 class OrcNPC: public NPC{
  public:
  	void notify(PC &whoNotified) override;
- 	void attack(PC &player) override;
- 	void defendFrom(PC &player) override;
+ 	void attack(PC &player) override; // no defendFrom as PC implements it
  	void nextTurn() override;
-	OrcNPC();
+	OrcNPC(int x, int y);
 	~OrcNPC();
 };
 

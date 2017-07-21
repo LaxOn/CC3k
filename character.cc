@@ -15,8 +15,11 @@ void Character::setMaxHP(int max) { hpMax = max; }
 
 void Character::setPotionMult(int max) { potionMult = max; }
 
-void Character::changeHP(int num) {
-	HP += potionMult * num;
+void Character::isAttacked(int num) { HP -= num; }
+
+void Character::changeHP(int num, bool forPotion) {
+	if (forPotion) HP += potionMult * num;
+	else HP += num;
 	if (hpMax && (HP > hpMax)) HP = hpMax;
 }
 

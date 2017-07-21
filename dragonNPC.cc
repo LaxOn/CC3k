@@ -5,7 +5,6 @@
 #include "object.h"
 #include "npc.h"
 
-
 void DragonNPC::notify(PC &whoNotified) override {
 	if (this->isNear(this->getInfo(), whoNotified.getInfo())) {
 		attack(whoNotified);
@@ -13,29 +12,24 @@ void DragonNPC::notify(PC &whoNotified) override {
 }
 
 void DragonNPC::attack(PC &player) override {
-
-}
-
-void DragonNPC::defendFrom(PC &player) override {
-
+	player.defendFrom(*this);
 }
 
 void DragonNPC::nextTurn() override {
 
 }
 
-DragonNPC::DragonNPC(int x, int y, Tile *t, Gold *g) {
+DragonNPC::DragonNPC(int x, int y) {
+	// Tile *address should be set when a DragonPC is created
 	this->setStats(150, 20, 20);
 	this->setDisp('D');
 	this->setType("DragonNPC");
 	this->cannotMove();
 	this->turnHostile();
+	this->setCoords(x,y);
 
-/*
-	void setCoords(int x, int y);
-	void setTile(Tile *t);
-	addLoot(int money)
-*/
+	// addLoot(int money)
+	// guards a treasure
 }
 
 DragonNPC::~DragonNPC() {}

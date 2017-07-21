@@ -6,8 +6,6 @@
 #include "pc.h"
 
 void NPC::move() {
-
-	
  	// calls Tile it currently in wiht the directions to go
  	// TIle call the neighbour
  	// set Nieghtnours ptr to character
@@ -18,9 +16,6 @@ void NPC::move() {
 			// x is number of unoccupied adjacent tile
 		// call old tile to be removed
 		// call new tile to be in
-
-
-
 	}
 }
 
@@ -29,7 +24,7 @@ void NPC::attack(PC &player) {
 }
 
 void NPC::defendFrom(PC &player) {
-	// look at paper
+		// look at paper
 }
 
 void NPC::turnHostile() {
@@ -41,8 +36,9 @@ void NPC::cannotMove() {
 }
 
 void NPC::addLoot(int money) {
-	
-	// lol idk ask Judy
+	// call constructor for Gold
+	// add gold to loot
+	// add Gold
 }
 
 NPC::NPC() {}

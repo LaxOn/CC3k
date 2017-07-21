@@ -4,13 +4,13 @@
 
 struct Info;
 
-class TrollPC: public PC{
+class TrollPC: public PC {
  public:
  	Info getState();
  	void attack(NPC& enemy) override;
  	void defendFrom(NPC& enemy) override;
  	void nextTurn() override;
-	TrollPC();
+	TrollPC(int x, int y);
 	~TrollPC();
 };
 
