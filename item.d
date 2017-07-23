@@ -1,1 +1,1 @@
-item.o: item.cc item.h
+item.o: item.cc item.h object.h

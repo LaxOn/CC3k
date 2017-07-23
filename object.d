@@ -1,1 +1,1 @@
-object.o: object.cc object.h
+object.o: object.cc object.h info.h

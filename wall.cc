@@ -3,8 +3,8 @@
 using namespace std;
 
 // constructor and destructor
-Wall::Wall(shared_ptr<BasicTile> base) :
-	TileDecorator{base} {}
+Wall::Wall(shared_ptr<BasicTile> base, bool sideWall) :
+	TileDecorator{base}, sideWall{sideWall} {}
 
 Wall::~Wall();
 
@@ -15,6 +15,10 @@ shared_ptr<Object> *& Wall::getObject(int index) {
 
 shared_ptr<Tile> *& Wall::getNeighbr(int index) {
 	return base->getNeighbr(index);
+}
+
+bool getSideWall() {
+	return sideWall;
 }
 
 // other methods

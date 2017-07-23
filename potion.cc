@@ -3,7 +3,7 @@
 using namespace std;
 
 // constructor and destructor
-Potion() {}
+Potion::Potion() {}
 
 Potion::~Potion() {}
 
@@ -20,7 +20,7 @@ bool Potion::getLifetime() {
 	return lifetime;
 }
 
-void Potion::resetEffect() {}
+void Potion::resetEffect(PC &pc) {}
 
 // other methods
 void Potion::useItem(PC &pc) {}

@@ -3,21 +3,21 @@
 using namespace std;
 
 // constructor and destructor
-BasicPotion::BasicPotion(int value, string effect, int x, int y) :
-	lifetime{false} {
+BasicPotion::BasicPotion(int value, string effect, bool lifetime, int x, int y) {
+	this->lifetime = lifetime;
 	setValue(value);
 	setEffect(effect);
-	setCoord(x, y);
+	setCoords(x, y);
 }
 
-BasicPotion::~BasicPotion();
+BasicPotion::~BasicPotion() {}
 
 // accessors and mutators
 bool BasicPotion::getLifetime() {
 	return lifetime;
 }
 
-void BasicPotion::resetEffect() {}
+void BasicPotion::resetEffect(PC &pc) {}
 
 // other methods
 void BasicPotion::useItem(PC &pc) {}

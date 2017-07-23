@@ -9,8 +9,8 @@ class TileDecorator: public Tile {
 
 public:
 	// constructor and destructor
-	TileDecorator(shared_ptr<BasicTile> base);
+	TileDecorator(std::shared_ptr<BasicTile> base);
 	~TileDecorator();
-}
+};
 
 #endif

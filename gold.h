@@ -2,6 +2,7 @@
 #define _GOLD_H_
 
 #include "item.h"
+#include <string>
 
 class Gold: public Item {
 	std::string description;
@@ -19,14 +20,15 @@ public:
 	std::string getDescript();
 	bool getDrgn();
 	bool getSlain();
+	bool getSteal();
 	NPC *& getNPC();
 
 	// other methods
 	void useItem(PC &pc) override;
 
-	void assignNPC(NPC &npc);
-	bool allowPickup();
-	bool allowSteal();
+	void assignNPC(NPC *npc);
+	void allowPickup();
+	void allowSteal();
 };
 
 #endif

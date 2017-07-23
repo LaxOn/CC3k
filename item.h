@@ -12,7 +12,7 @@ protected:
 
 public:
 	// constructor and destructor
-	Item(int value, int x, int y);
+	Item();
 	virtual ~Item()=0;
 
 	// accessors and mutators

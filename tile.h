@@ -40,16 +40,16 @@ public:
 
 	void setDisplay(std::shared_ptr<Display> dply);
 	
-	virtual shared_ptr<Object> *& getObject(int index);
-	virtual shared_ptr<Tile> *& getNeighbr(int index);
+	virtual std::shared_ptr<Object> *& getObject(int index);
+	virtual std::shared_ptr<Tile> *& getNeighbr(int index);
 
 	// other methods
-	virtual void addObject(shared_ptr<Object> o);
-	virtual void addNeighbr(shared_ptr<Tile> t);
+	virtual void addObject(std::shared_ptr<Object> o);
+	virtual void addNeighbr(std::shared_ptr<Tile> t);
 	virtual void killObject();
 	virtual int getType();
 	virtual void moveObj(int direction);
 	void notifyDisplay();
-}
+};
 
 #endif

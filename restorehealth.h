@@ -9,17 +9,17 @@ class RestoreHealth: public PotionDecorator {
 
 public:
 	// constructor and destructor
-	RestoreHealth(int health, BasicPotion *base);
+	RestoreHealth(std::shared_ptr<BasicPotion> base);
 	~RestoreHealth();
 
 	// accessors and mutators
 	bool getLifetime() override;
-	void resetEffect() override;
+	void resetEffect(PC &pc) override;
 	int getHealth();
 
 
 	// other methods
 	void useItem(PC &pc) override;
-}
+};
 
 #endif

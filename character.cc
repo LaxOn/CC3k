@@ -41,6 +41,8 @@ int Character::damageCalc(int aAtk, int dDef) {
 	return ceil(((double) 100 / (100 + dDef))*aAtk);
 }
 
+void Character::addMoney(int money) {}
+
 std::string Character::getType() { return type; }
 
 Character::Character() {}

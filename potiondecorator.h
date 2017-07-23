@@ -1,15 +1,16 @@
 #ifndef _POTIONDECORATOR_H_
 #define _POTIONDECORATOR_H_
 
-#include "Potion.h"
-#include "BasicPotion.h"
+#include <memory>
+#include "potion.h"
+#include "basicpotion.h"
 
 class PotionDecorator: public Potion {
-	BasicPotion * base;
+	std::shared_ptr<BasicPotion> base;
 
 public:
 	// constructor and destructor
-	PotionDecorator(BasicPotion * base);
+	PotionDecorator(std::shared_ptr<BasicPotion> base);
 	virtual ~PotionDecorator();
 };
 

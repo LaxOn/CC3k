@@ -1,9 +1,10 @@
 #include "restorehealth.h"
+#include "pc.h"
 
 using namespace std;
 
 // constructor and destructor
-RestoreHealth::RestoreHealth(BasicPotion *base) :
+RestoreHealth::RestoreHealth(shared_ptr<BasicPotion> base) :
 	PotionDecorator{base}, health{10} {
 		lifetime = true;
 	}
@@ -15,7 +16,7 @@ bool RestoreHealth::getLifetime() {
 	return lifetime;
 } 
 
-void RestoreHealth::resetEffect() {}
+void RestoreHealth::resetEffect(PC &pc) {}
 
 int RestoreHealth::getHealth() {
 	return health;
@@ -24,8 +25,5 @@ int RestoreHealth::getHealth() {
 
 // other methods
 void RestoreHealth::useItem(PC &pc) {
-	for (int i = 0; i < health; ++i) {
-		if (pc->getHealth() >= pc->getMaxHP()) break;
-		pc->changeHealth(1);
-	}
+		pc.changeHP(health, true);
 }

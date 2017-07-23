@@ -1,14 +1,15 @@
 #include "boostatk.h"
+#include "pc.h"
 
 using namespace std;
 
 // constructor and destructor
-BoostAtk::RestoreHealth(BasicPotion *base) :
+BoostAtk::BoostAtk(shared_ptr<BasicPotion> base) :
 	PotionDecorator{base}, attack{5} {
 		lifetime = false;
 	}
 
-BoostAtk::~RestoreHealth() {}
+BoostAtk::~BoostAtk() {}
 
 // accessors and mutators
 bool BoostAtk::getLifetime() {
@@ -16,7 +17,7 @@ bool BoostAtk::getLifetime() {
 } 
 
 void BoostAtk::resetEffect(PC &pc) {
-	pc->changeAtk(-attack);
+	pc.changeAtk(-attack);
 }
 
 int BoostAtk::getAttack() {
@@ -26,6 +27,6 @@ int BoostAtk::getAttack() {
 
 // other methods
 void BoostAtk::useItem(PC &pc) {
-	pc->changeAtk(attack);
+	pc.changeAtk(attack);
 }
 

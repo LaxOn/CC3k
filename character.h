@@ -17,6 +17,7 @@ class Character: public Object {
 	void changeHP(int num, bool forPotion);
 	void changeAtk(int num);
 	void changeDef(int num); 
+	void addMoney(int money);
 	int getHP();
 	int getAtk();
 	int getDef();

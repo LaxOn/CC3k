@@ -1,14 +1,15 @@
 #include "wounddef.h"
+#include "pc.h"
 
 using namespace std;
 
 // constructor and destructor
-WoundDef::RestoreHealth(BasicPotion *base) :
+WoundDef::WoundDef(shared_ptr<BasicPotion> base) :
 	PotionDecorator{base}, defense{-5} {
 		lifetime = false;
 	}
 
-WoundDef::~RestoreHealth() {}
+WoundDef::~WoundDef() {}
 
 // accessors and mutators
 bool WoundDef::getLifetime() {
@@ -16,7 +17,7 @@ bool WoundDef::getLifetime() {
 } 
 
 void WoundDef::resetEffect(PC &pc) {
-	pc->changeDef(-defense);
+	pc.changeDef(-defense);
 }
 
 int WoundDef::getDefense() {
@@ -26,5 +27,5 @@ int WoundDef::getDefense() {
 
 // other methods
 void WoundDef::useItem(PC &pc) {
-	pc->changeDef(defense);
+	pc.changeDef(defense);
 }
