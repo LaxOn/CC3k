@@ -3,18 +3,23 @@
 #include <memory>
 #include <vector>
 
-#include "dungeon.h"
+#include "game.h"
 #include "floor.h"
 
 using namespace std;
 
 int main() {
 	ifstream floorplaninput{"default-floor.txt"};
-	auto dungeon = make_shared<Dungeon> (5);
 
-	dungeon->constructFloor(floorplaninput);
+	// test block
+	//string columns;
+	//getline(floorplaninput, columns);
+	//cout << columns.length() <<endl;
+	// end test block
 
-	cout << dungeon->getFloor(1) << endl;
+	auto current_game = make_unique<Game> (floorplaninput);
+
+	current_game->displayFloor(1);
 	
 	return 0;
 }

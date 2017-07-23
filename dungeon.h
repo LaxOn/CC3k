@@ -17,10 +17,10 @@ public:
 
 	// accessors and mutators
 	int getSize();
-	Floor *& getFloor(int whichFloor);
+	std::shared_ptr<Floor> & getFloor(int whichFloor);
 
 	// other methods
-	void constructFloor(); // Floor construction without input file
+	//void constructFloor(); // Floor construction without input file
 	void constructFloor(std::istream &input); // Floor construction
 													// with input file
 };

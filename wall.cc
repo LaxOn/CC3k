@@ -4,21 +4,19 @@ using namespace std;
 
 // constructor and destructor
 Wall::Wall(shared_ptr<BasicTile> base, bool sideWall) :
-	TileDecorator{base}, sideWall{sideWall} {}
+	TileDecorator{base} {
+	setSideWall(sideWall);
+}
 
-Wall::~Wall();
+Wall::~Wall() {}
 
 // accessors and mutators
-shared_ptr<Object> *& Wall::getObject(int index) {
+shared_ptr<Object> & Wall::getObject(int index) {
 	return base->getObject(index);
 }
 
-shared_ptr<Tile> *& Wall::getNeighbr(int index) {
+shared_ptr<Tile> & Wall::getNeighbr(int index) {
 	return base->getNeighbr(index);
-}
-
-bool getSideWall() {
-	return sideWall;
 }
 
 // other methods
@@ -27,7 +25,7 @@ void Wall::addObject(shared_ptr<Object> o) {
 }
 
 void Wall::addNeighbr(shared_ptr<Tile> t) {
-	base->addNeighbr(o);;
+	base->addNeighbr(t);;
 }
 
 void Wall::killObject() {

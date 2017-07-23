@@ -6,14 +6,14 @@ using namespace std;
 None::None(shared_ptr<BasicTile> base) :
 	TileDecorator{base} {}
 
-None::~None();
+None::~None() {}
 
 // accessors and mutators
-shared_ptr<Object> *& None::getObject(int index) {
+shared_ptr<Object> & None::getObject(int index) {
 	return base->getObject(index);
 }
 
-shared_ptr<Tile> *& None::getNeighbr(int index) {
+shared_ptr<Tile> & None::getNeighbr(int index) {
 	return base->getNeighbr(index);
 }
 
@@ -23,7 +23,7 @@ void None::addObject(shared_ptr<Object> o) {
 }
 
 void None::addNeighbr(shared_ptr<Tile> t) {
-	base->addNeighbr(o);;
+	base->addNeighbr(t);;
 }
 
 void None::killObject() {

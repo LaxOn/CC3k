@@ -17,9 +17,10 @@ class Tile {
 	bool occupy;
 	bool dragonHoard;
 
-	std::shared_ptr<Display> d;
+	bool sideWall;
 
 protected:
+	std::shared_ptr<Display> d;
 	std::vector<std::shared_ptr<Object>> obj;
 	std::vector<std::shared_ptr<Tile>> neighbours;
 
@@ -33,15 +34,18 @@ public:
 	void setInfo(int x, int y);
 
 	bool getOccupy();
-	bool setOccupy(bool inp);
+	void setOccupy(bool inp);
 
 	bool getDragonHoard();
-	bool setDragonHoard(bool inp);
+	void setDragonHoard(bool inp);
 
 	void setDisplay(std::shared_ptr<Display> dply);
+
+	bool getSideWall();
+	void setSideWall(bool b);
 	
-	virtual std::shared_ptr<Object> *& getObject(int index);
-	virtual std::shared_ptr<Tile> *& getNeighbr(int index);
+	virtual std::shared_ptr<Object> & getObject(int index);
+	virtual std::shared_ptr<Tile> & getNeighbr(int index);
 
 	// other methods
 	virtual void addObject(std::shared_ptr<Object> o);

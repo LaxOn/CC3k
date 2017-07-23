@@ -1,1 +1,2 @@
-floordecorator.o: floordecorator.cc floordecorator.h
+tiledecorator.o: tiledecorator.cc tiledecorator.h tile.h info.h \
+ basictile.h

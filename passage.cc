@@ -6,14 +6,14 @@ using namespace std;
 Passage::Passage(shared_ptr<BasicTile> base) :
 	TileDecorator{base} {}
 
-Passage::~Passage();
+Passage::~Passage() {}
 
 // accessors and mutators
-shared_ptr<Object> *& Passage::getObject(int index) {
+shared_ptr<Object> & Passage::getObject(int index) {
 	return base->getObject(index);
 }
 
-shared_ptr<Tile> *& Passage::getNeighbr(int index) {
+shared_ptr<Tile> & Passage::getNeighbr(int index) {
 	return base->getNeighbr(index);
 }
 
@@ -23,7 +23,7 @@ void Passage::addObject(shared_ptr<Object> o) {
 }
 
 void Passage::addNeighbr(shared_ptr<Tile> t) {
-	base->addNeighbr(o);;
+	base->addNeighbr(t);;
 }
 
 void Passage::killObject() {

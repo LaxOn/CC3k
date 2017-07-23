@@ -1,1 +1,1 @@
-basicfloor.o: basicfloor.cc basicfloor.h
+basictile.o: basictile.cc basictile.h tile.h info.h

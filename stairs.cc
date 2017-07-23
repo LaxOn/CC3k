@@ -6,14 +6,14 @@ using namespace std;
 Stairs::Stairs(shared_ptr<BasicTile> base) :
 	TileDecorator{base} {}
 
-Stairs::~Stairs();
+Stairs::~Stairs() {}
 
 // accessors and mutators
-shared_ptr<Object> *& Stairs::getObject(int index) {
+shared_ptr<Object> & Stairs::getObject(int index) {
 	return base->getObject(index);
 }
 
-shared_ptr<Tile> *& Stairs::getNeighbr(int index) {
+shared_ptr<Tile> & Stairs::getNeighbr(int index) {
 	return base->getNeighbr(index);
 }
 
@@ -23,7 +23,7 @@ void Stairs::addObject(shared_ptr<Object> o) {
 }
 
 void Stairs::addNeighbr(shared_ptr<Tile> t) {
-	base->addNeighbr(o);;
+	base->addNeighbr(t);;
 }
 
 void Stairs::killObject() {

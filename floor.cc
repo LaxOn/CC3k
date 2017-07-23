@@ -19,7 +19,7 @@ using namespace std;
 
 // constructor and destructors
 Floor::Floor(int position) :
-	st{make_shared<Stairs>()}, player{make_shared<PC>()}, 
+	//st{make_shared<Stairs>ptr}, player{make_shared<PC>ptr}, 
 	position{position}, d{make_shared<Display>()}, 
 	maxPotion{10}, maxEnemy{20} {
 	d->setFloor(this);
@@ -129,78 +129,79 @@ void Floor::constructFloor(istream &input, int start) {
 	for (int i = 0; i < 25; ++i) {
 		for (int j = 0; j < 79; ++j) {
 			// the neighbours can be identified by position in the vector (integer 0-9 inclusive)
+			shared_ptr<BasicTile> ptr;
 			if (i - 1 < 0 && j - 1 < 0) {
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
 				tiles[i][j]->addNeighbr(tiles[i][j + 1]);
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
 				tiles[i][j]->addNeighbr(tiles[i + 1][j]);
 				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1]);
 			} else if (i - 1 < 0 && j + 1 > 78) {
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
 				tiles[i][j]->addNeighbr(tiles[i][j - 1]);
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
 				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1]);
 				tiles[i][j]->addNeighbr(tiles[i + 1][j]);
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
 			} else if (i - 1 < 0) {
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
 				tiles[i][j]->addNeighbr(tiles[i][j - 1]);
 				tiles[i][j]->addNeighbr(tiles[i][j + 1]);
 				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1]);
 				tiles[i][j]->addNeighbr(tiles[i + 1][j]);
 				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1]);
 			} else if (i + 1 > 24 && j - 1 < 0) {
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
 				tiles[i][j]->addNeighbr(tiles[i - 1][j]);
 				tiles[i][j]->addNeighbr(tiles[i - 1][j + 1]);
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
 				tiles[i][j]->addNeighbr(tiles[i][j + 1]);
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
 			} else if (i + 1 > 24 && j + 1 > 78) {
 				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1]);
 				tiles[i][j]->addNeighbr(tiles[i - 1][j]);
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
 				tiles[i][j]->addNeighbr(tiles[i][j - 1]);
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
 			} else if (i + 1 > 24) {
 				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1]);
 				tiles[i][j]->addNeighbr(tiles[i - 1][j]);
 				tiles[i][j]->addNeighbr(tiles[i - 1][j + 1]);
 				tiles[i][j]->addNeighbr(tiles[i][j - 1]);
 				tiles[i][j]->addNeighbr(tiles[i][j + 1]);
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(ptr);
 			} else if (j - 1 < 0) {
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
 				tiles[i][j]->addNeighbr(tiles[i - 1][j]);
 				tiles[i][j]->addNeighbr(tiles[i - 1][j + 1]);
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
 				tiles[i][j]->addNeighbr(tiles[i][j + 1]);
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
 				tiles[i][j]->addNeighbr(tiles[i + 1][j]);
 				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1]);
 			} else if (j + 1 > 78) {
 				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1]);
 				tiles[i][j]->addNeighbr(tiles[i - 1][j]);
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
 				tiles[i][j]->addNeighbr(tiles[i][j - 1]);
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
 				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1]);
 				tiles[i][j]->addNeighbr(tiles[i + 1][j]);
-				tiles[i][j]->addNeighbr(make_shared<Tile>());
+				tiles[i][j]->addNeighbr(ptr);
 			} else {
 				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1]);
 				tiles[i][j]->addNeighbr(tiles[i - 1][j]);

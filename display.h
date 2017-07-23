@@ -3,13 +3,14 @@
 
 #include <vector>
 #include <iostream>
+#include <memory>
 #include <string>
 #include "floor.h"
 
 class Tile;
 
 class Display {
-	Floor *f;
+	Floor * f;
 
 	std::vector<std::vector<char>> board;
 
@@ -48,7 +49,8 @@ public:
 	void setFloorNum(int num);
 
 	// other methods
-	void displayFloor(Floor &f);
+	void defaultFloor();
+	void displayFloor();
 	void displayStats();
 
 	void update(Tile &, std::string str);

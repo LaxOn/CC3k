@@ -4,6 +4,7 @@
 #include "tile.h"
 
 class BasicTile: public Tile {
+	int numObject = 0;
 	// numbers will be used to represent the type of Tile:
 	// 0 for BasicTile
 	// 1 for Passage
@@ -14,12 +15,14 @@ class BasicTile: public Tile {
 
 public:
 	// constructor and destructor
-	BasicTile(int x, int y);
+	BasicTile(int x, int y, std::shared_ptr<Display> dply);
 	~BasicTile();
 
 	// accessors and mutators
-	std::shared_ptr<Object> *& getObject(int index) override;
-	std::shared_ptr<Tile> *& getNeighbr(int index) override;
+	std::shared_ptr<Object> & getObject(int index) override;
+	std::shared_ptr<Tile> & getNeighbr(int index) override;
+
+	int getNumObject();
 
 	// other methods
 	void addObject(std::shared_ptr<Object> o) override;

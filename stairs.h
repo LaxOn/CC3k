@@ -11,8 +11,8 @@ public:
 	~Stairs();
 
 	// accessors and mutators
-	std::shared_ptr<Object> *& getObject(int index) override;
-	std::shared_ptr<Tile> *& getNeighbr(int index) override;
+	std::shared_ptr<Object> & getObject(int index) override;
+	std::shared_ptr<Tile> & getNeighbr(int index) override;
 
 	// other methods
 	void addObject(std::shared_ptr<Object> o) override;

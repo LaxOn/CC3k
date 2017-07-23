@@ -1,4 +1,5 @@
 #include "tile.h"
+#include "display.h"
 
 using namespace std;
 
@@ -22,7 +23,7 @@ bool Tile::getOccupy() {
 	return occupy;
 }
 
-bool Tile::setOccupy(bool inp) {
+void Tile::setOccupy(bool inp) {
 	this->occupy = inp;
 }
 
@@ -30,17 +31,29 @@ bool Tile::getDragonHoard() {
 	return dragonHoard;
 }
 
-bool Tile::setDragonHoard(bool inp) {
+void Tile::setDragonHoard(bool inp) {
 	this->dragonHoard = inp;
 }
 
 void Tile::setDisplay(shared_ptr<Display> dply) {
 	this->d = d;
 }
-	
-shared_ptr<Object> *& Tile::getObject(int index) {}
 
-shared_ptr<Tile> *& Tile::getNeighbr(int index) {}
+bool Tile::getSideWall() {
+	return sideWall;
+}
+
+void Tile::setSideWall(bool b) {
+	sideWall = b;
+}
+	
+shared_ptr<Object> & Tile::getObject(int index) {
+	return obj[index];
+}
+
+shared_ptr<Tile> & Tile::getNeighbr(int index) {
+	return neighbours[index];
+}
 
 // other methods
 void Tile::addObject(shared_ptr<Object> o) {}
@@ -49,10 +62,12 @@ void Tile::addNeighbr(shared_ptr<Tile> t) {}
 
 void Tile::killObject() {}
 
-int Tile::getType() {}
+int Tile::getType() {
+	return -1;
+}
 
 void Tile::moveObj(int direction) {}
 
 void Tile::notifyDisplay() {
-	d->notify(*this);
+	d->update(*this, "?");
 }

@@ -1,1 +1,1 @@
-main.o: main.cc dungeon.h floor.h
+main.o: main.cc game.h floor.h

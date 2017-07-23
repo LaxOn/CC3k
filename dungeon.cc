@@ -7,28 +7,31 @@ Dungeon::Dungeon(int size) :
 	size{size}, floors{nullptr} {}
 
 Dungeon::~Dungeon() {
-	for (int i = 0; i < 5; ++i) floors.pop();
+	for (int i = 0; i < 5; ++i) floors.pop_back();
 }
 
 // accessors and mutators
-int getSize() {
+int Dungeon::getSize() {
 	return size;
 }
 
-shared_ptr<Floor> & getFloor(int whichFloor) {
-	return floor[i];
+shared_ptr<Floor> & Dungeon::getFloor(int whichFloor) {
+	return floors[whichFloor];
 }
 
 // other methods
-void constructFloor() {
-	for (int i = 0; i < 5; ++i) {
-		floors.emplace_back(shared_ptr<Floor> f = make_shared(Floor()));
-}
 
-void constructFloor(istream &input) {
+/*
+void Dungeon::constructFloor() {
+	for (int i = 0; i < 5; ++i) {
+		floors.emplace_back(make_shared<Floor> (i + 1));
+}
+*/
+
+void Dungeon::constructFloor(istream &input) {
 	int index = 0;
 	for (int i = 0; i < 5; ++i) {
-		floors.emplace_back(shared_ptr<Floor> f = make_shared(Floor()));
+		floors.emplace_back(make_shared<Floor> (i + 1));
 		(floors.back())->constructFloor(input, index);
 		index += 25;
 	}

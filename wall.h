@@ -4,7 +4,6 @@
 #include "tiledecorator.h"
 
 class Wall: public TileDecorator {
-	bool sideWall;
 
 public:
 	// constructor and destructor
@@ -12,10 +11,8 @@ public:
 	~Wall();
 
 	// accessors and mutators
-	std::shared_ptr<Object> *& getObject(int index) override;
-	std::shared_ptr<Tile> *& getNeighbr(int index) override;
-
-	bool getSideWall();
+	std::shared_ptr<Object> & getObject(int index) override;
+	std::shared_ptr<Tile> & getNeighbr(int index) override;
 
 	// other methods
 	void addObject(std::shared_ptr<Object> o) override;

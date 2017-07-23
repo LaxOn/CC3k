@@ -5,6 +5,7 @@
 #include "basictile.h"
 
 class TileDecorator: public Tile {
+protected:
 	std::shared_ptr<BasicTile> base;
 
 public:

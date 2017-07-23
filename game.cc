@@ -1,12 +1,25 @@
 #ifndef GAME_CC
 #define GAME_CC
+
 #include <iostream>
 #include <string>
 #include "game.h"
 #include "dungeon.h"
 
-void Game::displayFloor(Dungeon &dung, int floor) {
-	std::cout << gameDungeon->getFloor(floor);
+using namespace std;
+
+Game::Game(std::istream &input) :
+	input{input} {
+	curFloor = 1;
+	// constructs the dungeons
+	gameDungeon = make_unique<Dungeon> (5); // put args of the constructor of dungeon in the parenthesis)
+	gameDungeon->constructFloor(input);
+}
+
+Game::~Game() {}
+
+void Game::displayFloor(int floor) {
+	cout << *(gameDungeon->getFloor(floor));
 }
 
 void Game::nextTurn() {
@@ -22,14 +35,5 @@ void Game::spawn(int x, int y, std::string) {
 	// call spawn on a floor
 		// call constructor of the object with that string name
 }
-
-Game::Game() {
-	curFloor = 1;
-	// constructs the dungeons
-	gameDungeon = std::make_unique<Dungeon>(5) // put args of the constructor of dungeon in the parenthesis)
-	gameDungeon->constructFloor();
-}
-
-Game::~Game() {}
 
 #endif
