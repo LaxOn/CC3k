@@ -98,6 +98,39 @@ void Floor::constructObject(int x, int y, char input) {
 	}
 }
 
+void Floor::oneChamber(int id, shared_ptr<Tile> t) {
+	if (t->getType() == 0 &&
+		t->getChamberID() == 0) {
+			(chambers.back())->addTile(t);
+			t->setChamberID(id);
+			//cout << t->getChamberID() << endl;
+			oneChamber(id, t->getNeighbr(1));
+			oneChamber(id, t->getNeighbr(2));
+			oneChamber(id, t->getNeighbr(3));
+			oneChamber(id, t->getNeighbr(4));
+			oneChamber(id, t->getNeighbr(5));
+			oneChamber(id, t->getNeighbr(6));
+			oneChamber(id, t->getNeighbr(7));
+	}
+}
+
+void Floor::constructChamber(int id) {
+	bool found = false;
+	chambers.emplace_back(make_shared<Chamber> (id));
+	for (int i = 0; i < 25; ++i) {
+		for (int j = 0; j < 79; ++j) {
+			if (tiles[i][j]->getType() == 0 &&
+				tiles[i][j]->getChamberID() == 0) {
+				found = true;
+				//cout << "run oneChamber for " << i << " " << j << endl;
+				oneChamber(id, tiles[i][j]);
+				break;
+			}
+		}
+		if (found == true) break;
+	}
+}
+
 void Floor::constructFloor(istream &input, int start) {
 	string line;
 
@@ -122,8 +155,6 @@ void Floor::constructFloor(istream &input, int start) {
 			}
 		}
 	}
-
-	d->defaultFloor();
 
 	// setting up neigbours for all Tiles
 	for (int i = 0; i < 25; ++i) {
@@ -224,6 +255,16 @@ void Floor::constructFloor(istream &input, int start) {
 			}
 		}
 	}
+
+	// construct chamber;
+	constructChamber(1);
+	constructChamber(2);
+	constructChamber(3);
+	constructChamber(4);
+	constructChamber(5);
+
+	// display setup
+	d->defaultFloor();
 
 	// testing neighbours
 	/*

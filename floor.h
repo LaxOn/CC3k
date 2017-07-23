@@ -61,6 +61,10 @@ public:
 
 	// other methods
 	void constructObject(int x, int y, char input);
+
+	void oneChamber(int id, std::shared_ptr<Tile> t);
+	void constructChamber(int id);
+
 	void constructFloor();
 	void constructFloor(std::istream &input, int start);
 };

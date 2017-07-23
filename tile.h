@@ -19,6 +19,8 @@ class Tile {
 
 	bool sideWall;
 
+	int chamberID = 0; // identifies which Chamber this Tile is in.
+
 protected:
 	std::shared_ptr<Display> d;
 	std::vector<std::shared_ptr<Object>> obj;
@@ -43,6 +45,9 @@ public:
 
 	bool getSideWall();
 	void setSideWall(bool b);
+
+	int getChamberID();
+	void setChamberID(int id);
 	
 	virtual std::shared_ptr<Object> & getObject(int index);
 	virtual std::shared_ptr<Tile> & getNeighbr(int index);

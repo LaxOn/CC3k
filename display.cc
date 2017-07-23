@@ -77,7 +77,23 @@ void Display::defaultFloor() {
 		board[i].resize(79);
 		for (int j = 0; j < 79; ++j) {
 			if ((f->getTile(i, j))->getType() == 0) {
-				board[i][j] = '.';
+				// testing Chamber setup
+				int c_id = (f->getTile(i, j))->getChamberID();
+				//cout << c_id << endl;
+				if (c_id == 1) {
+					board[i][j] = '1';
+				} else if (c_id == 2) {
+					board[i][j] = '2';
+				} else if (c_id == 3) {
+					board[i][j] = '3';
+				} else if (c_id == 4) {
+					board[i][j] = '4';
+				} else if (c_id == 5) {
+					board[i][j] = '5';
+				} else {
+					board[i][j] = '.';
+				}
+				//board[i][j] = '.';
 			} else if ((f->getTile(i, j))->getType() == 1) {
 				board[i][j] = '#';
 			} else if ((f->getTile(i, j))->getType() == 2) {

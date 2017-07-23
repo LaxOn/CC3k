@@ -46,6 +46,14 @@ bool Tile::getSideWall() {
 void Tile::setSideWall(bool b) {
 	sideWall = b;
 }
+
+int Tile::getChamberID() {
+	return chamberID;
+}
+
+void Tile::setChamberID(int id) {
+	chamberID = id;
+}
 	
 shared_ptr<Object> & Tile::getObject(int index) {
 	return obj[index];
