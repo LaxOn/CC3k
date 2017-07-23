@@ -1,5 +1,3 @@
-#ifndef HUMANNPC_CC
-#define HUMANNPC_CC
 #include "humanNPC.h"
 #include "character.h"
 #include "object.h"
@@ -34,5 +32,3 @@ HumanNPC::HumanNPC(int x, int y) {
 }
 
 HumanNPC::~HumanNPC() {}
-
-#endif

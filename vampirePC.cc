@@ -1,5 +1,3 @@
-#ifndef VAMPIREPC_CC
-#define VAMPIREPC_CC
 #include "vampirePC.h"
 #include "character.h"
 #include "object.h"
@@ -7,7 +5,7 @@
 #include "npc.h"
 
 void VampirePC::attack(NPC& enemy){
-	int damage = damageCalc(this->getAtk(), enemy.getDef());
+	int damage = calcDmg(this->getAtk(), enemy.getDef());
 	enemy.changeHP(-damage, false);
 	// gain 5 HP every successful attack
 		// except dwarf lose 5 instead
@@ -15,7 +13,7 @@ void VampirePC::attack(NPC& enemy){
 }
 
 void VampirePC::defendFrom(NPC& enemy){
-	int damage = damageCalc(enemy.getAtk(), this->getDef());
+	int damage = calcDmg(enemy.getAtk(), this->getDef());
 	this->changeHP(-damage, false);
 }
 
@@ -35,4 +33,3 @@ VampirePC::VampirePC(int x, int y) {
 }
 
 VampirePC::~VampirePC() {}
-#endif

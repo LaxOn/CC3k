@@ -1,5 +1,3 @@
-#ifndef DWARFNPC_CC
-#define DWARFNPC_CC
 #include "dwarfNPC.h"
 #include "character.h"
 #include "object.h"
@@ -33,5 +31,3 @@ DwarfNPC::DwarfNPC(int x, int y) {
 }
 
 DwarfNPC::~DwarfNPC() {}
-
-#endif

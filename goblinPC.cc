@@ -1,5 +1,3 @@
-#ifndef GOBLINPC_CC
-#define GOBLINPC_CC
 #include "goblinPC.h"
 #include "character.h"
 #include "object.h"
@@ -7,14 +5,14 @@
 #include "npc.h"
 
 void GoblinPC::attack(NPC& enemy){
-	int damage = damageCalc(this->getAtk(), enemy.getDef());
+	int damage = calcDmg(this->getAtk(), enemy.getDef());
 	enemy.changeHP(-damage, false);
 	// should steal 5 gold every successful hit
 	// 50% chance to miss against halfling
 }
 
 void GoblinPC::defendFrom(NPC& enemy){
-	int damage = damageCalc(enemy.getAtk(), this->getDef());
+	int damage = calcDmg(enemy.getAtk(), this->getDef());
 	this->changeHP(-damage, false);
 }
 
@@ -33,5 +31,3 @@ GoblinPC::GoblinPC(int x, int y) {
 }
 
 GoblinPC::~GoblinPC() {}
-
-#endif

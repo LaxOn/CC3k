@@ -1,5 +1,3 @@
-#ifndef ELFNPC_CC
-#define ELFNPC_CC
 #include "elfNPC.h"
 #include "character.h"
 #include "object.h"
@@ -35,5 +33,3 @@ ElfNPC::ElfNPC(int x, int y) {
 }
 
 ElfNPC::~ElfNPC() {}
-
-#endif

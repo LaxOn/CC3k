@@ -1,5 +1,3 @@
-#ifndef CHARACTER_CC
-#define CHARACTER_CC
 #include <string>
 #include "character.h"
 
@@ -37,16 +35,12 @@ int Character::getAtk(){ return atk; }
 
 int Character::getDef() { return def; }
 
-int Character::damageCalc(int aAtk, int dDef) {
-	return ceil(((double) 100 / (100 + dDef))*aAtk);
+int Character::calcDmg(int atk, int def) {
+	return ceil(((double) 100 / (100 + def)) * atk);
 }
-
-void Character::addMoney(int money) {}
 
 std::string Character::getType() { return type; }
 
 Character::Character() {}
 
 Character::~Character() {}
-		
-#endif

@@ -1,5 +1,3 @@
-#ifndef OBJECT_CC
-#define OBJECT_CC
 #include "object.h"
 #include "info.h"
 
@@ -10,6 +8,10 @@ void Object::setCoords(int x, int y) {
 
 void Object::setDisp(char charDisp) {
 	this->charDisp = charDisp;	
+}
+
+char Object::getDisp() {
+	return charDisp;	
 }
 
 void Object::setTile(Tile *t) {
@@ -35,5 +37,3 @@ bool Object::isNear(Info PCInfo, Info NPCInfo) {
 Object::Object() {}
 
 Object::~Object() {}
-
-#endif

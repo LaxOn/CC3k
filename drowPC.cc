@@ -1,19 +1,30 @@
-#ifndef DROWPC_CC
-#define DROWPC_CC
+#include <string>
 #include "drowPC.h"
 #include "character.h"
 #include "object.h"
 #include "pc.h"
 #include "npc.h"
 
+
+
 void DrowPC::attack(NPC& enemy){
-	int damage = damageCalc(this->getAtk(), enemy.getDef());
-	enemy.changeHP(-damage, false);
+	bool hit = true;
+	if (enemy.getType() == "halflingNPC") {
+		//srand (time(NULL));
+		//int randNum = rand()%100
+
+	}
+	if (hit) {	
+		int damage = calcDmg(this->getAtk(), enemy.getDef());
+		enemy.changeHP(-damage, false);
+	}
+
 	// 50% chance to miss against halfling
+	// 
 }
 
 void DrowPC::defendFrom(NPC& enemy){
-	int damage = damageCalc(enemy.getAtk(), this->getDef());
+	int damage = calcDmg(enemy.getAtk(), this->getDef());
 	this->changeHP(-damage, false);
 }
 
@@ -33,5 +44,3 @@ DrowPC::DrowPC(int x, int y) {
 }
 
 DrowPC::~DrowPC() {}
-
-#endif

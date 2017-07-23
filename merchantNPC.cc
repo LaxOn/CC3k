@@ -1,5 +1,3 @@
-#ifndef MERCHANTNPC_CC
-#define MERCHANTNPC_CC
 #include "merchantNPC.h"
 #include "character.h"
 #include "object.h"
@@ -34,5 +32,3 @@ MerchantNPC::MerchantNPC(int x, int y) {
 }
 
 MerchantNPC::~MerchantNPC() {}
-
-#endif

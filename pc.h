@@ -2,7 +2,6 @@
 #define PC_H
 #include <vector>
 #include "character.h"
-#include <vector>
 
 class Potion;
 class NPC;

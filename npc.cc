@@ -1,5 +1,3 @@
-#ifndef NPC_CC
-#define NPC_CC
 #include <string>
 #include <vector>
 #include "npc.h"
@@ -40,6 +38,3 @@ void NPC::addLoot(int money) {
 NPC::NPC() {}
 
 NPC::~NPC() {}
-
-
-#endif

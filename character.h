@@ -16,12 +16,11 @@ class Character: public Object {
 	void setPotionMult(int max);
 	void changeHP(int num, bool forPotion);
 	void changeAtk(int num);
-	void changeDef(int num); 
-	void addMoney(int money);
+	void changeDef(int num);
 	int getHP();
 	int getAtk();
 	int getDef();
-	int damageCalc(int aAtk, int dDef);
+	int calcDmg(int atk, int def);
 	std::string getType();
  	virtual void nextTurn()=0;
 	Character();

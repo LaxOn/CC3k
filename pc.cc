@@ -1,5 +1,3 @@
-#ifndef PC_CC
-#define PC_CC
 #include <algorithm>
 #include <vector>
 #include "pc.h"
@@ -66,5 +64,3 @@ PC::PC() {
 }
 
 PC::~PC() {}
-
-#endif

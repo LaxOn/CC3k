@@ -1,5 +1,3 @@
-#ifndef HALFLINGNPC_CC
-#define HALFLINGNPC_CC
 #include "halflingNPC.h"
 #include "character.h"
 #include "object.h"
@@ -33,5 +31,3 @@ HalflingNPC::HalflingNPC(int x, int y) {
 }
 
 HalflingNPC::~HalflingNPC() {}
-
-#endif

@@ -7,10 +7,11 @@ class Info;
 class Object {
 	int x, y;
 	char charDisp;
-	Tile *address;
+	Tile *address = nullptr;
  public:
 	void setCoords(int x, int y);
 	void setDisp(char charDisp);
+	char getDisp();
 	void setTile(Tile *t); // include x and y
  	Info getInfo();
  	bool isNear(Info PCInfo, Info NPCInfo);

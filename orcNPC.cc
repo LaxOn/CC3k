@@ -1,5 +1,3 @@
-#ifndef ORCNPC_CC
-#define ORCNPC_CC
 #include "orcNPC.h"
 #include "character.h"
 #include "object.h"
@@ -35,5 +33,3 @@ OrcNPC::OrcNPC(int x, int y) {
 }
 
 OrcNPC::~OrcNPC() {}
-
-#endif

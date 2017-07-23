@@ -1,5 +1,3 @@
-#ifndef DRAGONNPC_CC
-#define DRAGONNPC_CC
 #include "dragonNPC.h"
 #include "character.h"
 #include "object.h"
@@ -37,5 +35,3 @@ DragonNPC::DragonNPC(int x, int y) {
 }
 
 DragonNPC::~DragonNPC() {}
-
-#endif

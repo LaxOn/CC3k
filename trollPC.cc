@@ -1,5 +1,3 @@
-#ifndef TROLLPC_CC
-#define TROLLPC_CC
 #include "trollPC.h"
 #include "character.h"
 #include "object.h"
@@ -7,13 +5,13 @@
 #include "npc.h"
 
 void TrollPC::attack(NPC& enemy){
-	int damage = damageCalc(this->getAtk(), enemy.getDef());
+	int damage = calcDmg(this->getAtk(), enemy.getDef());
 	enemy.changeHP(-damage, false);
 	// 50% chance to miss against halfling
 }
 
 void TrollPC::defendFrom(NPC& enemy){
-	int damage = damageCalc(enemy.getAtk(), this->getDef());
+	int damage = calcDmg(enemy.getAtk(), this->getDef());
 	this->changeHP(-damage, false);
 }
 
@@ -32,5 +30,3 @@ TrollPC::TrollPC(int x, int y) {
 }
 
 TrollPC::~TrollPC() {}
-
-#endif
