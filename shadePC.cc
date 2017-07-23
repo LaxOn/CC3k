@@ -19,7 +19,7 @@ void ShadePC::nextTurn(){
 	// nothing
 }
 
-ShadePC::ShadePC(int x, int y) {
+ShadePC::ShadePC(int x, int y, Tile *t, std::shared_ptr<Display> D) {
 	// Tile *address should be set when a ShadePC is created
 	// all the NPC should be set as observers (with attach)
 	// Display should also be set as an observer (with attach)
@@ -27,6 +27,8 @@ ShadePC::ShadePC(int x, int y) {
 	this->setMaxHP(125);
 	this->setType("ShadePC");
 	this->setCoords(x,y);
+	this->setTile(t);
+	this->attach(D);
 }
 
 ShadePC::~ShadePC() {}

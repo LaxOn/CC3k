@@ -20,15 +20,14 @@ void DragonNPC::nextTurn(){
 
 }
 
-DragonNPC::DragonNPC(int x, int y) {
-	
-	// Tile *address should be set when a DragonPC is created
+DragonNPC::DragonNPC(int x, int y, Tile *t) {
 	this->setStats(150, 20, 20);
 	this->setDisp('D');
 	this->setType("DragonNPC");
 	this->cannotMove();
 	this->turnHostile();
 	this->setCoords(x,y);
+	this->setTile(t);
 
 	// addLoot(int money)
 	// guards a treasure

@@ -19,13 +19,13 @@ void MerchantNPC::nextTurn(){
 
 }
 
-MerchantNPC::MerchantNPC(int x, int y) {
-	// Tile *address should be set when a MerchantPC is created
+MerchantNPC::MerchantNPC(int x, int y, Tile *t) {
 	this->setStats(30, 70, 5);
 	this->setDisp('M');
 	this->setType("MerchantNPC");
 	this->cannotMove();
 	this->setCoords(x,y);
+	this->setTile(t);
 
 	// addLoot(int money)
 	// drops merchant loot

@@ -32,7 +32,7 @@ void DrowPC::nextTurn(){
 	// nothing
 }
 
-DrowPC::DrowPC(int x, int y) {
+DrowPC::DrowPC(int x, int y, Tile *t, std::shared_ptr<Display> D) {
 	// Tile *address should be set when a DrowPC is created
 	// all the NPC should be set as observers (with attach)
 	// Display should also be set as an observer (with attach)
@@ -41,6 +41,8 @@ DrowPC::DrowPC(int x, int y) {
 	this->setMaxHP(150);
 	this->setType("DrowPC");
 	this->setCoords(x, y);
+	this->setTile(t);
+	this->attach(D);
 }
 
 DrowPC::~DrowPC() {}

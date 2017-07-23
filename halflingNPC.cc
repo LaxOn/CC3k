@@ -19,13 +19,13 @@ void HalflingNPC::nextTurn(){
 
 }
 
-HalflingNPC::HalflingNPC(int x, int y) {
-	// Tile *address should be set when a HalflingPC is created
+HalflingNPC::HalflingNPC(int x, int y, Tile *t) {
 	this->setStats(100, 15, 20);
 	this->setDisp('L');
 	this->setType("HalflingNPC");
 	this->turnHostile();
 	this->setCoords(x,y);
+	this->setTile(t);
 
 	// addLoot(int money)
 }

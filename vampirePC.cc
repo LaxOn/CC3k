@@ -21,7 +21,7 @@ void VampirePC::nextTurn(){
 	// nothing
 }
 
-VampirePC::VampirePC(int x, int y) {
+VampirePC::VampirePC(int x, int y, Tile *t, std::shared_ptr<Display> D) {
 	// Tile *address should be set when a VampirePC is created
 	// all the NPC should be set as observers (with attach)
 	// Display should also be set as an observer (with attach)
@@ -30,6 +30,8 @@ VampirePC::VampirePC(int x, int y) {
 	this->setMaxHP(150);
 	this->setType("VampirePC");
 	this->setCoords(x,y);
+	this->setTile(t);
+	this->attach(D);
 }
 
 VampirePC::~VampirePC() {}

@@ -19,7 +19,7 @@ void TrollPC::nextTurn(){
 	this->changeHP(5, false);	// special ability
 }
 
-TrollPC::TrollPC(int x, int y) {
+TrollPC::TrollPC(int x, int y, Tile *t, std::shared_ptr<Display> D) {
 	// Tile *address should be set when a TrollPC is created
 	// all the NPC should be set as observers (with attach)
 	// Display should also be set as an observer (with attach)
@@ -27,6 +27,8 @@ TrollPC::TrollPC(int x, int y) {
 	this->setMaxHP(120);
 	this->setType("TrollPC");
 	this->setCoords(x,y);
+	this->setTile(t);
+	this->attach(D);
 }
 
 TrollPC::~TrollPC() {}

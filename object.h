@@ -71,6 +71,14 @@ class Object {
 			// .... ask JUDY later
 	// 
 
+// spawning
+	// chamber will have a list of unoccupied tiles
+	// ask for a number from factory
+	// that number converts to a tile
+	// calls addEnemy from Factory to a tile
 
+// floor creates display
+	// floor gives display to chamber 
+	// chamber gives display to factory
 
 #endif

@@ -3,6 +3,7 @@
 #include "npc.h"
 
 class PC;
+class Tile;
 
 class DragonNPC: public NPC{
 	Tile *goldAddress;
@@ -10,7 +11,7 @@ class DragonNPC: public NPC{
  	void notify(PC &whoNotified) override;
  	void attack(PC &player) override;	// no defendFrom as PC implements it
  	void nextTurn() override;
-	DragonNPC(int x, int y);
+	DragonNPC(int x, int y, Tile *t);
 	~DragonNPC();
 };
 

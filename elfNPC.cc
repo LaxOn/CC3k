@@ -20,13 +20,13 @@ void ElfNPC::nextTurn(){
 
 }
 
-ElfNPC::ElfNPC(int x, int y) {
-	// Tile *address should be set when a ElfPC is created
+ElfNPC::ElfNPC(int x, int y, Tile *t) {
 	this->setStats(140, 30, 10);
 	this->setDisp('E');
 	this->setType("ElfNPC");
 	this->turnHostile();
 	this->setCoords(x,y);
+	this->setTile(t);
 
 	// addLoot(int money)
 	// guards a treasure

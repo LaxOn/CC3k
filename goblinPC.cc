@@ -20,7 +20,7 @@ void GoblinPC::nextTurn(){
 	// nothing
 }
 
-GoblinPC::GoblinPC(int x, int y) {
+GoblinPC::GoblinPC(int x, int y, Tile *t, std::shared_ptr<Display> D) {
 	// Tile *address should be set when a GoblinPC is created
 	// all the NPC should be set as observers (with attach)
 	// Display should also be set as an observer (with attach)
@@ -28,6 +28,8 @@ GoblinPC::GoblinPC(int x, int y) {
 	this->setMaxHP(110);
 	this->setType("GoblinPC");
 	this->setCoords(x, y);
+	this->setTile(t);
+	this->attach(D);
 }
 
 GoblinPC::~GoblinPC() {}

@@ -20,6 +20,9 @@ void PC::addMoney(int money) {
 			// .... ask JUDY later
 }
 
+
+int PC::getMoney() { return money; }
+
 void PC::move(int dir) {
 	 	// calls Tile it currently in with the directions to go
  	// Tile call the neighbour
@@ -48,10 +51,7 @@ void PC::notifyNPCs() {
 	for (auto ob : NPCs) ob->notify(*this);
 }
 
-void PC::attach(Display *disp) {
-	this->disp = disp;
-
-}
+void PC::attach( std::shared_ptr<Display> D) { this->D = D; }
 
 														// uncomment later
 void PC::notifyDisplay() {

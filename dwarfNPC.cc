@@ -19,13 +19,13 @@ void DwarfNPC::nextTurn(){
 
 }
 
-DwarfNPC::DwarfNPC(int x, int y) {
-	// Tile *address should be set when a DwarfPC is created
+DwarfNPC::DwarfNPC(int x, int y, Tile *t) {
 	this->setStats(100, 20, 30);
 	this->setDisp('W');
 	this->setType("DwarfNPC");
 	this->turnHostile();
 	this->setCoords(x,y);
+	this->setTile(t);
 
 	// addLoot(int money)
 }

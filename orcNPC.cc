@@ -20,13 +20,13 @@ void OrcNPC::nextTurn(){
 
 }
 
-OrcNPC::OrcNPC(int x, int y) {
-	// Tile *address should be set when a OrcPC is created
+OrcNPC::OrcNPC(int x, int y, Tile *t) {
 	this->setStats(180, 30, 25);
 	this->setDisp('O');
 	this->setType("OrcNPC");
 	this->turnHostile();
 	this->setCoords(x,y);
+	this->setTile(t);
 
 	// addLoot(int money)
 	// guards a treasure

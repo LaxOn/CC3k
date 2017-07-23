@@ -19,13 +19,13 @@ void HumanNPC::nextTurn(){
 
 }
 
-HumanNPC::HumanNPC(int x, int y) {
-	// Tile *address should be set when a HumanPC is created
+HumanNPC::HumanNPC(int x, int y, Tile *t) {
 	this->setStats(150, 20, 20);
 	this->setDisp('H');
 	this->setType("HumanNPC");
 	this->turnHostile();
 	this->setCoords(x,y);
+	this->setTile(t);
 
 	// addLoot(int money)
 	// drops 2 normal piles of gold
