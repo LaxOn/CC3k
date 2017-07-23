@@ -8,9 +8,8 @@ class ElfNPC: public NPC{
  public:
  	void notify(PC &whoNotified) override;
  	void attack(PC &player) override;
- 	void defendFrom(PC &player) override;
  	void nextTurn() override;
-	ElfNPC();
+	ElfNPC(int x, int y);
 	~ElfNPC();
 };
 

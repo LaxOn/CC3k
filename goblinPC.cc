@@ -1,23 +1,24 @@
-#ifndef GOBLINPC_H
-#define GOBLINPC_H
+#ifndef GOBLINPC_CC
+#define GOBLINPC_CC
 #include "goblinPC.h"
 #include "character.h"
 #include "object.h"
 #include "pc.h"
+#include "npc.h"
 
-void GoblinPC::attack(NPC& enemy) override{
+void GoblinPC::attack(NPC& enemy){
 	int damage = damageCalc(this->getAtk(), enemy.getDef());
 	enemy.changeHP(-damage, false);
 	// should steal 5 gold every successful hit
 	// 50% chance to miss against halfling
 }
 
-void GoblinPC::defendFrom(NPC& enemy) override{
+void GoblinPC::defendFrom(NPC& enemy){
 	int damage = damageCalc(enemy.getAtk(), this->getDef());
 	this->changeHP(-damage, false);
 }
 
-void GoblinPC::nextTurn() override{
+void GoblinPC::nextTurn(){
 	// nothing
 }
 
@@ -28,7 +29,7 @@ GoblinPC::GoblinPC(int x, int y) {
 	this->setStats(110, 15, 20);
 	this->setMaxHP(110);
 	this->setType("GoblinPC");
-	setCoords(int x, int y);
+	this->setCoords(x, y);
 }
 
 GoblinPC::~GoblinPC() {}

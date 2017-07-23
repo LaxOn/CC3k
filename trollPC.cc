@@ -1,22 +1,23 @@
-#ifndef TROLLPC_H
-#define TROLLPC_H
+#ifndef TROLLPC_CC
+#define TROLLPC_CC
 #include "trollPC.h"
 #include "character.h"
 #include "object.h"
 #include "pc.h"
+#include "npc.h"
 
-void TrollPC::attack(NPC& enemy) override{
+void TrollPC::attack(NPC& enemy){
 	int damage = damageCalc(this->getAtk(), enemy.getDef());
 	enemy.changeHP(-damage, false);
 	// 50% chance to miss against halfling
 }
 
-void TrollPC::defendFrom(NPC& enemy) override{
+void TrollPC::defendFrom(NPC& enemy){
 	int damage = damageCalc(enemy.getAtk(), this->getDef());
 	this->changeHP(-damage, false);
 }
 
-void TrollPC::nextTurn() override{
+void TrollPC::nextTurn(){
 	this->changeHP(5, false);	// special ability
 }
 
@@ -27,7 +28,7 @@ TrollPC::TrollPC(int x, int y) {
 	this->setStats(120, 25, 15);
 	this->setMaxHP(120);
 	this->setType("TrollPC");
-	setCoords(int x, int y);
+	this->setCoords(x,y);
 }
 
 TrollPC::~TrollPC() {}

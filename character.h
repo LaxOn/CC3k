@@ -4,10 +4,11 @@
 #include "object.h"
 
 class Character: public Object {
-	int hp; atk, def;
+	int hp, atk, def;
 	std::string type;
 	int potionMult = 1;
 	int hpMax = 0;
+	int ceil(float num);
  public:
 	void setStats(int hp, int atk, int def);
 	void setType(std::string type);

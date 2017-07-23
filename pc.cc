@@ -1,35 +1,35 @@
-#ifndef PC_H
-#define PC_H
+#ifndef PC_CC
+#define PC_CC
+#include <algorithm>
+#include <vector>
 #include "pc.h"
 #include "npc.h"
+												// uncomment later
+//#include "display.h"					
 
-void PC::useItem() {
-	item->useItem(this);
-	// should be deleted???
+void PC::useItem(int dir) {
+	// picking up potions
+	// PC will call useItem(int dir)
+		//call soemthing in the tile which passes PC and direction
+	// Tile will calls its neighbour
+	// neighbour call potion with PC as the parameter
 }
 
-void PC::pickUpItem(Potion *item) {
-	this->item = item;
-	// how to pickup item
+void PC::addMoney(int money) {
+	// picking up gold
+	// Tile will check if PC and a gold is in itself
+	// if yes, Tile will call PC
+			// .... ask JUDY later
 }
 
-void PC::getGold(Gold &gold) {
-	// ask judy how to get gold
+void PC::move(int dir) {
+	 	// calls Tile it currently in with the directions to go
+ 	// Tile call the neighbour
+ 	// set Nieghbours ptr to character
+ 	// oldTIle = nullptr
+ 	// newTile call character with itself
 }
 
-void PC::move(char dir) {
-	// dir correponds to a certain direction
-	// call old tile to be removed
-	// call new tile to be in
-}
-
-void PC::attack(NPC& enemy) {
-	enemy.defendFrom(this);
-}
-
-void PC::defendFrom(NPC& enemy) {
-		// look at paper
-}
 
 void PC::attach(NPC* ob) {
 	NPCs.emplace_back(ob);
@@ -37,10 +37,11 @@ void PC::attach(NPC* ob) {
 }
 
 void PC::detach(NPC* ob) {
+														// look at piazza if it's okay to use algorithm
 	auto it = std::find(NPCs.begin(), NPCs.end(), ob);
-	if (it != v.end()) {
-	  	std::swap(*it, v.back());
-		v.pop_back();
+	if (it != NPCs.end()) {
+	  	std::swap(*it, NPCs.back());
+		NPCs.pop_back();
 		--numNPCs;
 	}
 }
@@ -54,8 +55,9 @@ void PC::attach(Display *disp) {
 
 }
 
+														// uncomment later
 void PC::notifyDisplay() {
-	disp->notify(*this);
+	// disp->update(*this);
 	// add notify to Display
 }
 

@@ -1,7 +1,13 @@
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#ifndef CHARACTER_CC
+#define CHARACTER_CC
 #include <string>
 #include "character.h"
+
+int Character::ceil(float num) {
+    int inum = (int)num;
+    if (num == (float)inum) { return inum; }
+    return inum + 1;
+}
 
 void Character::setStats(int hp, int atk, int def) {
 	this->atk = atk;
@@ -15,17 +21,15 @@ void Character::setMaxHP(int max) { hpMax = max; }
 
 void Character::setPotionMult(int max) { potionMult = max; }
 
-void Character::isAttacked(int num) { HP -= num; }
-
 void Character::changeHP(int num, bool forPotion) {
-	if (forPotion) HP += potionMult * num;
-	else HP += num;
-	if (hpMax && (HP > hpMax)) HP = hpMax;
+	if (forPotion) hp += potionMult * num;
+	else hp += num;
+	if (hpMax && (hp > hpMax)) hp = hpMax;
 }
 
-void Character::changeAtk(int num) { Atk += potionMult * num; }
+void Character::changeAtk(int num) { atk += potionMult * num; }
 
-void Character::changeDef(int num) { Def += potionMult * num; }
+void Character::changeDef(int num) { def += potionMult * num; }
 
 int Character::getHP() { return hp; }
 

@@ -4,6 +4,7 @@
 #include <vector>
 #include "character.h"
 
+class PC;
 class Gold;
 
 class NPC: public Character{

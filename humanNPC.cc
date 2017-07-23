@@ -1,21 +1,23 @@
-#ifndef HUMANNPC_H
-#define HUMANNPC_H
+#ifndef HUMANNPC_CC
+#define HUMANNPC_CC
 #include "humanNPC.h"
 #include "character.h"
 #include "object.h"
 #include "npc.h"
+#include "pc.h"
+#include "info.h"
 
-void HumanNPC::notify(PC &whoNotified) override {
+void HumanNPC::notify(PC &whoNotified){
 	if (this->isNear(this->getInfo(), whoNotified.getInfo())) {
 		attack(whoNotified);
 	}
 }
 
-void HumanNPC::attack(PC &player) override {
+void HumanNPC::attack(PC &player){
 	player.defendFrom(*this);
 }
 
-void HumanNPC::nextTurn() override {
+void HumanNPC::nextTurn(){
 
 }
 

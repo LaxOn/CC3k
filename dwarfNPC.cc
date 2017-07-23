@@ -1,21 +1,23 @@
-#ifndef DWARFNPC_H
-#define DWARFNPC_H
+#ifndef DWARFNPC_CC
+#define DWARFNPC_CC
 #include "dwarfNPC.h"
 #include "character.h"
 #include "object.h"
 #include "npc.h"
+#include "pc.h"
+#include "info.h"
 
-void DwarfNPC::notify(PC &whoNotified) override {
+void DwarfNPC::notify(PC &whoNotified){
 	if (this->isNear(this->getInfo(), whoNotified.getInfo())) {
 		attack(whoNotified);
 	}
 }
 
-void DwarfNPC::attack(PC &player) override {
+void DwarfNPC::attack(PC &player){
 	player.defendFrom(*this);
 }
 
-void DwarfNPC::nextTurn() override {
+void DwarfNPC::nextTurn(){
 
 }
 

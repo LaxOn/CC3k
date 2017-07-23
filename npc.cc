@@ -1,5 +1,5 @@
-#ifndef NPC_H
-#define NPC_H
+#ifndef NPC_CC
+#define NPC_CC
 #include <string>
 #include <vector>
 #include "npc.h"
@@ -20,11 +20,7 @@ void NPC::move() {
 }
 
 void NPC::attack(PC &player) {
-	player.defendFrom(this);
-}
-
-void NPC::defendFrom(PC &player) {
-		// look at paper
+	player.defendFrom(*this);
 }
 
 void NPC::turnHostile() {

@@ -58,4 +58,18 @@ class Object {
  	// oldTIle = nullptr
  	// newTile call character with itself
 
+// picking up potions
+	// PC will call useItem(int dir)
+		//call soemthing in the tile which passes PC and direction
+	// Tile will calls its neighbour
+	// neighbour call potion with PC as the parameter
+		
+// picking up gold
+	// Tile will check if PC and a gold is in itself
+	// if yes, Tile will call PC
+			// .... ask JUDY later
+	// 
+
+
+
 #endif
