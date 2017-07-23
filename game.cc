@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// constructor and destructor
 Game::Game(std::istream &input) :
 	input{input} {
 	curFloor = 1;
@@ -18,6 +19,12 @@ Game::Game(std::istream &input) :
 
 Game::~Game() {}
 
+// accessors and mutators
+int Game::getCurFloor(){
+	return curFloor;
+}
+
+// other methods
 void Game::displayFloor(int floor) {
 	cout << *(gameDungeon->getFloor(floor));
 }
