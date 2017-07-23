@@ -3,20 +3,22 @@
 #include "orcNPC.h"
 #include "character.h"
 #include "object.h"
+#include "pc.h"
 #include "npc.h"
+#include "info.h"
 
-void OrcNPC::notify(PC &whoNotified) override {
+void OrcNPC::notify(PC &whoNotified){
 	if (this->isNear(this->getInfo(), whoNotified.getInfo())) {
 		attack(whoNotified);
 	}
 }
 
-void OrcNPC::attack(PC &player) override {
+void OrcNPC::attack(PC &player){
 	// gets 50% more damage to goblins
 	player.defendFrom(*this);
 }
 
-void OrcNPC::nextTurn() override {
+void OrcNPC::nextTurn(){
 
 }
 

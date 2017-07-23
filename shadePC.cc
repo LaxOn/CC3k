@@ -1,22 +1,23 @@
-#ifndef SHADEPC_H
-#define SHADEPC_H
+#ifndef SHADEPC_CC
+#define SHADEPC_CC
 #include "shadePC.h"
 #include "character.h"
 #include "object.h"
 #include "pc.h"
+#include "npc.h"
 
-void ShadePC::attack(NPC& enemy) override{
+void ShadePC::attack(NPC& enemy){
 	int damage = damageCalc(this->getAtk(), enemy.getDef());
 	enemy.changeHP(-damage, false);
 	// 50% chance to miss against halfling
 }
 
-void ShadePC::defendFrom(NPC& enemy) override{
+void ShadePC::defendFrom(NPC& enemy){
 	int damage = damageCalc(enemy.getAtk(), this->getDef());
 	this->changeHP(-damage, false);
 }
 
-void ShadePC::nextTurn() override{
+void ShadePC::nextTurn(){
 	// nothing
 }
 
@@ -27,7 +28,7 @@ ShadePC::ShadePC(int x, int y) {
 	this->setStats(125, 25, 25);
 	this->setMaxHP(125);
 	this->setType("ShadePC");
-	setCoords(int x, int y);
+	this->setCoords(x,y);
 }
 
 ShadePC::~ShadePC() {}

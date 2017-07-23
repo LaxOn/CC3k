@@ -1,21 +1,23 @@
-#ifndef HALFLINGNPC_H
-#define HALFLINGNPC_H
+#ifndef HALFLINGNPC_CC
+#define HALFLINGNPC_CC
 #include "halflingNPC.h"
 #include "character.h"
 #include "object.h"
 #include "npc.h"
+#include "pc.h"
+#include "info.h"
 
-void HalflingNPC::notify(PC &whoNotified) override {
+void HalflingNPC::notify(PC &whoNotified){
 	if (this->isNear(this->getInfo(), whoNotified.getInfo())) {
 		attack(whoNotified);
 	}
 }
 
-void HalflingNPC::attack(PC &player) override {
+void HalflingNPC::attack(PC &player){
 	player.defendFrom(*this);
 }
 
-void HalflingNPC::nextTurn() override {
+void HalflingNPC::nextTurn(){
 
 }
 

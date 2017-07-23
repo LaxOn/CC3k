@@ -8,6 +8,7 @@ class Character: public Object {
 	std::string type;
 	int potionMult = 1;
 	int hpMax = 0;
+	int ceil(float num);
  public:
 	void setStats(int hp, int atk, int def);
 	void setType(std::string type);

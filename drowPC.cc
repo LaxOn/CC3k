@@ -1,22 +1,23 @@
-#ifndef DROWPC_H
-#define DROWPC_H
+#ifndef DROWPC_CC
+#define DROWPC_CC
 #include "drowPC.h"
 #include "character.h"
 #include "object.h"
 #include "pc.h"
+#include "npc.h"
 
-void DrowPC::attack(NPC& enemy) override{
+void DrowPC::attack(NPC& enemy){
 	int damage = damageCalc(this->getAtk(), enemy.getDef());
 	enemy.changeHP(-damage, false);
 	// 50% chance to miss against halfling
 }
 
-void DrowPC::defendFrom(NPC& enemy) override{
+void DrowPC::defendFrom(NPC& enemy){
 	int damage = damageCalc(enemy.getAtk(), this->getDef());
 	this->changeHP(-damage, false);
 }
 
-void DrowPC::nextTurn() override{
+void DrowPC::nextTurn(){
 	// nothing
 }
 
@@ -28,7 +29,7 @@ DrowPC::DrowPC(int x, int y) {
 	this->setPotionMult(1.5); // special ability
 	this->setMaxHP(150);
 	this->setType("DrowPC");
-	setCoords(int x, int y);
+	this->setCoords(x, y);
 }
 
 DrowPC::~DrowPC() {}

@@ -1,21 +1,23 @@
-#ifndef MERCHANTNPC_H
-#define MERCHANTNPC_H
+#ifndef MERCHANTNPC_CC
+#define MERCHANTNPC_CC
 #include "merchantNPC.h"
 #include "character.h"
 #include "object.h"
 #include "npc.h"
+#include "pc.h"
+#include "info.h"
 
-void MerchantNPC::notify(PC &whoNotified) override {
+void MerchantNPC::notify(PC &whoNotified){
 	if (this->isNear(this->getInfo(), whoNotified.getInfo())) {
 		attack(whoNotified);
 	}
 }
 
-void MerchantNPC::attack(PC &player) override {
+void MerchantNPC::attack(PC &player){
 	player.defendFrom(*this);
 }
 
-void MerchantNPC::nextTurn() override {
+void MerchantNPC::nextTurn(){
 
 }
 

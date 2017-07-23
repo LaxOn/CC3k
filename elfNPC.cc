@@ -1,22 +1,24 @@
-#ifndef ELFNPC_H
-#define ELFNPC_H
+#ifndef ELFNPC_CC
+#define ELFNPC_CC
 #include "elfNPC.h"
 #include "character.h"
 #include "object.h"
 #include "npc.h"
+#include "pc.h"
+#include "info.h"
 
-void ElfNPC::notify(PC &whoNotified) override {
+void ElfNPC::notify(PC &whoNotified){
 	if (this->isNear(this->getInfo(), whoNotified.getInfo())) {
 		attack(whoNotified);
 	}
 }
 
-void ElfNPC::attack(PC &player) override {
+void ElfNPC::attack(PC &player){
 	// attack twice excpet against Drow
 	player.defendFrom(*this);
 }
 
-void ElfNPC::nextTurn() override {
+void ElfNPC::nextTurn(){
 
 }
 
