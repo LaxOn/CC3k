@@ -2,6 +2,7 @@
 #define _POTION_H_
 
 #include "item.h"
+#include <string>
 
 class Potion: public Item {
 	std::string effect;
@@ -11,14 +12,14 @@ protected:
 
 public:
 	// constructor and destructor
-	Potion(int value, string effect, bool life, int x, int y);
+	Potion();
 	virtual ~Potion()=0;
 
 	// accessors and mutators
 	std::string getEffect();
 	void setEffect(std::string effect);
 	virtual bool getLifetime();
-	virtual void resetEffect();
+	virtual void resetEffect(PC &pc);
 
 	// other methods
 	void useItem(PC &pc) override;

@@ -9,17 +9,17 @@ class BoostDef: public PotionDecorator {
 
 public:
 	// constructor and destructor
-	BoostDef(int health, BasicPotion *base);
+	BoostDef(std::shared_ptr<BasicPotion> base);
 	~BoostDef();
 
 	// accessors and mutators
 	bool getLifetime() override;
-	void resetEffect() override;
+	void resetEffect(PC &pc) override;
 	int getDefense();
 
 
 	// other methods
 	void useItem(PC &pc) override;
-}
+};
 
 #endif

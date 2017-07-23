@@ -1,14 +1,15 @@
 #include "woundatk.h"
+#include "pc.h"
 
 using namespace std;
 
 // constructor and destructor
-WoundAtk::RestoreHealth(BasicPotion *base) :
+WoundAtk::WoundAtk(shared_ptr<BasicPotion> base) :
 	PotionDecorator{base}, attack{-5} {
 		lifetime = false;
 	}
 
-WoundAtk::~RestoreHealth() {}
+WoundAtk::~WoundAtk() {}
 
 // accessors and mutators
 bool WoundAtk::getLifetime() {
@@ -16,7 +17,7 @@ bool WoundAtk::getLifetime() {
 } 
 
 void WoundAtk::resetEffect(PC &pc) {
-	pc->changeAtk(-attack);
+	pc.changeAtk(-attack);
 }
 
 int WoundAtk::getAttack() {
@@ -26,5 +27,5 @@ int WoundAtk::getAttack() {
 
 // other methods
 void WoundAtk::useItem(PC &pc) {
-	pc->changeAtk(attack);
+	pc.changeAtk(attack);
 }

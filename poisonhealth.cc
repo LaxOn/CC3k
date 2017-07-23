@@ -1,21 +1,22 @@
 #include "poisonhealth.h"
+#include "pc.h"
 
 using namespace std;
 
 // constructor and destructor
-PoisonHealth::RestoreHealth(BasicPotion *base) :
-	PotionDecorator{base}, health{10} {
+PoisonHealth::PoisonHealth(shared_ptr<BasicPotion> base) :
+	PotionDecorator{base}, health{-10} {
 		lifetime = true;
 	}
 
-PoisonHealth::~RestoreHealth() {}
+PoisonHealth::~PoisonHealth() {}
 
 // accessors and mutators
 bool PoisonHealth::getLifetime() {
 	return lifetime;
 } 
 
-void PoisonHealth::resetEffect() {}
+void PoisonHealth::resetEffect(PC &pc) {}
 
 int PoisonHealth::getHealth() {
 	return health;
@@ -24,9 +25,6 @@ int PoisonHealth::getHealth() {
 
 // other methods
 void PoisonHealth::useItem(PC &pc) {
-	for (int i = 0; i < health; ++i) {
-		if (pc->getHealth() <= 0) break;
-		pc->changeHealth(-1);
-	}
+		pc.changeHP(health, true);
 }
 

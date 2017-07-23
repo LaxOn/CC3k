@@ -9,17 +9,17 @@ class WoundAtk: public PotionDecorator {
 
 public:
 	// constructor and destructor
-	WoundAtk(int health, BasicPotion *base);
+	WoundAtk(std::shared_ptr<BasicPotion> base);
 	~WoundAtk();
 
 	// accessors and mutators
 	bool getLifetime() override;
-	void resetEffect() override;
+	void resetEffect(PC &pc) override;
 	int getAttack();
 
 
 	// other methods
 	void useItem(PC &pc) override;
-}
+};
 
 #endif

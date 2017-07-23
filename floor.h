@@ -14,17 +14,20 @@ class Display;
 class NPC;
 class PC;
 class Potion;
+class Gold;
 
 class Floor {
 	// list of vectors of points for each class that will make up one floor
 	std::vector<std::shared_ptr<Chamber>> chambers;
+
 	std::vector<std::vector<std::shared_ptr<Tile>>> tiles;
+	
 	std::shared_ptr<Stairs> st;
 
 	// list of vectors containing Characters and Items
-	std::shared_ptr<NPC> enemies;
-	std::shared_ptr<Potion> potions;
-	std::shared_ptr<Gold> treasure;
+	std::vector<std::shared_ptr<NPC>> enemies;
+	std::vector<std::shared_ptr<Potion>> potions;
+	std::vector<std::shared_ptr<Gold>> treasure;
 
 	std::shared_ptr<PC> player;
 
@@ -34,7 +37,6 @@ class Floor {
 
 protected:
 	int maxPotion;
-	int maxTreasure;
 	int maxEnemy;
 
 public:
@@ -43,24 +45,26 @@ public:
 	~Floor();
 
 	// accessors and mutators
-	shared_ptr<Chamber> *& getChamber(int index);
-	shared_ptr<Tile> *& getTile(int x, int y);
-	shared_ptr<Stairs> *& getStairs(int index);
+	std::shared_ptr<Chamber> & getChamber(int index);
+	std::shared_ptr<Tile> & getTile(int x, int y);
+	std::shared_ptr<Stairs> & getStairs(int index);
 
-	shared_ptr<NPC> *& getNPC(int index);
-	shared_ptr<Potion> *& getPotion(int index);
-	shared_ptr<Gold> *& getGold(int index);
+	std::shared_ptr<NPC> & getNPC(int index);
+	std::shared_ptr<Potion> & getPotion(int index);
+	std::shared_ptr<Gold> & getGold(int index);
 
-	shared_ptr<PC> *& getPlayer();
+	std::shared_ptr<PC> & getPlayer();
 
 	int getPosition();
 
-	// other methods
-	void constructFloor();
-	void constructFloor(istream &input, int start);
-	void display();
-}
+	Display & getDisplay() const;
 
-void &operator<<(ostream &out, const Floor &f);
+	// other methods
+	void constructObject(int x, int y, char input);
+	void constructFloor();
+	void constructFloor(std::istream &input, int start);
+};
+
+std::ostream &operator<<(std::ostream &out, const Floor &f);
 
 #endif

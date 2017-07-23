@@ -1,5 +1,5 @@
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef OBJECT_CC
+#define OBJECT_CC
 #include "object.h"
 #include "info.h"
 
@@ -17,9 +17,9 @@ void Object::setTile(Tile *t) {
 	address = t;
 }
 
-Info Object::getInfo();
+Info Object::getInfo() {
 	// call constructor for Info
-	return Object{x,y};
+	return Info{x,y};
 }
 
 bool Object::isNear(Info PCInfo, Info NPCInfo) {
@@ -37,4 +37,3 @@ Object::Object() {}
 Object::~Object() {}
 
 #endif
-i

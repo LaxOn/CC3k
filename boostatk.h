@@ -9,17 +9,17 @@ class BoostAtk: public PotionDecorator {
 
 public:
 	// constructor and destructor
-	BoostAtk(int health, BasicPotion *base);
+	BoostAtk(std::shared_ptr<BasicPotion> base);
 	~BoostAtk();
 
 	// accessors and mutators
 	bool getLifetime() override;
-	void resetEffect() override;
+	void resetEffect(PC &pc) override;
 	int getAttack();
 
 
 	// other methods
 	void useItem(PC &pc) override;
-}
+};
 
 #endif

@@ -1,11 +1,12 @@
 #include "gold.h"
+#include "pc.h"
 
 using namespace std;
 
 // constructor and destructor
-Gold(int value, int x, int y, bool dragonHoard) :
+Gold::Gold(int value, int x, int y, bool dragonHoard) :
 	dragonHoard{dragonHoard}, npc{nullptr} {
-	this->setCoord(x, y);
+	this->setCoords(x, y);
 	this->setValue(value);
 }
 
@@ -24,23 +25,27 @@ bool Gold::getSlain() {
 	return slain;
 }
 
+bool Gold::getSteal() {
+	return steal;
+}
+
 NPC *& Gold::getNPC() {
 	return npc;
 }
 
 // other methods
 void Gold::useItem(PC &pc) {
-	pc->addMoney(value);
+	pc.addMoney(value);
 }
 
 void Gold::assignNPC(NPC *npc) {
 	npc = npc;
 }
 
-bool Gold::allowPickup() {
+void Gold::allowPickup() {
 	slain = true;
 }
 
-bool Gold::allowSteal() {
+void Gold::allowSteal() {
 	steal = true;
 }

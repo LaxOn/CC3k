@@ -1,14 +1,15 @@
 #include "boostdef.h"
+#include "pc.h"
 
 using namespace std;
 
 // constructor and destructor
-BoostDef::RestoreHealth(BasicPotion *base) :
+BoostDef::BoostDef(shared_ptr<BasicPotion> base) :
 	PotionDecorator{base}, defense{5} {
 		lifetime = false;
 	}
 
-BoostDef::~RestoreHealth() {}
+BoostDef::~BoostDef() {}
 
 // accessors and mutators
 bool BoostDef::getLifetime() {
@@ -16,7 +17,7 @@ bool BoostDef::getLifetime() {
 } 
 
 void BoostDef::resetEffect(PC &pc) {
-	pc->changeDef(-defense);
+	pc.changeDef(-defense);
 }
 
 int BoostDef::getDefense() {
@@ -26,5 +27,5 @@ int BoostDef::getDefense() {
 
 // other methods
 void BoostDef::useItem(PC &pc) {
-	pc->changeDef(defense);
+	pc.changeDef(defense);
 }

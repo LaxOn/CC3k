@@ -4,7 +4,7 @@
 #include "object.h"
 
 class Character: public Object {
-	int hp; atk, def;
+	int hp, atk, def;
 	std::string type;
 	int potionMult = 1;
 	int hpMax = 0;
@@ -16,6 +16,7 @@ class Character: public Object {
 	void changeHP(int num, bool forPotion);
 	void changeAtk(int num);
 	void changeDef(int num); 
+	void addMoney(int money);
 	int getHP();
 	int getAtk();
 	int getDef();

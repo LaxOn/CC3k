@@ -1,6 +1,7 @@
 #ifndef PC_H
 #define PC_H
 #include "character.h"
+#include <vector>
 
 class Potion;
 class NPC;
