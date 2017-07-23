@@ -18,6 +18,7 @@ class Display {
 	int hp;
 	int atk;
 	int def;
+	int gold;
 	std::string action;
 
 	int floorNum;
@@ -42,11 +43,14 @@ public:
 	int getDef();
 	void setDef(PC &pc);
 
+	int getGold();
+	void setGold(PC &pc);
+
 	std::string getAction();
 	void setAction(std::string act);
 
 	int getFloorNum();
-	void setFloorNum(int num);
+	void setFloorNum(Floor *f);
 
 	// other methods
 	void defaultFloor();

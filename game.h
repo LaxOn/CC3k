@@ -14,6 +14,8 @@ class Game {
 	std::istream &input;
 
  public:
+ 	int getCurFloor();
+ 	
  	void displayFloor(int floor);
  	void nextTurn();
  	void spawn(int x, int y, std::string);
