@@ -10,7 +10,9 @@ BoostAtk::BoostAtk(shared_ptr<BasicPotion> base) :
 		setDisp('P');
 	}
 
-BoostAtk::~BoostAtk() {}
+BoostAtk::~BoostAtk() {
+	base.reset();
+}
 
 // accessors and mutators
 bool BoostAtk::getLifetime() {

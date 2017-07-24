@@ -1,1 +1,2 @@
-dwarfNPC.o: dwarfNPC.cc dwarfNPC.h npc.h character.h object.h pc.h info.h
+dwarfNPC.o: dwarfNPC.cc dwarfNPC.h npc.h character.h object.h pc.h \
+ display.h floor.h info.h factory.h

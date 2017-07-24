@@ -10,7 +10,9 @@ WoundAtk::WoundAtk(shared_ptr<BasicPotion> base) :
 		setDisp('P');
 	}
 
-WoundAtk::~WoundAtk() {}
+WoundAtk::~WoundAtk() {
+	base.reset();
+}
 
 // accessors and mutators
 bool WoundAtk::getLifetime() {

@@ -10,7 +10,9 @@ PoisonHealth::PoisonHealth(shared_ptr<BasicPotion> base) :
 		setDisp('P');
 	}
 
-PoisonHealth::~PoisonHealth() {}
+PoisonHealth::~PoisonHealth() {
+	base.reset();
+}
 
 // accessors and mutators
 bool PoisonHealth::getLifetime() {

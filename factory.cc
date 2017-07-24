@@ -34,10 +34,10 @@
 #include "info.h"
 #include <memory>
 #include <iostream>
+
 using namespace std;
 
 int Factory::randInt(int max) {
-	srand(time(NULL));
 	double rawNum = double(rand()) / double(RAND_MAX);
 	return int(rawNum * double(max));
 }
@@ -52,18 +52,29 @@ void Factory::addDragon(Tile &t) {
 }
 
 void Factory::addGold(Tile &t) {
+	cout << "tracker 3 " << endl;
 	Info tInfo = t.getInfo();
 	int x = tInfo.x;
 	int y = tInfo.y;
-	const int normal = 5;
-	const int dragon = 6;
-	const int small = 8;
-	int goldNum = randInt(7);
-	if (goldNum < normal) t.addObject(make_shared<Gold>(2,x,y,false));
-	else if (goldNum < dragon) {
+	//const int normal = 5;
+	//const int dragon = 6;
+	//const int small = 8;
+
+	int goldNum = randInt(8);
+	//cout << "goldNum is " << goldNum << endl;
+
+	if (goldNum == 0 || goldNum == 1) {
+		t.addObject(make_shared<Gold>(1,x,y,false));
+		t.setOccupy(true);
+	} else if (goldNum == 2 || goldNum == 3 || goldNum == 4 ||
+			goldNum == 5 || goldNum == 6) {
+		t.addObject(make_shared<Gold>(2,x,y,false));
+		t.setOccupy(true);
+	} else if (goldNum == 7) {
+		//cout << "checking dragon hoard 1" << endl;
 		// check if there are empty neighbours
 		int freeNeigbrs = 0;
-		std::shared_ptr<Tile> nb;
+		Tile *nb;
 		for(int i=0; i<=7; ++i) {
 			nb = t.getNeighbr(i);
 			if (nb->getType()==0 && !nb->getOccupy()) {
@@ -71,41 +82,47 @@ void Factory::addGold(Tile &t) {
 			}
 		}
 		// randomize among neighbours
+		//cout << "number of free neighbours is " << freeNeigbrs << endl;
 		if (freeNeigbrs) {
-			int randNum = randInt(freeNeigbrs - 1);
+			int randNum = randInt(freeNeigbrs -1) +1;
 			int dragonIndex = 0;
 			while (randNum > 0) {
 				nb = t.getNeighbr(dragonIndex);
 				if (!nb->getOccupy()) --randNum;
 				++dragonIndex;
 			}
+			--dragonIndex;
 			// add the gold and the dragon
+			//cout << "constructing dragon hoard" << endl;
 			t.addObject(make_shared<Gold>(6,x,y,true));
 			t.setOccupy(true);
-			std::shared_ptr<Tile> dragonTile = t.getNeighbr(dragonIndex);
+			Tile *dragonTile = t.getNeighbr(dragonIndex);
 			addDragon(*dragonTile);
 			dragonTile->setOccupy(true);
 			(dragonTile->getNPC())->guardGold(t);
-		} else { addGold(t); }
+		} else { 
+			addGold(t); 
+		}
+		//cout << "checking dragon hoard 2" << endl;
 	}
-	else if (goldNum < small) t.addObject(make_shared<Gold>(1,x,y,false));
 }
 
-void Factory::addPC(Tile &t, char race) {
+void Factory::addPC(Tile &t, string race) {
 	Info tInfo = t.getInfo();
 	int x = tInfo.x;
 	int y = tInfo.y;
-	if (race == 's') t.addPC(make_shared<ShadePC>(x,y,&t));
-	else if (race == 'd') t.addPC(make_shared<DrowPC>(x,y,&t));
-	else if (race == 'v') t.addPC(make_shared<VampirePC>(x,y,&t));
-	else if (race == 'g') t.addPC(make_shared<GoblinPC>(x,y,&t));
-	else if (race == 't') t.addPC(make_shared<TrollPC>(x,y,&t));
+	if (race == "s") t.addPC(make_shared<ShadePC>(x,y,&t));
+	else if (race == "d") t.addPC(make_shared<DrowPC>(x,y,&t));
+	else if (race == "v") t.addPC(make_shared<VampirePC>(x,y,&t));
+	else if (race == "g") t.addPC(make_shared<GoblinPC>(x,y,&t));
+	else if (race == "t") t.addPC(make_shared<TrollPC>(x,y,&t));
 	player = t.getPC();
-	player->attach(*D);
+	//player->attach(*D);
 	t.setOccupy(true);
 }
 
 void Factory::addEnemy(Tile &t) {
+	//cout << "the tile type is " << t.getType() << endl;
 	Info tInfo = t.getInfo();
 	int x = tInfo.x;
 	int y = tInfo.y;

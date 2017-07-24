@@ -9,12 +9,13 @@
 using namespace std;
 
 // constructor and destructor
-Game::Game(std::istream &input) :
+Game::Game(std::istream &input, string race) :
 	input{input} {
 	curFloor = 1;
 	// constructs the dungeons
 	gameDungeon = make_unique<Dungeon> (5); // put args of the constructor of dungeon in the parenthesis)
-	gameDungeon->constructFloor(input, curFloor);
+	gameDungeon->constructFloor(input, curFloor, race);
+	cout << "GAME CONSTRUCTION COMPLETE" << endl;
 }
 
 Game::~Game() {}
@@ -38,7 +39,7 @@ void Game::nextTurn() {
 		// attack PC if it's near PC
 }
 
-void Game::spawn(int x, int y, std::string) {
+void Game::spawn(int x, int y, std::string str) {
 	// call spawn on a floor
 		// call constructor of the object with that string name
 }

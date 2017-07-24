@@ -7,7 +7,6 @@ Dungeon::Dungeon(int size) :
 	size{size}, floors{nullptr} {}
 
 Dungeon::~Dungeon() {
-	for (int i = 0; i < 5; ++i) floors.pop_back();
 }
 
 // accessors and mutators
@@ -28,8 +27,8 @@ void Dungeon::constructFloor() {
 }
 */
 
-void Dungeon::constructFloor(istream &input, int index) {
-	floors.emplace_back(make_shared<Floor> (1));
-	//cout << "making floor : detail " << i << endl;
-	(floors.back())->constructFloor(input, index);
+void Dungeon::constructFloor(istream &input, int index, string race) {
+	floors.emplace_back(make_shared<Floor> (index));
+	(floors.back())->constructFloor(input, (index - 1)*25, race);
+	//cout << "FLOOR CONSTRUCTION COMPLETE: " << index << endl; 
 }

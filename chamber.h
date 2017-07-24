@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <string>
 
 class Factory;
 class Chamber;
@@ -17,16 +18,16 @@ class Gold;
 class Chamber {
 	int numTiles;
 
-	std::vector<std::shared_ptr<Tile>> tiles;
+	std::vector<Tile *> tiles;
 	
 	//std::shared_ptr<Stairs> st;
 
 	// list of vectors containing Characters and Items
-	std::vector<std::shared_ptr<NPC>> enemies;
-	std::vector<std::shared_ptr<Potion>> potions;
-	std::vector<std::shared_ptr<Gold>> treasure;
+	//std::vector<std::shared_ptr<NPC>> enemies;
+	//std::vector<std::shared_ptr<Potion>> potions;
+	//std::vector<std::shared_ptr<Gold>> treasure;
 
-	//std::shared_ptr<PC> player;
+	bool has_player = false;
 
 	int position;
 
@@ -42,17 +43,20 @@ public:
 	~Chamber();
 
 	// accessors and mutators
-	void addTile(std::shared_ptr<Tile> t);
-	std::shared_ptr<Tile> & getTile(int index);
+	void addTile(Tile *t);
+	Tile *getTile(int index);
 	//std::shared_ptr<Tile> & getTile(int x, int y);
 	//std::shared_ptr<Stairs> & getStairs(int index);
 
-	std::shared_ptr<NPC> & getNPC(int index);
-	std::shared_ptr<Potion> & getPotion(int index);
-	std::shared_ptr<Gold> & getGold(int index);
+	//std::shared_ptr<NPC> & getNPC(int index);
+	//std::shared_ptr<Potion> & getPotion(int index);
+	//std::shared_ptr<Gold> & getGold(int index);
 
 	//std::shared_ptr<PC> & getPlayer();
 
+	bool getHas_Player();
+	void setHas_Player(bool b);
+	
 	int getPosition();
 	int getNumTiles();
 
@@ -66,11 +70,11 @@ public:
 	std::shared_ptr<Factory> & getFactory();
 
 	// other methods
-	Tile &getRandomTile(std::shared_ptr<Factory> f);
-	void spawnPC(std::shared_ptr<Factory> f);
-	void spawnEnemy(std::shared_ptr<Factory> f);
-	void spawnPotion(std::shared_ptr<Factory> f);
-	void spawnGold(std::shared_ptr<Factory> f);
+	Tile &getRandomTile(Factory *f);
+	void spawnPC(Factory *f, std::string race);
+	void spawnEnemy(Factory *f);
+	void spawnPotion(Factory *f);
+	void spawnGold(Factory *f);
 };
 
 #endif

@@ -10,7 +10,9 @@ BoostDef::BoostDef(shared_ptr<BasicPotion> base) :
 		setDisp('P');
 	}
 
-BoostDef::~BoostDef() {}
+BoostDef::~BoostDef() {
+	base.reset();
+}
 
 // accessors and mutators
 bool BoostDef::getLifetime() {

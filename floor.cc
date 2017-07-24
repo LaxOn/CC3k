@@ -113,11 +113,12 @@ int Floor::getNumEnemy() {
 }
 
 // all spawning functions
-void Floor::spawnPC() {
+void Floor::spawnPC(string race) {
 	if (position == 1 && hasPlayer == false) {
-		int whichChamber = f->randInt(4);
-		chambers[whichChamber]->spawnPC(f);
-
+		int whichChamber = f->randInt(5);
+		chambers[whichChamber]->spawnPC(f.get(), race);
+		chambers[whichChamber]->setHas_Player(true);
+		//cout << "player successfully spawned" << endl;
 		int number_tiles = chambers[whichChamber]->getNumTiles();
 		for (int i = 0; i < number_tiles; ++i) {
 			if ((chambers[whichChamber]->getTile(i))->getPC() != nullptr) {
@@ -131,22 +132,20 @@ void Floor::spawnPC() {
 
 void Floor::spawnStairs() {
 	int whichChamber = 0;
-	bool do_not_spawn = false;
-	while (hasStairs == false) {
-		whichChamber = f->randInt(4);
-		int number_tiles = chambers[whichChamber]->getNumTiles();
-		for (int i = 0; i < number_tiles; ++i) {
-			if ((chambers[whichChamber]->getTile(i))->getPC() != nullptr) {
-				do_not_spawn = false;
-				break;
-			}
-		}
-		if (do_not_spawn == false) {
-			Info temp = (chambers[whichChamber]->getRandomTile(f).getInfo());
-			tiles[temp.x][temp.y] = make_shared<Stairs> (make_shared<BasicTile> (temp.x, temp.y, *d));
-			hasStairs = true;
-			break;
-		}
+	while (true) {
+		whichChamber = f->randInt(5);
+		if (chambers[whichChamber]->getHas_Player() == true) continue;
+
+		Info temp = (chambers[whichChamber]->getRandomTile(f.get())).getInfo();
+			
+		int x = temp.x;
+		int y = temp.y;
+
+		tiles[x][y] = make_shared<Stairs> (make_shared<BasicTile> (x, y, *d));
+
+		d->update(*tiles[temp.x][temp.y], "Stairs");
+		hasStairs = true;
+		break;
 	}
 }
 
@@ -154,9 +153,10 @@ void Floor::spawnEnemy() {
 	int whichChamber = 0;
 
 	while (numEnemy < maxEnemy) {
-		whichChamber = f->randInt(4);
+		whichChamber = f->randInt(5);
 
-		chambers[whichChamber]->spawnEnemy(f);
+		//cout << "random number is " << whichChamber << endl;
+		chambers[whichChamber]->spawnEnemy(f.get());
 		++numEnemy;
 	}
 }
@@ -165,9 +165,9 @@ void Floor::spawnPotion() {
 	int whichChamber = 0;
 
 	while (numPotion < maxPotion) {
-		whichChamber = f->randInt(4);
+		whichChamber = f->randInt(5);
 
-		chambers[whichChamber]->spawnPotion(f);
+		chambers[whichChamber]->spawnPotion(f.get());
 		++numPotion;
 	}
 }
@@ -176,9 +176,9 @@ void Floor::spawnTreasure() {
 	int whichChamber = 0;
 
 	while (numTreasure < maxTreasure) {
-		whichChamber = f->randInt(4);
-
-		chambers[whichChamber]->spawnGold(f);
+		whichChamber = f->randInt(5);
+		cout << "tracker 1 " << endl;
+		chambers[whichChamber]->spawnGold(f.get());
 		++numTreasure;
 	}
 }
@@ -297,12 +297,14 @@ void Floor::constructObject(int x, int y, char input) {
 
 }
 
-void Floor::oneChamber(int id, shared_ptr<Tile> t) {
+void Floor::oneChamber(int id, Tile *t) {
+	//cout << t << endl;
 	if (t->getType() == 0 &&
 		t->getChamberID() == 0) {
 			(chambers.back())->addTile(t);
 			t->setChamberID(id);
 			//cout << t->getChamberID() << endl;
+			oneChamber(id, t->getNeighbr(0));
 			oneChamber(id, t->getNeighbr(1));
 			oneChamber(id, t->getNeighbr(2));
 			oneChamber(id, t->getNeighbr(3));
@@ -311,6 +313,8 @@ void Floor::oneChamber(int id, shared_ptr<Tile> t) {
 			oneChamber(id, t->getNeighbr(6));
 			oneChamber(id, t->getNeighbr(7));
 	}
+
+	//if (t == nullptr) cout << "NULL POINTER" << endl;
 }
 
 void Floor::constructChamber(int id) {
@@ -322,7 +326,7 @@ void Floor::constructChamber(int id) {
 				tiles[i][j]->getChamberID() == 0) {
 				found = true;
 				//cout << "run oneChamber for " << i << " " << j << endl;
-				oneChamber(id, tiles[i][j]);
+				oneChamber(id, tiles[i][j].get());
 				break;
 			}
 		}
@@ -330,7 +334,7 @@ void Floor::constructChamber(int id) {
 	}
 }
 
-void Floor::constructFloor(istream &input, int start) {
+void Floor::constructFloor(istream &input, int start, string race) {
 	string line;
 
 	// construct all Tiles accordingly
@@ -368,104 +372,101 @@ void Floor::constructFloor(istream &input, int start) {
 
 	//cout << "basic floor constructed" << endl;
 
-	//cout << "objects from file spawned" << endl;
-
 	// setting up neigbours for all Tiles
 	for (int i = 0; i < 25; ++i) {
 		for (int j = 0; j < 79; ++j) {
 			//cout << "neighbour construction at : " << i << " " << j << endl;
 			// the neighbours can be identified by position in the vector (integer 0-9 inclusive)
-			shared_ptr<BasicTile> ptr;
 			if (i - 1 < 0 && j - 1 < 0) {
 				//cout << "tracker 1" << endl;
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(tiles[i][j + 1]);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j]);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1]);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(tiles[i][j + 1].get());
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(tiles[i + 1][j].get());
+				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1].get());
 			} else if (i - 1 < 0 && j + 1 > 78) {
 				//cout << "tracker 2" << endl;
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(tiles[i][j - 1]);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1]);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j]);
-				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(tiles[i][j - 1].get());
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1].get());
+				tiles[i][j]->addNeighbr(tiles[i + 1][j].get());
+				tiles[i][j]->addNeighbr(nullptr);
 			} else if (i - 1 < 0) {
 				//cout << "tracker 3" << endl;
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(tiles[i][j - 1]);
-				tiles[i][j]->addNeighbr(tiles[i][j + 1]);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1]);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j]);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1]);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(tiles[i][j - 1].get());
+				tiles[i][j]->addNeighbr(tiles[i][j + 1].get());
+				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1].get());
+				tiles[i][j]->addNeighbr(tiles[i + 1][j].get());
+				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1].get());
 			} else if (i + 1 > 24 && j - 1 < 0) {
 				//cout << "tracker 4" << endl;
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(tiles[i - 1][j]);
-				tiles[i][j]->addNeighbr(tiles[i - 1][j + 1]);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(tiles[i][j + 1]);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(tiles[i - 1][j].get());
+				tiles[i][j]->addNeighbr(tiles[i - 1][j + 1].get());
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(tiles[i][j + 1].get());
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
 			} else if (i + 1 > 24 && j + 1 > 78) {
 				//cout << "tracker 5" << endl;
-				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1]);
-				tiles[i][j]->addNeighbr(tiles[i - 1][j]);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(tiles[i][j - 1]);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1].get());
+				tiles[i][j]->addNeighbr(tiles[i - 1][j].get());
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(tiles[i][j - 1].get());
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
 			} else if (i + 1 > 24) {
 				//cout << "tracker 6" << endl;
-				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1]);
-				tiles[i][j]->addNeighbr(tiles[i - 1][j]);
-				tiles[i][j]->addNeighbr(tiles[i - 1][j + 1]);
-				tiles[i][j]->addNeighbr(tiles[i][j - 1]);
-				tiles[i][j]->addNeighbr(tiles[i][j + 1]);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1].get());
+				tiles[i][j]->addNeighbr(tiles[i - 1][j].get());
+				tiles[i][j]->addNeighbr(tiles[i - 1][j + 1].get());
+				tiles[i][j]->addNeighbr(tiles[i][j - 1].get());
+				tiles[i][j]->addNeighbr(tiles[i][j + 1].get());
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(nullptr);
 			} else if (j - 1 < 0) {
 				//cout << "tracker 7" << endl;
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(tiles[i - 1][j]);
-				tiles[i][j]->addNeighbr(tiles[i - 1][j + 1]);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(tiles[i][j + 1]);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j]);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1]);
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(tiles[i - 1][j].get());
+				tiles[i][j]->addNeighbr(tiles[i - 1][j + 1].get());
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(tiles[i][j + 1].get());
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(tiles[i + 1][j].get());
+				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1].get());
 			} else if (j + 1 > 78) {
 				//cout << "tracker 8" << endl;
-				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1]);
-				tiles[i][j]->addNeighbr(tiles[i - 1][j]);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(tiles[i][j - 1]);
-				tiles[i][j]->addNeighbr(ptr);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1]);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j]);
-				tiles[i][j]->addNeighbr(ptr);
+				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1].get());
+				tiles[i][j]->addNeighbr(tiles[i - 1][j].get());
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(tiles[i][j - 1].get());
+				tiles[i][j]->addNeighbr(nullptr);
+				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1].get());
+				tiles[i][j]->addNeighbr(tiles[i + 1][j].get());
+				tiles[i][j]->addNeighbr(nullptr);
 			} else {
 				//cout << "tracker 9" << endl;
-				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1]);
-				tiles[i][j]->addNeighbr(tiles[i - 1][j]);
-				tiles[i][j]->addNeighbr(tiles[i - 1][j + 1]);
-				tiles[i][j]->addNeighbr(tiles[i][j + 1]);
-				tiles[i][j]->addNeighbr(tiles[i][j + 1]);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1]);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j]);
-				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1]);
+				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1].get());
+				tiles[i][j]->addNeighbr(tiles[i - 1][j].get());
+				tiles[i][j]->addNeighbr(tiles[i - 1][j + 1].get());
+				tiles[i][j]->addNeighbr(tiles[i][j + 1].get());
+				tiles[i][j]->addNeighbr(tiles[i][j + 1].get());
+				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1].get());
+				tiles[i][j]->addNeighbr(tiles[i + 1][j].get());
+				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1].get());
 			}
 		}
 	}
@@ -483,10 +484,17 @@ void Floor::constructFloor(istream &input, int start) {
 	d->defaultFloor();
 	//cout << &d << endl;
 
-	if (position == 1) {
+	spawnPC(race);
+	//cout << "player spawned" << endl;
+
+	//if (position == 1) {
 		player->attach(*d);
-		cout << "the player is a " << player->getType() << endl;
-	}
+		//cout << "the player is a " << player->getType() << endl;
+	//}
+
+	//cout << start << endl;
+
+	bool predetermined = false;
 
 	// add all other Objects
 	input.clear();
@@ -501,28 +509,35 @@ void Floor::constructFloor(istream &input, int start) {
 				line[j] == '#' ||
 				line[j] == '.' ||
 				line[j] == '@' ||
+				line[j] == '+' ||
 				line[j] == 92) {
 				continue;
 			} else {
+				predetermined = true;
 				//cout << "next object is " << line[j] << endl;
 				Floor::constructObject(i, j, line[j]);
 			}
 		}
 	}
 
-	//cout << "all completed except spawn" << endl;
+	//cout << "all setup completed" << endl;
 
 	// spawning all Objects necessary for one Floor
-	spawnPC();
-	//cout << "player spawned" << endl;
-	spawnStairs();
-	//cout << "stairs spawned" << endl;
-	spawnEnemy();
-	//cout << "enemy spawned" << endl;
-	spawnPotion();
-	//cout << "potions spawned" << endl;
-	spawnTreasure();
-	//cout << "treasure spawned" << endl;
+	if (predetermined == false) {
+		spawnStairs();
+		//cout << "stairs spawned" << endl;
+
+		spawnEnemy();
+		//cout << "enemy spawned" << endl;
+
+		spawnPotion();
+		//cout << "potions spawned" << endl;
+
+		spawnTreasure();
+		//cout << "treasure spawned" << endl;
+	}
+
+	cout << "ALL SETUP COMPLETED" << endl;
 
 	// testing neighbours
 	/*

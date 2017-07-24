@@ -4,8 +4,10 @@
 #include <iostream>
 #include <fstream>
 #include <memory>
+#include <string>
 
 class Dungeon;
+class PC;
 
 class Game {
 	int curFloor;
@@ -18,9 +20,11 @@ class Game {
  	
  	void displayFloor(int floor);
  	void nextTurn();
- 	void spawn(int x, int y, std::string);
+ 	void spawn(int x, int y, std::string str);
+
+ 	void descend(PC &pc);
  	
- 	Game(std::istream &input);
+ 	Game(std::istream &input, std::string race);
  	~Game();
 };
 

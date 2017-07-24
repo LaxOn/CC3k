@@ -80,7 +80,7 @@ public:
 	int getNumEnemy();
 
 	// all spawning functions
-	void spawnPC();
+	void spawnPC(std::string race);
 	void spawnStairs();
 	void spawnEnemy();
 	void spawnPotion();
@@ -89,10 +89,10 @@ public:
 	// other methods
 	void constructObject(int x, int y, char input);
 
-	void oneChamber(int id, std::shared_ptr<Tile> t);
+	void oneChamber(int id, Tile *t);
 	void constructChamber(int id);
 
-	void constructFloor(std::istream &input, int start);
+	void constructFloor(std::istream &input, int start, std::string race);
 };
 
 std::ostream &operator<<(std::ostream &out, const Floor &f);

@@ -10,6 +10,8 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
+	srand(time(0));
+
 	// setting up file input
 	string fileName;
 
@@ -28,15 +30,14 @@ int main(int argc, char* argv[]) {
 
 	string testString;
 
+	string race = "s";
+
 	// making new Game object
-	auto current_game = make_unique<Game> (floorplaninput);
+	auto current_game = make_unique<Game> (floorplaninput, race);
 
 	// testing display
 	current_game->displayFloor(1);
-	//current_game->displayFloor(2);
-	//current_game->displayFloor(3);
-	//current_game->displayFloor(4);
-	//current_game->displayFloor(5);
 	
+	cout << "MAIN() FINISHED" << endl;
 	return 0;
 }

@@ -10,7 +10,9 @@ RestoreHealth::RestoreHealth(shared_ptr<BasicPotion> base) :
 	setDisp('P');
 }
 
-RestoreHealth::~RestoreHealth() {}
+RestoreHealth::~RestoreHealth() {
+	base.reset();
+}
 
 // accessors and mutators
 bool RestoreHealth::getLifetime() {

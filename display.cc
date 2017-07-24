@@ -6,7 +6,8 @@
 using namespace std;
 
 // constructor and destructor
-Display::Display() {}
+Display::Display() :
+	race{""}, hp{0}, atk{0}, def{0}, gold{0}, action {""} {}
 	
 Display::~Display() {}
 
@@ -20,7 +21,9 @@ string Display::getRace() {
 }
 
 void Display::setRace(PC &pc) {
-	race = pc.getType();
+	string temp = pc.getType();
+
+	race = temp.substr(0, temp.length() - 2);
 }
 
 int Display::getHP() {
@@ -60,7 +63,7 @@ string Display::getAction() {
 }
 
 void Display::setAction(string act) {
-
+	action = act;
 }
 
 int Display::getFloorNum() {
@@ -98,19 +101,121 @@ void Display::defaultFloor() {
 				*/
 				board[i][j] = '.';
 			} else if ((f->getTile(i, j))->getType() == 1) {
-				board[i][j] = '#';
+
+				int c_id = (f->getTile(i, j))->getChamberID();
+				//cout << c_id << endl;
+				if (c_id == 1) {
+					board[i][j] = '1';
+				} else if (c_id == 2) {
+					board[i][j] = '2';
+				} else if (c_id == 3) {
+					board[i][j] = '3';
+				} else if (c_id == 4) {
+					board[i][j] = '4';
+				} else if (c_id == 5) {
+					board[i][j] = '5';
+				} else {
+					board[i][j] = '#';
+				}
+
+				//board[i][j] = '#';
 			} else if ((f->getTile(i, j))->getType() == 2) {
-				board[i][j] = 92;
+
+				int c_id = (f->getTile(i, j))->getChamberID();
+				//cout << c_id << endl;
+				if (c_id == 1) {
+					board[i][j] = '1';
+				} else if (c_id == 2) {
+					board[i][j] = '2';
+				} else if (c_id == 3) {
+					board[i][j] = '3';
+				} else if (c_id == 4) {
+					board[i][j] = '4';
+				} else if (c_id == 5) {
+					board[i][j] = '5';
+				} else {
+					board[i][j] = 92;
+				}
+
+				//board[i][j] = 92;
 			} else if ((f->getTile(i, j))->getType() == 3) {
-				board[i][j] = '+';
+
+				int c_id = (f->getTile(i, j))->getChamberID();
+				//cout << c_id << endl;
+				if (c_id == 1) {
+					board[i][j] = '1';
+				} else if (c_id == 2) {
+					board[i][j] = '2';
+				} else if (c_id == 3) {
+					board[i][j] = '3';
+				} else if (c_id == 4) {
+					board[i][j] = '4';
+				} else if (c_id == 5) {
+					board[i][j] = '5';
+				} else {
+					board[i][j] = '+';
+				}
+
+				//board[i][j] = '+';
 			} else if ((f->getTile(i, j))->getType() == 4 
 						&& (f->getTile(i, j))->getSideWall() == 1) {
-				board[i][j] = '|';
+
+				int c_id = (f->getTile(i, j))->getChamberID();
+				//cout << c_id << endl;
+				if (c_id == 1) {
+					board[i][j] = '1';
+				} else if (c_id == 2) {
+					board[i][j] = '2';
+				} else if (c_id == 3) {
+					board[i][j] = '3';
+				} else if (c_id == 4) {
+					board[i][j] = '4';
+				} else if (c_id == 5) {
+					board[i][j] = '5';
+				} else {
+					board[i][j] = '|';
+				}
+
+				//board[i][j] = '|';
 			} else if ((f->getTile(i, j))->getType() == 4 
 						&& (f->getTile(i, j))->getSideWall() == 0){
-				board[i][j] = '-';
+
+				int c_id = (f->getTile(i, j))->getChamberID();
+				//cout << c_id << endl;
+				if (c_id == 1) {
+					board[i][j] = '1';
+				} else if (c_id == 2) {
+					board[i][j] = '2';
+				} else if (c_id == 3) {
+					board[i][j] = '3';
+				} else if (c_id == 4) {
+					board[i][j] = '4';
+				} else if (c_id == 5) {
+					board[i][j] = '5';
+				} else {
+					board[i][j] = '-';
+				}
+
+				//board[i][j] = '-';
 			} else if ((f->getTile(i, j))->getType() == 5) {
-				board[i][j] = ' ';
+
+				int c_id = (f->getTile(i, j))->getChamberID();
+				//cout << c_id << endl;
+				if (c_id == 1) {
+					board[i][j] = '1';
+				} else if (c_id == 2) {
+					board[i][j] = '2';
+				} else if (c_id == 3) {
+					board[i][j] = '3';
+				} else if (c_id == 4) {
+					board[i][j] = '4';
+				} else if (c_id == 5) {
+					board[i][j] = '5';
+				} else {
+					board[i][j] = ' ';
+				}
+
+				//board[i][j] = ' ';
 			}
 		}
 	}
@@ -144,7 +249,8 @@ void Display::update(Tile & t, std::string str) {
 	//cout << x << " " << y << endl;
 	//cout << board[x][y] << endl;
 
-	if (str == "Player") {
+	if (str == "ShadePC" || str == "DrowPC" || str == "VampirePC" ||
+		str == "TrollPC" || str == "GoblinPC") {
 		board[x][y] = '@';
 	} else if (str == "HumanNPC") {
 		board[x][y] = 'H';
@@ -164,7 +270,9 @@ void Display::update(Tile & t, std::string str) {
 		board[x][y] = 'P';
 	} else if (str == "G") {
 		board[x][y] = 'G';
-	} 
+	} else if (str == "Stairs") {
+		board[x][y] = 92;
+	}
 	//cout << board[x][y] << endl;
 }
 

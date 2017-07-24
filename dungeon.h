@@ -6,6 +6,8 @@
 #include <iostream>
 #include "floor.h"
 
+class PC;
+
 class Dungeon {
 	int size; // number of floors
 	std::vector<std::shared_ptr<Floor>> floors; // array of pointers to Floors on the heap
@@ -21,9 +23,10 @@ public:
 
 	// other methods
 	//void constructFloor(); // Floor construction without input file
-	void constructFloor(std::istream &input, int index); 
+	void constructFloor(std::istream &input, int index, std::string race); 
 													// Floor construction
 													// with input file
+	void descend(PC &pc);
 };
 
 #endif

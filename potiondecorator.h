@@ -6,6 +6,7 @@
 #include "basicpotion.h"
 
 class PotionDecorator: public Potion {
+protected:
 	std::shared_ptr<BasicPotion> base;
 
 public:

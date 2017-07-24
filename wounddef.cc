@@ -10,7 +10,9 @@ WoundDef::WoundDef(shared_ptr<BasicPotion> base) :
 		setDisp('P');
 	}
 
-WoundDef::~WoundDef() {}
+WoundDef::~WoundDef() {
+	base.reset();
+}
 
 // accessors and mutators
 bool WoundDef::getLifetime() {
