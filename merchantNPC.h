@@ -5,8 +5,10 @@
 class PC;
 class Tile;
 
-class MerchantNPC: public NPC{
+class MerchantNPC: public NPC {
  public:
+	static bool hostile;
+ 	void turnHostile();
  	void notify(PC &whoNotified) override;
  	void attack(PC &player) override; // no defendFrom as PC implements it
  	void nextTurn() override;

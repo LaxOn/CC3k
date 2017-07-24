@@ -3,11 +3,18 @@
 #include "object.h"
 #include "pc.h"
 #include "npc.h"
+#include "factory.h"
 
 void ShadePC::attack(NPC& enemy){
-	int damage = calcDmg(this->getAtk(), enemy.getDef());
-	enemy.changeHP(-damage, false);
-	// 50% chance to miss against halfling
+	int hit = 1;
+	if (enemy.getType() == "halflingNPC") {
+		Factory f;
+		hit = f.randInt(1);
+	}
+	if (hit) {
+		int damage = calcDmg(this->getAtk(), enemy.getDef());
+		enemy.changeHP(-damage, false);
+	}
 }
 
 void ShadePC::defendFrom(NPC& enemy){
@@ -16,13 +23,11 @@ void ShadePC::defendFrom(NPC& enemy){
 }
 
 void ShadePC::nextTurn(){
-	// nothing
+	this->notifyNPCs();
+	this->notifyDisplay();
 }
 
 ShadePC::ShadePC(int x, int y, Tile *t, std::shared_ptr<Display> D) {
-	// Tile *address should be set when a ShadePC is created
-	// all the NPC should be set as observers (with attach)
-	// Display should also be set as an observer (with attach)
 	this->setStats(125, 25, 25);
 	this->setMaxHP(125);
 	this->setType("ShadePC");

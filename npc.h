@@ -6,17 +6,22 @@
 
 class PC;
 class Gold;
+class Tile;
 
 class NPC: public Character{
-	bool hostile = false;
 	bool canMove = true;
-	Gold *loot;
+	int loot = 0;
+	bool attackPC = false;
+ protected:
+	Tile *goldTile = nullptr;
  public:
+ 	void guardGold(Tile &goldTile);
+ 	void justAttacked();
+ 	void willAttack();
  	void move();
- 	void turnHostile();
  	void cannotMove();
  	void addLoot(int money);
- 	//overload == ????
+ 	int getMoney();
  	virtual void notify(PC &whoNotified)=0;
  	virtual void attack(PC &player)=0;
  	NPC();

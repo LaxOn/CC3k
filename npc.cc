@@ -17,12 +17,20 @@ void NPC::move() {
 	}
 }
 
-void NPC::attack(PC &player) {
-	player.defendFrom(*this);
+void NPC::guardGold(Tile &goldTile) {
+	this->goldTile = &goldTile;
 }
 
-void NPC::turnHostile() {
-	hostile = true;
+void NPC::justAttacked() {
+	attackPC = false;
+}
+
+void NPC::willAttack() {
+	attackPC = true;
+}
+
+void NPC::attack(PC &player) {
+	player.defendFrom(*this);
 }
 
 void NPC::cannotMove() {
@@ -30,10 +38,10 @@ void NPC::cannotMove() {
 }
 
 void NPC::addLoot(int money) {
-	// call constructor for Gold
-	// add gold to loot
-	// add Gold
+	loot += money;
 }
+
+int NPC::getMoney() { return loot; }
 
 NPC::NPC() {}
 

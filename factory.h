@@ -14,8 +14,10 @@ class Factory {
 	int randInt(int max);
 	void addEnemy(Tile &t);
 	void addDragon(Tile &t);
+	void addGold(Tile &t);
 	void addPC(Tile &t, char race);
 	void addPotion(Tile &t);
+	Factory();
 	Factory(shared_ptr<Display> D);
 	~Factory();
 };

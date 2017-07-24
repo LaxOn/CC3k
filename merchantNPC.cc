@@ -4,19 +4,28 @@
 #include "npc.h"
 #include "pc.h"
 #include "info.h"
+#include "factory.h"
 
-void MerchantNPC::notify(PC &whoNotified){
+bool MerchantNPC::hostile = false;
+
+void MerchantNPC::notify(PC &whoNotified) {
 	if (this->isNear(this->getInfo(), whoNotified.getInfo())) {
-		attack(whoNotified);
+		if (hostile) willAttack();
 	}
 }
 
-void MerchantNPC::attack(PC &player){
-	player.defendFrom(*this);
+void MerchantNPC::turnHostile() {
+	hostile = true;
 }
 
-void MerchantNPC::nextTurn(){
+void MerchantNPC::attack(PC &player) {
+	Factory f;
+	int hit = f.randInt(1);
+	if (hit) player.defendFrom(*this);
+}
 
+void MerchantNPC::nextTurn() {
+	 justAttacked();
 }
 
 MerchantNPC::MerchantNPC(int x, int y, Tile *t) {
@@ -26,9 +35,6 @@ MerchantNPC::MerchantNPC(int x, int y, Tile *t) {
 	this->cannotMove();
 	this->setCoords(x,y);
 	this->setTile(t);
-
-	// addLoot(int money)
-	// drops merchant loot
 }
 
 MerchantNPC::~MerchantNPC() {}

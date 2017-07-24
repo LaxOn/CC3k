@@ -3,11 +3,18 @@
 #include "object.h"
 #include "pc.h"
 #include "npc.h"
+#include "factory.h"
 
 void TrollPC::attack(NPC& enemy){
-	int damage = calcDmg(this->getAtk(), enemy.getDef());
-	enemy.changeHP(-damage, false);
-	// 50% chance to miss against halfling
+	int hit = 1;
+	if (enemy.getType() == "halflingNPC") {
+		Factory f;
+		hit = f.randInt(1);
+	}
+	if (hit) {
+		int damage = calcDmg(this->getAtk(), enemy.getDef());
+		enemy.changeHP(-damage, false);
+	}
 }
 
 void TrollPC::defendFrom(NPC& enemy){
@@ -16,13 +23,12 @@ void TrollPC::defendFrom(NPC& enemy){
 }
 
 void TrollPC::nextTurn(){
-	this->changeHP(5, false);	// special ability
+	this->notifyNPCs();
+	this->notifyDisplay();
+	this->changeHP(5, false);
 }
 
 TrollPC::TrollPC(int x, int y, Tile *t, std::shared_ptr<Display> D) {
-	// Tile *address should be set when a TrollPC is created
-	// all the NPC should be set as observers (with attach)
-	// Display should also be set as an observer (with attach)
 	this->setStats(120, 25, 15);
 	this->setMaxHP(120);
 	this->setType("TrollPC");

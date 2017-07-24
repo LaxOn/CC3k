@@ -4,20 +4,27 @@
 #include "npc.h"
 #include "pc.h"
 #include "info.h"
+#include "factory.h"
+#include "tile.h"
+#include "basictile.h"
 
-void DragonNPC::notify(PC &whoNotified){
-	if (this->isNear(this->getInfo(), whoNotified.getInfo())) {
-		attack(whoNotified);
+void DragonNPC::notify(PC &whoNotified) {
+	Info DragonInfo = this->getInfo();
+	Info DHoardInfo = (goldTile->getObject(1))->getInfo();
+	if (this->isNear(DragonInfo, whoNotified.getInfo()) || 
+	 	(this->isNear(DHoardInfo, whoNotified.getInfo()))) {
+			willAttack();
 	}
-	// near gold as well
 }
 
-void DragonNPC::attack(PC &player){
-	player.defendFrom(*this);
+void DragonNPC::attack(PC &player) {
+	Factory f;
+	int hit = f.randInt(1);
+	if (hit) player.defendFrom(*this);
 }
 
-void DragonNPC::nextTurn(){
-
+void DragonNPC::nextTurn() { 
+	 justAttacked();
 }
 
 DragonNPC::DragonNPC(int x, int y, Tile *t) {
@@ -25,12 +32,8 @@ DragonNPC::DragonNPC(int x, int y, Tile *t) {
 	this->setDisp('D');
 	this->setType("DragonNPC");
 	this->cannotMove();
-	this->turnHostile();
 	this->setCoords(x,y);
 	this->setTile(t);
-
-	// addLoot(int money)
-	// guards a treasure
 }
 
 DragonNPC::~DragonNPC() {}

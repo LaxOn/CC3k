@@ -24,6 +24,13 @@
 #include "poisonhealth.h"
 #include "woundatk.h"
 #include "wounddef.h"
+#include "gold.h"
+#include "passage.h"
+#include "basictile.h"
+#include "stairs.h"
+#include "door.h"
+#include "wall.h"
+#include "none.h"
 #include "info.h"
 #include <memory>
 #include <iostream>
@@ -41,6 +48,47 @@ void Factory::addDragon(Tile &t) {
 	int y = tInfo.y;
 	t.addNPC(make_shared<DragonNPC>(x,y,&t));
 	player->attach(t.getNPC());
+	t.setOccupy(true);
+}
+
+void Factory::addGold(Tile &t) {
+	Info tInfo = t.getInfo();
+	int x = tInfo.x;
+	int y = tInfo.y;
+	const int normal = 5;
+	const int dragon = 6;
+	const int small = 8;
+	int goldNum = randInt(7);
+	if (goldNum < normal) t.addObject(make_shared<Gold>(2,x,y,false));
+	else if (goldNum < dragon) {
+		// check if there are empty neighbours
+		int freeNeigbrs = 0;
+		std::shared_ptr<Tile> nb;
+		for(int i=0; i<=7; ++i) {
+			nb = t.getNeighbr(i);
+			if (nb->getType()==0 && !nb->getOccupy()) {
+				++freeNeigbrs;
+			}
+		}
+		// randomize among neighbours
+		if (freeNeigbrs) {
+			int randNum = randInt(freeNeigbrs - 1);
+			int dragonIndex = 0;
+			while (randNum > 0) {
+				nb = t.getNeighbr(dragonIndex);
+				if (!nb->getOccupy()) --randNum;
+				++dragonIndex;
+			}
+			// add the gold and the dragon
+			t.addObject(make_shared<Gold>(6,x,y,true));
+			t.setOccupy(true);
+			std::shared_ptr<Tile> dragonTile = t.getNeighbr(dragonIndex);
+			addDragon(*dragonTile);
+			dragonTile->setOccupy(true);
+			(dragonTile->getNPC())->guardGold(t);
+		} else { addGold(t); }
+	}
+	else if (goldNum < small) t.addObject(make_shared<Gold>(1,x,y,false));
 }
 
 void Factory::addPC(Tile &t, char race) {
@@ -53,6 +101,7 @@ void Factory::addPC(Tile &t, char race) {
 	else if (race == 'g') t.addPC(make_shared<GoblinPC>(x,y,&t,D));
 	else if (race == 't') t.addPC(make_shared<TrollPC>(x,y,&t,D));
 	player = t.getPC();
+	t.setOccupy(true);
 }
 
 void Factory::addEnemy(Tile &t) {
@@ -60,19 +109,24 @@ void Factory::addEnemy(Tile &t) {
 	int x = tInfo.x;
 	int y = tInfo.y;
 	const int human = 4;
-	const int dwarf = 7;
-	const int halfling = 12;
-	const int elf = 14;
-	const int orc = 16;
-	const int merchant = 18;
+	const int merchant = 6;
+	const int dwarf = 9;
+	const int halfling = 14;
+	const int elf = 16;
+	const int orc = 18;
 	int enemyNum = randInt(17);
 	if (enemyNum < human) t.addNPC(make_shared<HumanNPC>(x,y,&t));
+	else if (enemyNum < merchant) t.addNPC(make_shared<MerchantNPC>(x,y,&t));
 	else if (enemyNum < dwarf) t.addNPC(make_shared<DwarfNPC>(x,y,&t));
 	else if (enemyNum < halfling) t.addNPC(make_shared<HalflingNPC>(x,y,&t));
 	else if (enemyNum < elf) t.addNPC(make_shared<ElfNPC>(x,y,&t));
 	else if (enemyNum < orc) t.addNPC(make_shared<OrcNPC>(x,y,&t));
-	else if (enemyNum < merchant) t.addNPC(make_shared<MerchantNPC>(x,y,&t));
 	player->attach(t.getNPC());
+	t.setOccupy(true);
+	int loot;
+	if (enemyNum < human || enemyNum < merchant) loot = 4;
+	else loot = randInt(1) + 1;
+	t.getNPC()->addLoot(loot);
 }
 
 void Factory::addPotion(Tile &t) {
@@ -98,7 +152,10 @@ void Factory::addPotion(Tile &t) {
 		(make_shared<BasicPotion>(0,"", false, x, y)));
 	else if (potionNum ==WD) t.addObject(make_shared<WoundDef>
 		(make_shared<BasicPotion>(0,"", false, x, y)));
+	t.setOccupy(true);
 }
+
+Factory::Factory() {}
 
 Factory::Factory(shared_ptr<Display> D): D{D} {}
 
