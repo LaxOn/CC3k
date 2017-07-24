@@ -2,20 +2,35 @@
 #include <vector>
 #include "npc.h"
 #include "pc.h"
+#include "factory.h"
 
 void NPC::move() {
- 	// calls Tile it currently in wiht the directions to go
- 	// TIle call the neighbour
- 	// set Nieghtnours ptr to character
- 	// oldTIle = nullptr
- 	// newTile call character with itself
+	/*
 	if (canMove) {
-		// random number from 1 to x
-			// x is number of unoccupied adjacent tile
-		// call old tile to be removed
-		// call new tile to be in
-	}
+		Tile *t = this->getTile();
+		int count = 0;
+		std::shared_ptr<Tile> nb 
+		for(i=0; i<=7; ++i) {
+			nb = t->getNeighbr(i);
+			if (!nb->getType() && !nb->getOccupy()) ++count;
+		}
+		if (count) {
+			Factory f;
+			int randNum = f.randInt(count - 1) + 1;
+			int index = 0;
+			while (randNum) {
+				nb = t->getNeighbr(index);
+				if (!nb->getType() && !nb->getOccupy()) --randNum;
+				++index;
+			}
+			--index;
+			t->moveObj(index);
+		} // else there's no space to move out of
+	} // can't move so stays in the same place
+	*/
 }
+
+bool NPC::pcInRange() { return attackPC; }
 
 void NPC::guardGold(Tile &goldTile) {
 	this->goldTile = &goldTile;
@@ -46,3 +61,22 @@ int NPC::getMoney() { return loot; }
 NPC::NPC() {}
 
 NPC::~NPC() {}
+
+/*
+takeNPC(Tile *) {}
+takePC(Tile *) {}
+t->moveObj(index);
+	std::shared_ptr<Tile> nb = getNeighbr(index);
+	if (PCobj) {
+		nb->takeNPC(this)
+	
+	} else if (NPCobj) {
+	
+	}
+			 	// calls Tile it currently in with the directions to go
+ 	// Tile call the neighbour
+ 	// set Nieghbours ptr to character
+ 	// oldTIle = nullptr
+ 	// newTile call character with itself
+*/
+

@@ -95,12 +95,13 @@ void Factory::addPC(Tile &t, char race) {
 	Info tInfo = t.getInfo();
 	int x = tInfo.x;
 	int y = tInfo.y;
-	if (race == 's') t.addPC(make_shared<ShadePC>(x,y,&t,D));
-	else if (race == 'd') t.addPC(make_shared<DrowPC>(x,y,&t,D));
-	else if (race == 'v') t.addPC(make_shared<VampirePC>(x,y,&t,D));
-	else if (race == 'g') t.addPC(make_shared<GoblinPC>(x,y,&t,D));
-	else if (race == 't') t.addPC(make_shared<TrollPC>(x,y,&t,D));
+	if (race == 's') t.addPC(make_shared<ShadePC>(x,y,&t));
+	else if (race == 'd') t.addPC(make_shared<DrowPC>(x,y,&t));
+	else if (race == 'v') t.addPC(make_shared<VampirePC>(x,y,&t));
+	else if (race == 'g') t.addPC(make_shared<GoblinPC>(x,y,&t));
+	else if (race == 't') t.addPC(make_shared<TrollPC>(x,y,&t));
 	player = t.getPC();
+	player->attach(*D);
 	t.setOccupy(true);
 }
 
@@ -157,6 +158,6 @@ void Factory::addPotion(Tile &t) {
 
 Factory::Factory() {}
 
-Factory::Factory(shared_ptr<Display> D): D{D} {}
+Factory::Factory(Display &D): D{&D} {}
 
 Factory::~Factory() {}

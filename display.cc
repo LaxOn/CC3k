@@ -140,9 +140,9 @@ void Display::update(Tile & t, std::string str) {
 	int x = temp.x;
 	int y = temp.y;
 
-	cout << "the object is " << str << endl;
-	cout << x << " " << y << endl;
-	cout << board[x][y] << endl;
+	//cout << "the object is " << str << endl;
+	//cout << x << " " << y << endl;
+	//cout << board[x][y] << endl;
 
 	if (str == "Player") {
 		board[x][y] = '@';
@@ -158,14 +158,14 @@ void Display::update(Tile & t, std::string str) {
 		board[x][y] = 'M';
 	} else if (str == "DragonNPC") {
 		board[x][y] = 'D';
-	} else if (str == "HalfingNPC") {
+	} else if (str == "HalflingNPC") {
 		board[x][y] = 'L';
 	} else if (str == "P") {
 		board[x][y] = 'P';
 	} else if (str == "G") {
 		board[x][y] = 'G';
 	} 
-	//cout << "tracker!!!" << endl;
+	//cout << board[x][y] << endl;
 }
 
 void Display::update(PC *pc) {

@@ -12,8 +12,7 @@ class VampirePC: public PC {
  	void attack(NPC& enemy) override;
  	void defendFrom(NPC& enemy) override;
  	void nextTurn() override;
-	VampirePC(int x, int y, Tile *t,
-		std::shared_ptr<Display> D);
+	VampirePC(int x, int y, Tile *t);
 	~VampirePC();
 };
 

@@ -14,7 +14,7 @@ Game::Game(std::istream &input) :
 	curFloor = 1;
 	// constructs the dungeons
 	gameDungeon = make_unique<Dungeon> (5); // put args of the constructor of dungeon in the parenthesis)
-	gameDungeon->constructFloor(input);
+	gameDungeon->constructFloor(input, curFloor);
 }
 
 Game::~Game() {}

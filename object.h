@@ -12,7 +12,8 @@ class Object {
 	void setCoords(int x, int y);
 	void setDisp(char charDisp);
 	char getDisp();
-	void setTile(Tile *t); // include x and y
+	void setTile(Tile *t);
+	Tile *getTile();
  	Info getInfo();
  	bool isNear(Info PCInfo, Info NPCInfo);
 	Object();
@@ -21,18 +22,10 @@ class Object {
 
 // personal notes
 	// put const
-	// put override
-	// remove weaknessList
-	// remove ability
-	// possibilty to implement attack in concrete level
-
-
-// Tile's obj is a vector of 1 or 2 object/s
-
-
 
 // pocket didn't exist
-	// cna make a vector of a pocket
+	// can make a vector of a pocket
+
 
 // death
 // checked
@@ -41,7 +34,7 @@ class Object {
 		// call tile's add item and move the loot
 		// calls tile delete the npc
 		// Tile pops char
-	// afer potion
+	// after potion
 
 
 // get gold by

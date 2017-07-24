@@ -1,45 +1,47 @@
 #include <algorithm>
 #include <vector>
 #include <memory>
+#include <iostream>
 #include "pc.h"
 #include "npc.h"
-												// uncomment later
-//#include "display.h"					
+#include "display.h"					
 
 void PC::useItem(int dir) {
-	// picking up potions
-	// PC will call useItem(int dir)
-		//call soemthing in the tile which passes PC and direction
-	// Tile will calls its neighbour
-	// neighbour call potion with PC as the parameter
-}
+	/*
+	Tile *t = this->getTile();
+	std::shared_ptr<Tile> nb = t->getNeighbr(dir);
+	if ((!nb->getType()) && nb->getOccupy() &&
+		(nb->getObject(0))->getDisp()=='P') {
+			t->useObj(index);
+	} // else throw an exception because there are no potions there 
+*/}
 
 void PC::addMoney(int money) {
-	// picking up gold
-	// Tile will check if PC and a gold is in itself
-	// if yes, Tile will call PC
-			// .... ask JUDY later
+	this->money += money;
 }
-
 
 int PC::getMoney() { return money; }
 
 void PC::move(int dir) {
-	 	// calls Tile it currently in with the directions to go
- 	// Tile call the neighbour
- 	// set Nieghbours ptr to character
- 	// oldTIle = nullptr
- 	// newTile call character with itself
-}
-
+	/*
+	Tile *t = this->getTile();
+	std::shared_ptr<Tile> nb = t->getNeighbr(dir);
+	if (nb->getType()<=3 && !nb->getOccupy()) t->moveObj(index);
+	// else throw an exception because it can't go there;
+*/}
 
 void PC::attach(std::shared_ptr<NPC> ob) {
-	NPCs.emplace_back(ob);
 	++numNPCs;
+	//std::cout << "attaching NPC" <<std::endl;
+	NPCs.resize(numNPCs);
+
+	//std::cout << "resizing NPC" <<std::endl;
+	NPCs.back() = ob;
+
+	//std::cout << "vector stuff" <<std::endl;
 }
 
 void PC::detach(std::shared_ptr<NPC> ob) {
-														// look at piazza if it's okay to use algorithm
 	auto it = std::find(NPCs.begin(), NPCs.end(), ob);
 	if (it != NPCs.end()) {
 	  	std::swap(*it, NPCs.back());
@@ -52,12 +54,13 @@ void PC::notifyNPCs() {
 	for (auto ob : NPCs) ob->notify(*this);
 }
 
-void PC::attach( std::shared_ptr<Display> D) { this->D = D; }
+void PC::attach(Display &D) { 
+	this->D = &D; 
+	D.update(*getTile(), getType());
+}
 
-														// uncomment later
 void PC::notifyDisplay() {
-	// disp->update(*this);
-	// add notify to Display
+	D->update(this);
 }
 
 PC::PC() {

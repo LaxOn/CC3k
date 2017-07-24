@@ -29,13 +29,12 @@ void GoblinPC::nextTurn(){
 	this->notifyDisplay();
 }
 
-GoblinPC::GoblinPC(int x, int y, Tile *t, std::shared_ptr<Display> D) {
+GoblinPC::GoblinPC(int x, int y, Tile *t) {
 	this->setStats(110, 15, 20);
 	this->setMaxHP(110);
 	this->setType("GoblinPC");
 	this->setCoords(x, y);
 	this->setTile(t);
-	this->attach(D);
 }
 
 GoblinPC::~GoblinPC() {}

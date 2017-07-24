@@ -27,14 +27,13 @@ void DrowPC::nextTurn() {
 	this->notifyDisplay();
 }
 
-DrowPC::DrowPC(int x, int y, Tile *t, std::shared_ptr<Display> D) {
+DrowPC::DrowPC(int x, int y, Tile *t) {
 	this->setStats(150, 25, 15);
 	this->setPotionMult(1.5);
 	this->setMaxHP(150);
 	this->setType("DrowPC");
 	this->setCoords(x, y);
 	this->setTile(t);
-	this->attach(D);
 }
 
 DrowPC::~DrowPC() {}

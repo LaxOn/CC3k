@@ -28,13 +28,12 @@ void TrollPC::nextTurn(){
 	this->changeHP(5, false);
 }
 
-TrollPC::TrollPC(int x, int y, Tile *t, std::shared_ptr<Display> D) {
+TrollPC::TrollPC(int x, int y, Tile *t) {
 	this->setStats(120, 25, 15);
 	this->setMaxHP(120);
 	this->setType("TrollPC");
 	this->setCoords(x,y);
 	this->setTile(t);
-	this->attach(D);
 }
 
 TrollPC::~TrollPC() {}

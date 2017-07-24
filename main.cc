@@ -33,10 +33,10 @@ int main(int argc, char* argv[]) {
 
 	// testing display
 	current_game->displayFloor(1);
-	current_game->displayFloor(2);
-	current_game->displayFloor(3);
-	current_game->displayFloor(4);
-	current_game->displayFloor(5);
+	//current_game->displayFloor(2);
+	//current_game->displayFloor(3);
+	//current_game->displayFloor(4);
+	//current_game->displayFloor(5);
 	
 	return 0;
 }

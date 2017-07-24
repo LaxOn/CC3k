@@ -15,6 +15,7 @@ class NPC: public Character{
  protected:
 	Tile *goldTile = nullptr;
  public:
+ 	bool pcInRange();
  	void guardGold(Tile &goldTile);
  	void justAttacked();
  	void willAttack();

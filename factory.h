@@ -8,7 +8,7 @@ class Tile;
 class PC;
 
 class Factory {
-	std::shared_ptr<Display> D;
+	Display *D;
 	std::shared_ptr<PC> player;
  public:
 	int randInt(int max);
@@ -18,7 +18,7 @@ class Factory {
 	void addPC(Tile &t, char race);
 	void addPotion(Tile &t);
 	Factory();
-	Factory(shared_ptr<Display> D);
+	Factory(Display &D);
 	~Factory();
 };
 

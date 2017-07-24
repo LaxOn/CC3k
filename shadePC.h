@@ -12,8 +12,7 @@ class ShadePC: public PC {
  	void attack(NPC& enemy) override;
  	void defendFrom(NPC& enemy) override;
  	void nextTurn() override;
-	ShadePC(int x, int y, Tile *t,
-		std::shared_ptr<Display> D);
+	ShadePC(int x, int y, Tile *t);
 	~ShadePC();
 };
 

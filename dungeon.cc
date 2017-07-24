@@ -28,12 +28,8 @@ void Dungeon::constructFloor() {
 }
 */
 
-void Dungeon::constructFloor(istream &input) {
-	int index = 0;
-	for (int i = 1; i <= 5; ++i) {
-		floors.emplace_back(make_shared<Floor> (i));
-		//cout << "making floor : detail " << i << endl;
-		(floors.back())->constructFloor(input, index);
-		index += 25;
-	}
+void Dungeon::constructFloor(istream &input, int index) {
+	floors.emplace_back(make_shared<Floor> (1));
+	//cout << "making floor : detail " << i << endl;
+	(floors.back())->constructFloor(input, index);
 }

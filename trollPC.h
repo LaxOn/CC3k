@@ -12,8 +12,7 @@ class TrollPC: public PC {
  	void attack(NPC& enemy) override;
  	void defendFrom(NPC& enemy) override;
  	void nextTurn() override;
-	TrollPC(int x, int y, Tile *t,
-		std::shared_ptr<Display> D);
+	TrollPC(int x, int y, Tile *t);
 	~TrollPC();
 };
 

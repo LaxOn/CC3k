@@ -12,8 +12,7 @@ class GoblinPC: public PC {
  	void attack(NPC& enemy) override;
  	void defendFrom(NPC& enemy) override;
  	void nextTurn() override;
-	GoblinPC(int x, int y, Tile *t,
-		std::shared_ptr<Display> D);
+	GoblinPC(int x, int y, Tile *t);
 	~GoblinPC();
 };
 

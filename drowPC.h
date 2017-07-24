@@ -12,8 +12,7 @@ class DrowPC: public PC{
  	void attack(NPC& enemy) override;
  	void defendFrom(NPC& enemy) override;
  	void nextTurn() override;
-	DrowPC(int x, int y, Tile *t,
-		std::shared_ptr<Display> D);
+	DrowPC(int x, int y, Tile *t);
 	~DrowPC();
 };
 

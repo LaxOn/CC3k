@@ -27,13 +27,12 @@ void ShadePC::nextTurn(){
 	this->notifyDisplay();
 }
 
-ShadePC::ShadePC(int x, int y, Tile *t, std::shared_ptr<Display> D) {
+ShadePC::ShadePC(int x, int y, Tile *t) {
 	this->setStats(125, 25, 25);
 	this->setMaxHP(125);
 	this->setType("ShadePC");
 	this->setCoords(x,y);
 	this->setTile(t);
-	this->attach(D);
 }
 
 ShadePC::~ShadePC() {}

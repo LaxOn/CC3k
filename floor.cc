@@ -23,6 +23,7 @@
 #include "dragonNPC.h"
 #include "merchantNPC.h"
 #include "halflingNPC.h"
+#include "shadePC.h"
 
 #include "restorehealth.h"
 #include "poisonhealth.h"
@@ -36,7 +37,7 @@ using namespace std;
 // constructor and destructors
 Floor::Floor(int position) :
 	position{position}, numChambers{5},
-	d{make_shared<Display>()}, f{make_shared<Factory> (d)},
+	d{make_shared<Display>()}, f{make_shared<Factory> (*d)},
 	maxPotion{10}, numPotion{0},
 	maxTreasure{10}, numTreasure{0},
 	maxEnemy{20}, numEnemy{0} {
@@ -186,105 +187,106 @@ void Floor::spawnTreasure() {
 void Floor::constructObject(int x, int y, char input) {
 	//cout << input << endl;
 	if (input == 'H') {
-		cout << "constructing 1" << endl;
+		//cout << "constructing 1" << endl;
 		tiles[x][y]->addNPC(make_shared<HumanNPC> (x, y, tiles[x][y].get()));
 		tiles[x][y]->setOccupy(true);
 		player->attach(tiles[x][y]->getNPC());
 		++numEnemy;
 	} else if (input == 'W') {
-		cout << "constructing 2" << endl;
+		//cout << "constructing 2" << endl;
 		tiles[x][y]->addNPC(make_shared<DwarfNPC> (x, y, tiles[x][y].get()));
 		tiles[x][y]->setOccupy(true);
 		player->attach(tiles[x][y]->getNPC());
 		++numEnemy;
 	} else if (input == 'E') {
-		cout << "constructing 3" << endl;
+		//cout << "constructing 3" << endl;
 		tiles[x][y]->addNPC(make_shared<ElfNPC> (x, y, tiles[x][y].get()));
 		tiles[x][y]->setOccupy(true);
 		player->attach(tiles[x][y]->getNPC());
 		++numEnemy;
 	} else if (input == 'O') {
-		cout << "constructing 4" << endl;
+		//cout << "constructing 4" << endl;
 		tiles[x][y]->addNPC(make_shared<OrcNPC> (x, y, tiles[x][y].get()));
 		tiles[x][y]->setOccupy(true);
 		player->attach(tiles[x][y]->getNPC());
 		++numEnemy;
 	} else if (input == 'M') {
-		cout << "constructing 5" << endl;
+		//cout << "constructing 5" << endl;
 		tiles[x][y]->addNPC(make_shared<MerchantNPC> (x, y, tiles[x][y].get()));
 		tiles[x][y]->setOccupy(true);
 		//cout << "DONE" << endl;
 		player->attach(tiles[x][y]->getNPC());
+		// player->attach(t.getNPC());
 		//cout << "DONE2" << endl;
 		++numEnemy;
 	} else if (input == 'D') {
-		cout << "constructing 6" << endl;
+		//cout << "constructing 6" << endl;
 		tiles[x][y]->addNPC(make_shared<DragonNPC> (x, y, tiles[x][y].get()));
 		tiles[x][y]->setOccupy(true);
 		player->attach(tiles[x][y]->getNPC());
 		++numEnemy;
 	} else if (input == 'L') {
-		cout << "constructing 7" << endl;
+		//cout << "constructing 7" << endl;
 		tiles[x][y]->addNPC(make_shared<HalflingNPC> (x, y, tiles[x][y].get()));
 		tiles[x][y]->setOccupy(true);
 		player->attach(tiles[x][y]->getNPC());
 		++numEnemy;
 	} else if (input == 'P') {
-		cout << "constructing 8" << endl;
+		//cout << "constructing 8" << endl;
 		//f->addPotion(getTile(x, y));
 		++numPotion;
 	} else if (input == '0') {
-		cout << "constructing 9" << endl;
+		//cout << "constructing 9" << endl;
 		tiles[x][y]->addObject(make_shared<RestoreHealth> (make_shared<BasicPotion>(0,"", true, x, y)));
 		tiles[x][y]->setOccupy(true);
 		++numPotion;
 	} else if (input == '1') {
-		cout << "constructing 10" << endl;
+		//cout << "constructing 10" << endl;
 		tiles[x][y]->addObject(make_shared<BoostAtk> (make_shared<BasicPotion>(0,"", true, x, y)));
 		tiles[x][y]->setOccupy(true);
 		++numPotion;
 	} else if (input == '2') {
-		cout << "constructing 11" << endl;
+		//cout << "constructing 11" << endl;
 		tiles[x][y]->addObject(make_shared<BoostDef> (make_shared<BasicPotion>(0,"", true, x, y)));
 		tiles[x][y]->setOccupy(true);
 		++numPotion;
 	} else if (input == '3') {
-		cout << "constructing 12" << endl;
+		//cout << "constructing 12" << endl;
 		tiles[x][y]->addObject(make_shared<PoisonHealth> (make_shared<BasicPotion>(0,"", true, x, y)));
 		tiles[x][y]->setOccupy(true);
 		++numPotion;
 	} else if (input == '4') {
-		cout << "constructing 13" << endl;
+		//cout << "constructing 13" << endl;
 		tiles[x][y]->addObject(make_shared<WoundAtk> (make_shared<BasicPotion>(0,"", true, x, y)));
 		tiles[x][y]->setOccupy(true);
 		++numPotion;
 	} else if (input == '5') {
-		cout << "constructing 14" << endl;
+		//cout << "constructing 14" << endl;
 		tiles[x][y]->addObject(make_shared<WoundDef> (make_shared<BasicPotion>(0,"", true, x, y)));
 		tiles[x][y]->setOccupy(true);
 		++numPotion;
 	} else if (input == 'G') {
-		cout << "constructing 15" << endl;
+		//cout << "constructing 15" << endl;
 		//f->addGold(getTile(x, y));
 		tiles[x][y]->setOccupy(true);
 		++numTreasure;
 	} else if (input == '6') {
-		cout << "constructing 16" << endl;
+		//cout << "constructing 16" << endl;
 		tiles[x][y]->addObject(make_shared<Gold>(2, x, y, false));
 		tiles[x][y]->setOccupy(true);
 		++numTreasure;
 	} else if (input == '7') {
-		cout << "constructing 17" << endl;
+		//cout << "constructing 17" << endl;
 		tiles[x][y]->addObject(make_shared<Gold>(1, x, y, false));
 		tiles[x][y]->setOccupy(true);
 		++numTreasure;
 	} else if (input == '8') {
-		cout << "constructing 18" << endl;
+		//cout << "constructing 18" << endl;
 		tiles[x][y]->addObject(make_shared<Gold>(4, x, y, false));
 		tiles[x][y]->setOccupy(true);
 		++numTreasure;
 	} else if (input == '9') {
-		cout << "constructing 19" << endl;
+		//cout << "constructing 19" << endl;
 		tiles[x][y]->addObject(make_shared<Gold>(6, x, y, true));
 		tiles[x][y]->setOccupy(true);
 		//
@@ -349,10 +351,12 @@ void Floor::constructFloor(istream &input, int start) {
 			} else if (line[j] == '+') {
 				tiles[i][j] = make_shared<Door> (make_shared<BasicTile> (i, j, *d));
 			} else if (line[j] == '@') {
-				hasPlayer = true;
 				tiles[i][j] = make_shared<BasicTile> (i, j, *d);
-				//f->addPC(*(tiles[i][j]));
-				player = (tiles[i][j]->getPC());
+				if (position == 1) {
+					hasPlayer = true;
+					tiles[i][j]->addPC(make_shared<ShadePC>(i,j, tiles[i][j].get()));
+					player = (tiles[i][j]->getPC());
+				}
 			} else if (line[j] == 92) {
 				hasStairs = true;
 				tiles[i][j] = make_shared<Stairs> (make_shared<BasicTile> (i, j, *d));
@@ -478,6 +482,11 @@ void Floor::constructFloor(istream &input, int start) {
 	// display setup
 	d->defaultFloor();
 	//cout << &d << endl;
+
+	if (position == 1) {
+		player->attach(*d);
+		cout << "the player is a " << player->getType() << endl;
+	}
 
 	// add all other Objects
 	input.clear();

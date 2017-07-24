@@ -15,8 +15,11 @@ char Object::getDisp() {
 }
 
 void Object::setTile(Tile *t) {
-											// change x and y from y
 	address = t;
+}
+
+Tile *Object::getTile() {
+	return address;
 }
 
 Info Object::getInfo() {

@@ -3,16 +3,16 @@
 #include <vector>
 #include <memory>
 #include "character.h"
+#include "display.h"
 
 class Potion;
 class NPC;
-class Display;
 class Gold;
 
 class PC: public Character{
   	std::vector<std::shared_ptr<NPC>> NPCs;
   	int numNPCs = 0;
-  	std::shared_ptr<Display> D;
+  	Display *D = nullptr;
 	int money = 0;
  public:
 	void useItem(int dir);
@@ -22,7 +22,7 @@ class PC: public Character{
 	void attach(std::shared_ptr<NPC> ob);
 	void detach(std::shared_ptr<NPC> ob);
 	void notifyNPCs();
-	void attach(std::shared_ptr<Display> D);
+	void attach(Display &D);
 	void notifyDisplay();
  	virtual void attack(NPC& enemy)=0;
  	virtual void defendFrom(NPC& enemy)=0;
@@ -31,3 +31,22 @@ class PC: public Character{
 };
 
 #endif
+
+
+/*
+takeNPC(Tile *) {}
+takePC(Tile *) {}
+t->moveObj(index);
+	std::shared_ptr<Tile> nb = getNeighbr(index);
+	if (PCobj) {
+		nb->takeNPC(this)
+	
+	} else if (NPCobj) {
+	
+	}
+			 	// calls Tile it currently in with the directions to go
+ 	// Tile call the neighbour
+ 	// set Nieghbours ptr to character
+ 	// oldTIle = nullptr
+ 	// newTile call character with itself
+*/

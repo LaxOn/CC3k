@@ -69,7 +69,7 @@ shared_ptr<NPC> Tile::getNPC() {
 
 void Tile::addPC(std::shared_ptr<PC> pc) {
 	PCobj = pc;
-	d->update(*this, pc->getType());
+	//d->update(*this, pc->getType());
 }
 
 shared_ptr<PC> Tile::getPC() {
