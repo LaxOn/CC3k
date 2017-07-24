@@ -10,7 +10,7 @@ class Display;
 class Gold;
 
 class PC: public Character{
-  	std::vector<NPC*> NPCs;
+  	std::vector<std::shared_ptr<NPC>> NPCs;
   	int numNPCs = 0;
   	std::shared_ptr<Display> D;
 	int money = 0;
@@ -19,8 +19,8 @@ class PC: public Character{
 	int getMoney();
 	void addMoney(int money);
 	void move(int dir);
-	void attach(NPC* ob);
-	void detach(NPC* ob);
+	void attach(std::shared_ptr<NPC> ob);
+	void detach(std::shared_ptr<NPC> ob);
 	void notifyNPCs();
 	void attach(std::shared_ptr<Display> D);
 	void notifyDisplay();

@@ -1,6 +1,5 @@
 #ifndef _TILE_H_
 #define _TILE_H_
-
 #include <vector>
 #include <memory>
 #include <string>
@@ -9,6 +8,8 @@
 class Object;
 class Tile;
 class Display;
+class NPC;
+class PC;
 
 class Tile {
 	int x;
@@ -25,6 +26,8 @@ protected:
 	std::shared_ptr<Display> d;
 	std::vector<std::shared_ptr<Object>> obj;
 	std::vector<std::shared_ptr<Tile>> neighbours;
+	std::shared_ptr<PC> PCobj;
+	std::shared_ptr<NPC> NPCobj;
 
 public:
 	// constructor and destructor
@@ -48,6 +51,12 @@ public:
 
 	int getChamberID();
 	void setChamberID(int id);
+
+	void addNPC(std::shared_ptr<NPC> npc);
+	std::shared_ptr<NPC> getNPC();
+
+	void addPC(std::shared_ptr<PC> pc);
+	std::shared_ptr<PC> getPC();
 	
 	virtual std::shared_ptr<Object> & getObject(int index);
 	virtual std::shared_ptr<Tile> & getNeighbr(int index);

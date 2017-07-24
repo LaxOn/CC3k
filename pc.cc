@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <vector>
+#include <memory>
 #include "pc.h"
 #include "npc.h"
 												// uncomment later
@@ -32,12 +33,12 @@ void PC::move(int dir) {
 }
 
 
-void PC::attach(NPC* ob) {
+void PC::attach(std::shared_ptr<NPC> ob) {
 	NPCs.emplace_back(ob);
 	++numNPCs;
 }
 
-void PC::detach(NPC* ob) {
+void PC::detach(std::shared_ptr<NPC> ob) {
 														// look at piazza if it's okay to use algorithm
 	auto it = std::find(NPCs.begin(), NPCs.end(), ob);
 	if (it != NPCs.end()) {

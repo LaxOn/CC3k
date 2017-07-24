@@ -54,6 +54,22 @@ int Tile::getChamberID() {
 void Tile::setChamberID(int id) {
 	chamberID = id;
 }
+
+void Tile::addNPC(std::shared_ptr<NPC> npc) {
+	NPCobj = npc;
+}
+
+std::shared_ptr<NPC> Tile::getNPC() {
+	return NPCobj;
+}
+
+void Tile::addPC(std::shared_ptr<PC> pc) {
+	PCobj = pc;
+}
+
+std::shared_ptr<PC> Tile::getPC() {
+	return PCobj;
+}
 	
 shared_ptr<Object> & Tile::getObject(int index) {
 	return obj[index];
@@ -77,5 +93,5 @@ int Tile::getType() {
 void Tile::moveObj(int direction) {}
 
 void Tile::notifyDisplay() {
-	d->update(*this, "?");
+	//d->update(*this, "?");
 }
