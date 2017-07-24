@@ -4,13 +4,15 @@ using namespace std;
 
 // constructor and destructor
 Passage::Passage(shared_ptr<BasicTile> base) :
-	TileDecorator{base} {}
+	TileDecorator{base} {
+		setOccupy(false);
+	}
 
 Passage::~Passage() {}
 
 // accessors and mutators
-shared_ptr<Object> & Passage::getObject(int index) {
-	return base->getObject(index);
+shared_ptr<Object> & Passage::getObject() {
+	return base->getObject();
 }
 
 shared_ptr<Tile> & Passage::getNeighbr(int index) {

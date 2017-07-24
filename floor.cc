@@ -1,5 +1,6 @@
 #include "floor.h"
 #include "display.h"
+#include "factory.h"
 #include "npc.h"
 #include "pc.h"
 #include "potion.h"
@@ -7,21 +8,38 @@
 #include "chamber.h"
 #include "tile.h"
 #include "basictile.h"
+#include "basicpotion.h"
 #include "tiledecorator.h"
 #include "passage.h"
 #include "stairs.h"
 #include "door.h"
 #include "wall.h"
 #include "none.h"
-#include <vector>
+
+#include "humanNPC.h"
+#include "dwarfNPC.h"
+#include "elfNPC.h"
+#include "orcNPC.h"
+#include "dragonNPC.h"
+#include "merchantNPC.h"
+#include "halflingNPC.h"
+
+#include "restorehealth.h"
+#include "poisonhealth.h"
+#include "boostatk.h"
+#include "woundatk.h"
+#include "boostdef.h"
+#include "wounddef.h"
 
 using namespace std;
 
 // constructor and destructors
 Floor::Floor(int position) :
-	//st{make_shared<Stairs>ptr}, player{make_shared<PC>ptr}, 
-	position{position}, d{make_shared<Display>()}, 
-	maxPotion{10}, maxEnemy{20} {
+	position{position}, numChambers{5},
+	d{make_shared<Display>()}, f{make_shared<Factory> (d)},
+	maxPotion{10}, numPotion{0},
+	maxTreasure{10}, numTreasure{0},
+	maxEnemy{20}, numEnemy{0} {
 	d->setFloor(this);
 	d->setFloorNum(this);
 }
@@ -65,37 +83,216 @@ Display & Floor::getDisplay() const {
 	return *d;
 }
 
-// other methods
-void Floor::constructFloor() {
-	// not sure if this is needed
+Factory & Floor::getFactory() const {
+	return *f;
 }
 
-void Floor::constructObject(int x, int y, char input) {
-	if (input == '@') {
+int Floor::getMaxPotion() {
+	return maxPotion;
+}
 
-	} else if (input == 'H') {
+int Floor::getNumPotion() {
+	return numPotion;
+}
 
-	} else if (input == 'W') {
+int Floor::getMaxTreasure() {
+	return maxTreasure;
+}
 
-	} else if (input == 'E') {
+int Floor::getNumTreasure() {
+	return numTreasure;
+}
 
-	} else if (input == 'O') {
+int Floor::getMaxEnemy() {
+	return maxEnemy;
+}
 
-	} else if (input == 'M') {
+int Floor::getNumEnemy() {
+	return numEnemy;
+}
 
-	} else if (input == 'D') {
+// all spawning functions
+void Floor::spawnPC() {
+	if (position == 1 && hasPlayer == false) {
+		int whichChamber = f->randInt(4);
+		chambers[whichChamber]->spawnPC(f);
 
-	} else if (input == 'L') {
-
-	} else if (input == 'P') {
-
-	} else if (input == 'G') {
-
-	} else if (input == 92) {
-		tiles[x][y] = make_shared<Stairs> ((make_shared<BasicTile> (x, y, d)));
-	} else {
-		tiles[x][y] = make_shared<BasicTile> (x, y, d);
+		int number_tiles = chambers[whichChamber]->getNumTiles();
+		for (int i = 0; i < number_tiles; ++i) {
+			if ((chambers[whichChamber]->getTile(i))->getPC() != nullptr) {
+				player = (chambers[whichChamber]->getTile(i))->getPC();
+				(chambers[whichChamber]->getTile(i))->setOccupy(true);
+			}
+		}
+		hasPlayer = true;
 	}
+}
+
+void Floor::spawnStairs() {
+	int whichChamber = 0;
+	bool do_not_spawn = false;
+	while (hasStairs == false) {
+		whichChamber = f->randInt(4);
+		int number_tiles = chambers[whichChamber]->getNumTiles();
+		for (int i = 0; i < number_tiles; ++i) {
+			if ((chambers[whichChamber]->getTile(i))->getPC() != nullptr) {
+				do_not_spawn = false;
+				break;
+			}
+		}
+		if (do_not_spawn == false) {
+			Info temp = (chambers[whichChamber]->getRandomTile(f).getInfo());
+			tiles[temp.x][temp.y] = make_shared<Stairs> (make_shared<BasicTile> (temp.x, temp.y, *d));
+			hasStairs = true;
+			break;
+		}
+	}
+}
+
+void Floor::spawnEnemy() {
+	int whichChamber = 0;
+
+	while (numEnemy < maxEnemy) {
+		whichChamber = f->randInt(4);
+
+		chambers[whichChamber]->spawnEnemy(f);
+		++numEnemy;
+	}
+}
+
+void Floor::spawnPotion() {
+	int whichChamber = 0;
+
+	while (numPotion < maxPotion) {
+		whichChamber = f->randInt(4);
+
+		chambers[whichChamber]->spawnPotion(f);
+		++numPotion;
+	}
+}
+
+void Floor::spawnTreasure() {
+	int whichChamber = 0;
+
+	while (numTreasure < maxTreasure) {
+		whichChamber = f->randInt(4);
+
+		chambers[whichChamber]->spawnGold(f);
+		++numTreasure;
+	}
+}
+
+// other methods
+void Floor::constructObject(int x, int y, char input) {
+	//cout << input << endl;
+	if (input == 'H') {
+		cout << "constructing 1" << endl;
+		tiles[x][y]->addNPC(make_shared<HumanNPC> (x, y, tiles[x][y].get()));
+		tiles[x][y]->setOccupy(true);
+		player->attach(tiles[x][y]->getNPC());
+		++numEnemy;
+	} else if (input == 'W') {
+		cout << "constructing 2" << endl;
+		tiles[x][y]->addNPC(make_shared<DwarfNPC> (x, y, tiles[x][y].get()));
+		tiles[x][y]->setOccupy(true);
+		player->attach(tiles[x][y]->getNPC());
+		++numEnemy;
+	} else if (input == 'E') {
+		cout << "constructing 3" << endl;
+		tiles[x][y]->addNPC(make_shared<ElfNPC> (x, y, tiles[x][y].get()));
+		tiles[x][y]->setOccupy(true);
+		player->attach(tiles[x][y]->getNPC());
+		++numEnemy;
+	} else if (input == 'O') {
+		cout << "constructing 4" << endl;
+		tiles[x][y]->addNPC(make_shared<OrcNPC> (x, y, tiles[x][y].get()));
+		tiles[x][y]->setOccupy(true);
+		player->attach(tiles[x][y]->getNPC());
+		++numEnemy;
+	} else if (input == 'M') {
+		cout << "constructing 5" << endl;
+		tiles[x][y]->addNPC(make_shared<MerchantNPC> (x, y, tiles[x][y].get()));
+		tiles[x][y]->setOccupy(true);
+		//cout << "DONE" << endl;
+		player->attach(tiles[x][y]->getNPC());
+		//cout << "DONE2" << endl;
+		++numEnemy;
+	} else if (input == 'D') {
+		cout << "constructing 6" << endl;
+		tiles[x][y]->addNPC(make_shared<DragonNPC> (x, y, tiles[x][y].get()));
+		tiles[x][y]->setOccupy(true);
+		player->attach(tiles[x][y]->getNPC());
+		++numEnemy;
+	} else if (input == 'L') {
+		cout << "constructing 7" << endl;
+		tiles[x][y]->addNPC(make_shared<HalflingNPC> (x, y, tiles[x][y].get()));
+		tiles[x][y]->setOccupy(true);
+		player->attach(tiles[x][y]->getNPC());
+		++numEnemy;
+	} else if (input == 'P') {
+		cout << "constructing 8" << endl;
+		//f->addPotion(getTile(x, y));
+		++numPotion;
+	} else if (input == '0') {
+		cout << "constructing 9" << endl;
+		tiles[x][y]->addObject(make_shared<RestoreHealth> (make_shared<BasicPotion>(0,"", true, x, y)));
+		tiles[x][y]->setOccupy(true);
+		++numPotion;
+	} else if (input == '1') {
+		cout << "constructing 10" << endl;
+		tiles[x][y]->addObject(make_shared<BoostAtk> (make_shared<BasicPotion>(0,"", true, x, y)));
+		tiles[x][y]->setOccupy(true);
+		++numPotion;
+	} else if (input == '2') {
+		cout << "constructing 11" << endl;
+		tiles[x][y]->addObject(make_shared<BoostDef> (make_shared<BasicPotion>(0,"", true, x, y)));
+		tiles[x][y]->setOccupy(true);
+		++numPotion;
+	} else if (input == '3') {
+		cout << "constructing 12" << endl;
+		tiles[x][y]->addObject(make_shared<PoisonHealth> (make_shared<BasicPotion>(0,"", true, x, y)));
+		tiles[x][y]->setOccupy(true);
+		++numPotion;
+	} else if (input == '4') {
+		cout << "constructing 13" << endl;
+		tiles[x][y]->addObject(make_shared<WoundAtk> (make_shared<BasicPotion>(0,"", true, x, y)));
+		tiles[x][y]->setOccupy(true);
+		++numPotion;
+	} else if (input == '5') {
+		cout << "constructing 14" << endl;
+		tiles[x][y]->addObject(make_shared<WoundDef> (make_shared<BasicPotion>(0,"", true, x, y)));
+		tiles[x][y]->setOccupy(true);
+		++numPotion;
+	} else if (input == 'G') {
+		cout << "constructing 15" << endl;
+		//f->addGold(getTile(x, y));
+		tiles[x][y]->setOccupy(true);
+		++numTreasure;
+	} else if (input == '6') {
+		cout << "constructing 16" << endl;
+		tiles[x][y]->addObject(make_shared<Gold>(2, x, y, false));
+		tiles[x][y]->setOccupy(true);
+		++numTreasure;
+	} else if (input == '7') {
+		cout << "constructing 17" << endl;
+		tiles[x][y]->addObject(make_shared<Gold>(1, x, y, false));
+		tiles[x][y]->setOccupy(true);
+		++numTreasure;
+	} else if (input == '8') {
+		cout << "constructing 18" << endl;
+		tiles[x][y]->addObject(make_shared<Gold>(4, x, y, false));
+		tiles[x][y]->setOccupy(true);
+		++numTreasure;
+	} else if (input == '9') {
+		cout << "constructing 19" << endl;
+		tiles[x][y]->addObject(make_shared<Gold>(6, x, y, true));
+		tiles[x][y]->setOccupy(true);
+		//
+		// come back to this tomorrow: how to attach to Dragon! especially
+		// if Dragon spawns before or after?
+		++numTreasure;
+	}
+
 }
 
 void Floor::oneChamber(int id, shared_ptr<Tile> t) {
@@ -139,22 +336,35 @@ void Floor::constructFloor(istream &input, int start) {
 	for (int i = 0; i < 25; ++i) {
 		tiles[i].resize(79);
 		getline(input, line);
+		//cout << line << endl;
 		for (int j = 0; j < 79; ++j) {
 			if (line[j] == '|') {
-				tiles[i][j] = make_shared<Wall> ((make_shared<BasicTile> (i, j, d)), 1);
+				tiles[i][j] = make_shared<Wall> ((make_shared<BasicTile> (i, j, *d)), 1);
 			} else if (line[j] == ' ') {
-				tiles[i][j] = make_shared<None> ((make_shared<BasicTile> (i, j, d)));
+				tiles[i][j] = make_shared<None> (make_shared<BasicTile> (i, j, *d));
 			} else if (line[j] == '-') {
-				tiles[i][j] = make_shared<Wall> ((make_shared<BasicTile> (i, j, d)), 0);
+				tiles[i][j] = make_shared<Wall> ((make_shared<BasicTile> (i, j, *d)), 0);
 			} else if (line[j] == '#') {
-				tiles[i][j] = make_shared<Passage> ((make_shared<BasicTile> (i, j, d)));
+				tiles[i][j] = make_shared<Passage> (make_shared<BasicTile> (i, j, *d));
 			} else if (line[j] == '+') {
-				tiles[i][j] = make_shared<Door> ((make_shared<BasicTile> (i, j, d)));
+				tiles[i][j] = make_shared<Door> (make_shared<BasicTile> (i, j, *d));
+			} else if (line[j] == '@') {
+				hasPlayer = true;
+				tiles[i][j] = make_shared<BasicTile> (i, j, *d);
+				//f->addPC(*(tiles[i][j]));
+				player = (tiles[i][j]->getPC());
+			} else if (line[j] == 92) {
+				hasStairs = true;
+				tiles[i][j] = make_shared<Stairs> (make_shared<BasicTile> (i, j, *d));
 			} else {
-				Floor::constructObject(i, j, line[i]);
+				tiles[i][j] = make_shared<BasicTile> (i, j, *d);
 			}
 		}
 	}
+
+	//cout << "basic floor constructed" << endl;
+
+	//cout << "objects from file spawned" << endl;
 
 	// setting up neigbours for all Tiles
 	for (int i = 0; i < 25; ++i) {
@@ -256,15 +466,54 @@ void Floor::constructFloor(istream &input, int start) {
 		}
 	}
 
+	//cout << "neighbour setup completed" << endl;
+
 	// construct chamber;
-	constructChamber(1);
-	constructChamber(2);
-	constructChamber(3);
-	constructChamber(4);
-	constructChamber(5);
+	for (int i = 1; i <= numChambers; ++i) {
+		constructChamber(i);
+	}
+
+	//cout << "chamber construction completed" << endl;
 
 	// display setup
 	d->defaultFloor();
+	//cout << &d << endl;
+
+	// add all other Objects
+	input.clear();
+	input.seekg(start, ios::beg);
+	for (int i = 0; i < 25; ++i) {
+		getline(input, line);
+		for (int j = 0; j < 79; ++j) {
+			//cout << "tracker" << endl;
+			if (line[j] == '|' ||
+				line[j] == ' ' ||
+				line[j] == '-' ||
+				line[j] == '#' ||
+				line[j] == '.' ||
+				line[j] == '@' ||
+				line[j] == 92) {
+				continue;
+			} else {
+				//cout << "next object is " << line[j] << endl;
+				Floor::constructObject(i, j, line[j]);
+			}
+		}
+	}
+
+	//cout << "all completed except spawn" << endl;
+
+	// spawning all Objects necessary for one Floor
+	spawnPC();
+	//cout << "player spawned" << endl;
+	spawnStairs();
+	//cout << "stairs spawned" << endl;
+	spawnEnemy();
+	//cout << "enemy spawned" << endl;
+	spawnPotion();
+	//cout << "potions spawned" << endl;
+	spawnTreasure();
+	//cout << "treasure spawned" << endl;
 
 	// testing neighbours
 	/*

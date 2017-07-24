@@ -6,8 +6,9 @@ using namespace std;
 // constructor and destructor
 RestoreHealth::RestoreHealth(shared_ptr<BasicPotion> base) :
 	PotionDecorator{base}, health{10} {
-		lifetime = true;
-	}
+	lifetime = true;
+	setDisp('P');
+}
 
 RestoreHealth::~RestoreHealth() {}
 
@@ -21,7 +22,6 @@ void RestoreHealth::resetEffect(PC &pc) {}
 int RestoreHealth::getHealth() {
 	return health;
 }
-
 
 // other methods
 void RestoreHealth::useItem(PC &pc) {

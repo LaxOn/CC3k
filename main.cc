@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <memory>
 #include <vector>
 
@@ -8,9 +9,24 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
 	// setting up file input
-	ifstream floorplaninput{"default-floor.txt"};
+	string fileName;
+
+	if (argc == 1) {
+		fileName = "default-floor.txt";
+	} else if (argc == 2) {
+		istringstream readFloorName{argv[1]};
+
+		readFloorName >> fileName;
+	} else {
+		cout << "Incorrect number of arguments" << endl;
+		return 1;
+	}
+
+	ifstream floorplaninput{fileName};
+
+	string testString;
 
 	// making new Game object
 	auto current_game = make_unique<Game> (floorplaninput);

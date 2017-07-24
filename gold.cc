@@ -8,13 +8,14 @@ Gold::Gold(int value, int x, int y, bool dragonHoard) :
 	dragonHoard{dragonHoard}, npc{nullptr} {
 	this->setCoords(x, y);
 	this->setValue(value);
+	setDisp('G');
 }
 
 Gold::~Gold() {}
 
 // accessors and mutators
-std::string Gold::getDescript() {
-	return description;
+string Gold::getDescript() {
+	return "Gold";
 }
 
 bool Gold::getDrgn() {

@@ -4,13 +4,15 @@ using namespace std;
 
 // constructor and destructor
 Door::Door(shared_ptr<BasicTile> base) :
-	TileDecorator{base} {}
+	TileDecorator{base} {
+		setOccupy(false);
+	}
 
 Door::~Door() {}
 
 // accessors and mutators
-shared_ptr<Object> & Door::getObject(int index) {
-	return base->getObject(index);
+shared_ptr<Object> & Door::getObject() {
+	return base->getObject();
 }
 
 shared_ptr<Tile> & Door::getNeighbr(int index) {

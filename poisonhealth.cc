@@ -7,6 +7,7 @@ using namespace std;
 PoisonHealth::PoisonHealth(shared_ptr<BasicPotion> base) :
 	PotionDecorator{base}, health{-10} {
 		lifetime = true;
+		setDisp('P');
 	}
 
 PoisonHealth::~PoisonHealth() {}
@@ -27,4 +28,3 @@ int PoisonHealth::getHealth() {
 void PoisonHealth::useItem(PC &pc) {
 		pc.changeHP(health, true);
 }
-

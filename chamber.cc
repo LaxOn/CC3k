@@ -23,16 +23,6 @@ shared_ptr<Tile> & Chamber::getTile(int index) {
 	return tiles[index];
 }
 
-/*
-shared_ptr<Tile> & Chamber::getTile(int x, int y) {
-	Info result;
-	for (int i = 0; i < numTiles; ++i) {
-		result = tiles[i]->getInfo();
-		if (result.x == x && result.y == y) return tiles[i];
-	}
-}
-*/
-
 //std::shared_ptr<Stairs> & getStairs(int index);
 
 shared_ptr<NPC> & Chamber::getNPC(int index) {
@@ -51,6 +41,10 @@ shared_ptr<Gold> & Chamber::getGold(int index) {
 
 int Chamber::getPosition() {
 	return position;
+}
+
+int Chamber::getNumTiles() {
+	return numTiles;
 }
 
 int Chamber::getNumPotion() {
@@ -73,23 +67,42 @@ void Chamber::setHasStairs(bool b) {
 	hasStairs = b;
 }
 
-shared_ptr<Factory> & Chamber::getFactory() {
-	return f;
-}
-
 // other methods
-//shared_ptr<Tile> & Chamber::getRandomTile() {
-//
-// }
+Tile &Chamber::getRandomTile(shared_ptr<Factory> f) {
+	int unoccupied = 0;
+	for (int i = 0; i < numTiles; ++i) {
+		if (tiles[i]->getOccupy() == 0) ++unoccupied;
+	}
 
-void Chamber::spawnEnemy() {
-	//f->addEnemy(getRandomTile());
+	int whichOne = f->randInt(unoccupied - 1);
+
+	int index = 0;
+	while (index < numTiles && whichOne > 0) {
+		if (tiles[index]->getOccupy() == 0) --whichOne;
+		++index;
+	}
+	//cout << "random tile chosen" << endl;
+	return *tiles[index];
 }
 
-void Chamber::spawnPotion() {
-
+void Chamber::spawnPC(shared_ptr<Factory> f) {
+	//f->addPC(getRandomTile(f));
 }
 
-void Chamber::spawnGold() {
+void Chamber::spawnEnemy(std::shared_ptr<Factory> f) {
+	//cout << "spawning enemy" << endl;
+	//f->addEnemy(getRandomTile(f));
+	++numEnemy;
+}
 
+void Chamber::spawnPotion(std::shared_ptr<Factory> f) {
+	//cout << "spawning potion" << endl;
+	//f->addPotion(getRandomTile(f));
+	++numPotion;
+}
+
+void Chamber::spawnGold(std::shared_ptr<Factory> f) {
+	//cout << "spawning gold" << endl;
+	//f->addGold(getRandomTile(f));
+	++numTreasure;
 }

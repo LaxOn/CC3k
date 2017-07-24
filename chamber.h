@@ -36,8 +36,6 @@ class Chamber {
 
 	bool hasStairs = false;
 
-	std::shared_ptr<Factory> f;
-
 public:
 	// accessors and mutators
 	Chamber(int position);
@@ -56,6 +54,7 @@ public:
 	//std::shared_ptr<PC> & getPlayer();
 
 	int getPosition();
+	int getNumTiles();
 
 	int getNumPotion();
 	int getNumTreasure();
@@ -67,10 +66,11 @@ public:
 	std::shared_ptr<Factory> & getFactory();
 
 	// other methods
-	std::shared_ptr<Tile> & getRandomTile();
-	void spawnEnemy();
-	void spawnPotion();
-	void spawnGold();
+	Tile &getRandomTile(std::shared_ptr<Factory> f);
+	void spawnPC(std::shared_ptr<Factory> f);
+	void spawnEnemy(std::shared_ptr<Factory> f);
+	void spawnPotion(std::shared_ptr<Factory> f);
+	void spawnGold(std::shared_ptr<Factory> f);
 };
 
 #endif

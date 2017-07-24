@@ -4,13 +4,15 @@ using namespace std;
 
 // constructor and destructor
 Stairs::Stairs(shared_ptr<BasicTile> base) :
-	TileDecorator{base} {}
+	TileDecorator{base} {
+		setOccupy(true);
+	}
 
 Stairs::~Stairs() {}
 
 // accessors and mutators
-shared_ptr<Object> & Stairs::getObject(int index) {
-	return base->getObject(index);
+shared_ptr<Object> & Stairs::getObject() {
+	return base->getObject();
 }
 
 shared_ptr<Tile> & Stairs::getNeighbr(int index) {

@@ -3,6 +3,7 @@
 
 #include "potiondecorator.h"
 #include "basicpotion.h"
+#include <string>
 
 class BoostDef: public PotionDecorator {
 	int defense;

@@ -7,6 +7,7 @@ using namespace std;
 BoostAtk::BoostAtk(shared_ptr<BasicPotion> base) :
 	PotionDecorator{base}, attack{5} {
 		lifetime = false;
+		setDisp('P');
 	}
 
 BoostAtk::~BoostAtk() {}
@@ -29,4 +30,3 @@ int BoostAtk::getAttack() {
 void BoostAtk::useItem(PC &pc) {
 	pc.changeAtk(attack);
 }
-

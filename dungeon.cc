@@ -29,7 +29,7 @@ void Dungeon::constructFloor() {
 */
 
 void Dungeon::constructFloor(istream &input) {
-	int index = 1;
+	int index = 0;
 	for (int i = 1; i <= 5; ++i) {
 		floors.emplace_back(make_shared<Floor> (i));
 		//cout << "making floor : detail " << i << endl;

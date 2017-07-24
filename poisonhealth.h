@@ -3,6 +3,7 @@
 
 #include "potiondecorator.h"
 #include "basicpotion.h"
+#include <string>
 
 class PoisonHealth: public PotionDecorator {
 	int health;

@@ -23,7 +23,7 @@ class Tile {
 	int chamberID = 0; // identifies which Chamber this Tile is in.
 
 protected:
-	std::shared_ptr<Display> d;
+	Display *d;
 	std::vector<std::shared_ptr<Object>> obj;
 	std::vector<std::shared_ptr<Tile>> neighbours;
 	std::shared_ptr<PC> PCobj;
@@ -44,7 +44,7 @@ public:
 	bool getDragonHoard();
 	void setDragonHoard(bool inp);
 
-	void setDisplay(std::shared_ptr<Display> dply);
+	void setDisplay(Display &d);
 
 	bool getSideWall();
 	void setSideWall(bool b);
@@ -58,7 +58,7 @@ public:
 	void addPC(std::shared_ptr<PC> pc);
 	std::shared_ptr<PC> getPC();
 	
-	virtual std::shared_ptr<Object> & getObject(int index);
+	virtual std::shared_ptr<Object> & getObject();
 	virtual std::shared_ptr<Tile> & getNeighbr(int index);
 
 	// other methods

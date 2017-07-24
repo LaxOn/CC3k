@@ -1,6 +1,7 @@
 #include "display.h"
 #include "tile.h"
 #include "pc.h"
+#include "info.h"
 
 using namespace std;
 
@@ -78,6 +79,7 @@ void Display::defaultFloor() {
 		for (int j = 0; j < 79; ++j) {
 			if ((f->getTile(i, j))->getType() == 0) {
 				// testing Chamber setup
+				/*
 				int c_id = (f->getTile(i, j))->getChamberID();
 				//cout << c_id << endl;
 				if (c_id == 1) {
@@ -93,7 +95,8 @@ void Display::defaultFloor() {
 				} else {
 					board[i][j] = '.';
 				}
-				//board[i][j] = '.';
+				*/
+				board[i][j] = '.';
 			} else if ((f->getTile(i, j))->getType() == 1) {
 				board[i][j] = '#';
 			} else if ((f->getTile(i, j))->getType() == 2) {
@@ -131,8 +134,38 @@ void Display::displayStats() {
 	cout << "Action: " << action << endl;
 }
 	
-void Display::update(Tile &, std::string str) {
-	// to be implemented later
+void Display::update(Tile & t, std::string str) {
+	//cout << "display update runs" << endl;
+	Info temp = t.getInfo();
+	int x = temp.x;
+	int y = temp.y;
+
+	cout << "the object is " << str << endl;
+	cout << x << " " << y << endl;
+	cout << board[x][y] << endl;
+
+	if (str == "Player") {
+		board[x][y] = '@';
+	} else if (str == "HumanNPC") {
+		board[x][y] = 'H';
+	} else if (str == "DwarfNPC") {
+		board[x][y] = 'W';
+	} else if (str == "ElfNPC") {
+		board[x][y] = 'E';
+	} else if (str == "OrcNPC") {
+		board[x][y] = 'O';
+	} else if (str == "MerchantNPC") {
+		board[x][y] = 'M';
+	} else if (str == "DragonNPC") {
+		board[x][y] = 'D';
+	} else if (str == "HalfingNPC") {
+		board[x][y] = 'L';
+	} else if (str == "P") {
+		board[x][y] = 'P';
+	} else if (str == "G") {
+		board[x][y] = 'G';
+	} 
+	//cout << "tracker!!!" << endl;
 }
 
 void Display::update(PC *pc) {

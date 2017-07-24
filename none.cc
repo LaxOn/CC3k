@@ -4,13 +4,15 @@ using namespace std;
 
 // constructor and destructor
 None::None(shared_ptr<BasicTile> base) :
-	TileDecorator{base} {}
+	TileDecorator{base} {
+		setOccupy(true);
+	}
 
 None::~None() {}
 
 // accessors and mutators
-shared_ptr<Object> & None::getObject(int index) {
-	return base->getObject(index);
+shared_ptr<Object> & None::getObject() {
+	return base->getObject();
 }
 
 shared_ptr<Tile> & None::getNeighbr(int index) {

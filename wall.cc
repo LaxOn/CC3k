@@ -5,14 +5,15 @@ using namespace std;
 // constructor and destructor
 Wall::Wall(shared_ptr<BasicTile> base, bool sideWall) :
 	TileDecorator{base} {
+	setOccupy(true);
 	setSideWall(sideWall);
 }
 
 Wall::~Wall() {}
 
 // accessors and mutators
-shared_ptr<Object> & Wall::getObject(int index) {
-	return base->getObject(index);
+shared_ptr<Object> & Wall::getObject() {
+	return base->getObject();
 }
 
 shared_ptr<Tile> & Wall::getNeighbr(int index) {

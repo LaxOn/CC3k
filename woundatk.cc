@@ -7,6 +7,7 @@ using namespace std;
 WoundAtk::WoundAtk(shared_ptr<BasicPotion> base) :
 	PotionDecorator{base}, attack{-5} {
 		lifetime = false;
+		setDisp('P');
 	}
 
 WoundAtk::~WoundAtk() {}

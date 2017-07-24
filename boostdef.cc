@@ -7,6 +7,7 @@ using namespace std;
 BoostDef::BoostDef(shared_ptr<BasicPotion> base) :
 	PotionDecorator{base}, defense{5} {
 		lifetime = false;
+		setDisp('P');
 	}
 
 BoostDef::~BoostDef() {}

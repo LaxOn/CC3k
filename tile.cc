@@ -1,5 +1,7 @@
 #include "tile.h"
 #include "display.h"
+#include "npc.h"
+#include "pc.h"
 
 using namespace std;
 
@@ -35,8 +37,8 @@ void Tile::setDragonHoard(bool inp) {
 	this->dragonHoard = inp;
 }
 
-void Tile::setDisplay(shared_ptr<Display> dply) {
-	this->d = d;
+void Tile::setDisplay(Display &d) {
+	this->d = &d;
 }
 
 bool Tile::getSideWall() {
@@ -55,24 +57,27 @@ void Tile::setChamberID(int id) {
 	chamberID = id;
 }
 
-void Tile::addNPC(std::shared_ptr<NPC> npc) {
+void Tile::addNPC(shared_ptr<NPC> npc) {
 	NPCobj = npc;
+	d->update(*this, npc->getType());
+	//cout << "update is done " << endl;
 }
 
-std::shared_ptr<NPC> Tile::getNPC() {
+shared_ptr<NPC> Tile::getNPC() {
 	return NPCobj;
 }
 
 void Tile::addPC(std::shared_ptr<PC> pc) {
 	PCobj = pc;
+	d->update(*this, pc->getType());
 }
 
-std::shared_ptr<PC> Tile::getPC() {
+shared_ptr<PC> Tile::getPC() {
 	return PCobj;
 }
 	
-shared_ptr<Object> & Tile::getObject(int index) {
-	return obj[index];
+shared_ptr<Object> & Tile::getObject() {
+	return obj[0];
 }
 
 shared_ptr<Tile> & Tile::getNeighbr(int index) {

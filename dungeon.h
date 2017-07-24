@@ -21,7 +21,8 @@ public:
 
 	// other methods
 	//void constructFloor(); // Floor construction without input file
-	void constructFloor(std::istream &input); // Floor construction
+	void constructFloor(std::istream &input); 
+													// Floor construction
 													// with input file
 };
 
