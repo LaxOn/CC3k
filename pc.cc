@@ -4,17 +4,17 @@
 #include <iostream>
 #include "pc.h"
 #include "npc.h"
-#include "display.h"					
+#include "display.h"
+#include "tile.h"				
 
 void PC::useItem(int dir) {
-	/*
 	Tile *t = this->getTile();
 	std::shared_ptr<Tile> nb = t->getNeighbr(dir);
 	if ((!nb->getType()) && nb->getOccupy() &&
-		(nb->getObject(0))->getDisp()=='P') {
-			t->useObj(index);
+		(nb->getObject())->getDisp()=='P') {
+			t->useItemOn(dir, *this);
 	} // else throw an exception because there are no potions there 
-*/}
+}
 
 void PC::addMoney(int money) {
 	this->money += money;
@@ -23,22 +23,16 @@ void PC::addMoney(int money) {
 int PC::getMoney() { return money; }
 
 void PC::move(int dir) {
-	/*
+	
 	Tile *t = this->getTile();
 	std::shared_ptr<Tile> nb = t->getNeighbr(dir);
-	if (nb->getType()<=3 && !nb->getOccupy()) t->moveObj(index);
+	if (nb->getType()<=3 && !nb->getOccupy()) t->moveObj(dir);
 	// else throw an exception because it can't go there;
-*/}
+}
 
 void PC::attach(std::shared_ptr<NPC> ob) {
+	NPCs.emplace_back(ob);
 	++numNPCs;
-	//std::cout << "attaching NPC" <<std::endl;
-	NPCs.resize(numNPCs);
-
-	//std::cout << "resizing NPC" <<std::endl;
-	NPCs.back() = ob;
-
-	//std::cout << "vector stuff" <<std::endl;
 }
 
 void PC::detach(std::shared_ptr<NPC> ob) {

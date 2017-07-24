@@ -11,7 +11,7 @@ Door::Door(shared_ptr<BasicTile> base) :
 Door::~Door() {}
 
 // accessors and mutators
-shared_ptr<Object> & Door::getObject() {
+shared_ptr<Item> & Door::getObject() {
 	return base->getObject();
 }
 
@@ -20,7 +20,7 @@ shared_ptr<Tile> & Door::getNeighbr(int index) {
 }
 
 // other methods
-void Door::addObject(shared_ptr<Object> o) {
+void Door::addObject(shared_ptr<Item> o) {
 	base->addObject(o);
 }
 

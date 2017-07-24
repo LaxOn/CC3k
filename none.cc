@@ -11,7 +11,7 @@ None::None(shared_ptr<BasicTile> base) :
 None::~None() {}
 
 // accessors and mutators
-shared_ptr<Object> & None::getObject() {
+shared_ptr<Item> & None::getObject() {
 	return base->getObject();
 }
 
@@ -20,7 +20,7 @@ shared_ptr<Tile> & None::getNeighbr(int index) {
 }
 
 // other methods
-void None::addObject(shared_ptr<Object> o) {
+void None::addObject(shared_ptr<Item> o) {
 	base->addObject(o);
 }
 

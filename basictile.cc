@@ -15,8 +15,8 @@ BasicTile::BasicTile(int x, int y, Display &dply) {
 BasicTile::~BasicTile() {}
 
 // accessors and mutators
-shared_ptr<Object> & BasicTile::getObject() {
-	return obj[0];
+shared_ptr<Item> & BasicTile::getObject() {
+	return obj;
 }
 
 shared_ptr<Tile> & BasicTile::getNeighbr(int index) {
@@ -24,27 +24,23 @@ shared_ptr<Tile> & BasicTile::getNeighbr(int index) {
 }
 
 // other methods
-void BasicTile::addObject(shared_ptr<Object> o) {
-	obj.resize(1);
-
-	obj[0] = o;
-
+void BasicTile::addObject(shared_ptr<Item> o) {
+	obj = o;
 	char temp = (this->getObject())->getDisp();
 	string s(1, temp);
-
-	//cout << "the object is " << obj[0]->getDisp() << endl;
-	//cout << "the string is " << s << endl;
-
-	//cout << &d << endl;
 	d->update(*this, s);
 }
+
+
+
+
 
 void BasicTile::addNeighbr(shared_ptr<Tile> t) {
 	neighbours.push_back(t);
 }
 
 void BasicTile::killObject() {
-	obj.pop_back();
+	obj.reset();
 }
 
 void BasicTile::moveObj(int direction) {

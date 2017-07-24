@@ -11,7 +11,7 @@ Passage::Passage(shared_ptr<BasicTile> base) :
 Passage::~Passage() {}
 
 // accessors and mutators
-shared_ptr<Object> & Passage::getObject() {
+shared_ptr<Item> & Passage::getObject() {
 	return base->getObject();
 }
 
@@ -20,7 +20,7 @@ shared_ptr<Tile> & Passage::getNeighbr(int index) {
 }
 
 // other methods
-void Passage::addObject(shared_ptr<Object> o) {
+void Passage::addObject(shared_ptr<Item> o) {
 	base->addObject(o);
 }
 

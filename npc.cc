@@ -3,14 +3,14 @@
 #include "npc.h"
 #include "pc.h"
 #include "factory.h"
+#include "tile.h"
 
 void NPC::move() {
-	/*
 	if (canMove) {
 		Tile *t = this->getTile();
 		int count = 0;
-		std::shared_ptr<Tile> nb 
-		for(i=0; i<=7; ++i) {
+		std::shared_ptr<Tile> nb;
+		for(int i=0; i<=7; ++i) {
 			nb = t->getNeighbr(i);
 			if (!nb->getType() && !nb->getOccupy()) ++count;
 		}
@@ -27,7 +27,6 @@ void NPC::move() {
 			t->moveObj(index);
 		} // else there's no space to move out of
 	} // can't move so stays in the same place
-	*/
 }
 
 bool NPC::pcInRange() { return attackPC; }

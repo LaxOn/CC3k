@@ -12,7 +12,7 @@ Wall::Wall(shared_ptr<BasicTile> base, bool sideWall) :
 Wall::~Wall() {}
 
 // accessors and mutators
-shared_ptr<Object> & Wall::getObject() {
+shared_ptr<Item> & Wall::getObject() {
 	return base->getObject();
 }
 
@@ -21,7 +21,7 @@ shared_ptr<Tile> & Wall::getNeighbr(int index) {
 }
 
 // other methods
-void Wall::addObject(shared_ptr<Object> o) {
+void Wall::addObject(shared_ptr<Item> o) {
 	base->addObject(o);
 }
 

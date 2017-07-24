@@ -11,7 +11,7 @@ Stairs::Stairs(shared_ptr<BasicTile> base) :
 Stairs::~Stairs() {}
 
 // accessors and mutators
-shared_ptr<Object> & Stairs::getObject() {
+shared_ptr<Item> & Stairs::getObject() {
 	return base->getObject();
 }
 
@@ -20,7 +20,7 @@ shared_ptr<Tile> & Stairs::getNeighbr(int index) {
 }
 
 // other methods
-void Stairs::addObject(shared_ptr<Object> o) {
+void Stairs::addObject(shared_ptr<Item> o) {
 	base->addObject(o);
 }
 

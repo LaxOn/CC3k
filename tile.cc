@@ -1,6 +1,7 @@
 #include "tile.h"
 #include "display.h"
 #include "npc.h"
+#include "potion.h"
 #include "pc.h"
 
 using namespace std;
@@ -57,6 +58,41 @@ void Tile::setChamberID(int id) {
 	chamberID = id;
 }
 
+									// where does display go
+void Tile::stealNPC(Tile *t) {
+	addNPC(t->getNPC());
+	setOccupy(true);
+	(t->getNPC()).reset();
+	t->setOccupy(false);
+}
+
+void Tile::stealPC(Tile *t) {
+	addNPC(t->getNPC());
+	setOccupy(true);
+	(t->getPC()).reset();
+	t->setOccupy(false);
+}
+
+void Tile::moveObj(int dir) {
+	std::shared_ptr<Tile> nb = getNeighbr(dir);
+	if (PCobj) nb->stealPC(this);
+	else if (NPCobj) nb->stealNPC(this);
+
+	//d->update(*this, s);
+	// else throw an exception
+}
+
+void Tile::useItemOn(int dir, PC &pc) {
+	std::shared_ptr<Tile> nb = getNeighbr(dir);
+	nb->useItemTo(pc);
+}
+
+void Tile::useItemTo(PC &pc) {
+	getObject()->useItem(pc);
+	getObject().reset();
+	setOccupy(false);
+}
+
 void Tile::addNPC(shared_ptr<NPC> npc) {
 	NPCobj = npc;
 	d->update(*this, npc->getType());
@@ -76,8 +112,8 @@ shared_ptr<PC> Tile::getPC() {
 	return PCobj;
 }
 	
-shared_ptr<Object> & Tile::getObject() {
-	return obj[0];
+shared_ptr<Item> & Tile::getObject() {
+	return obj;
 }
 
 shared_ptr<Tile> & Tile::getNeighbr(int index) {
@@ -85,7 +121,7 @@ shared_ptr<Tile> & Tile::getNeighbr(int index) {
 }
 
 // other methods
-void Tile::addObject(shared_ptr<Object> o) {}
+void Tile::addObject(shared_ptr<Item> o) {}
 
 void Tile::addNeighbr(shared_ptr<Tile> t) {}
 
@@ -94,8 +130,6 @@ void Tile::killObject() {}
 int Tile::getType() {
 	return -1;
 }
-
-void Tile::moveObj(int direction) {}
 
 void Tile::notifyDisplay() {
 	//d->update(*this, "?");

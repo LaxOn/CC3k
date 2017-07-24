@@ -3,6 +3,8 @@
 #include <vector>
 #include <memory>
 #include <string>
+
+#include "item.h"
 #include "info.h"
 
 class Object;
@@ -24,7 +26,7 @@ class Tile {
 
 protected:
 	Display *d;
-	std::vector<std::shared_ptr<Object>> obj;
+	std::shared_ptr<Item> obj;
 	std::vector<std::shared_ptr<Tile>> neighbours;
 	std::shared_ptr<PC> PCobj;
 	std::shared_ptr<NPC> NPCobj;
@@ -52,21 +54,26 @@ public:
 	int getChamberID();
 	void setChamberID(int id);
 
+	void stealNPC(Tile *t);
+	void stealPC(Tile *t);
+	void useItemOn(int dir, PC &pc);
+	void useItemTo(PC &pc);
+
 	void addNPC(std::shared_ptr<NPC> npc);
 	std::shared_ptr<NPC> getNPC();
 
 	void addPC(std::shared_ptr<PC> pc);
 	std::shared_ptr<PC> getPC();
 	
-	virtual std::shared_ptr<Object> & getObject();
+	virtual std::shared_ptr<Item> & getObject();
 	virtual std::shared_ptr<Tile> & getNeighbr(int index);
 
 	// other methods
-	virtual void addObject(std::shared_ptr<Object> o);
+	virtual void addObject(std::shared_ptr<Item> o);
 	virtual void addNeighbr(std::shared_ptr<Tile> t);
 	virtual void killObject();
 	virtual int getType();
-	virtual void moveObj(int direction);
+	virtual void moveObj(int dir);
 	void notifyDisplay();
 };
 
