@@ -5,8 +5,8 @@ using namespace std;
 // constructor and destructor
 None::None(shared_ptr<BasicTile> base) :
 	TileDecorator{base} {
-		setOccupy(true);
-	}
+	setOccupy(true);
+}
 
 None::~None() {}
 
@@ -15,7 +15,7 @@ shared_ptr<Item> & None::getObject() {
 	return base->getObject();
 }
 
-shared_ptr<Tile> & None::getNeighbr(int index) {
+Tile *None::getNeighbr(int index) {
 	return base->getNeighbr(index);
 }
 
@@ -24,7 +24,7 @@ void None::addObject(shared_ptr<Item> o) {
 	base->addObject(o);
 }
 
-void None::addNeighbr(shared_ptr<Tile> t) {
+void None::addNeighbr(Tile *t) {
 	base->addNeighbr(t);;
 }
 

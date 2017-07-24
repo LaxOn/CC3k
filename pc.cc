@@ -9,7 +9,7 @@
 
 void PC::useItem(int dir) {
 	Tile *t = this->getTile();
-	std::shared_ptr<Tile> nb = t->getNeighbr(dir);
+	Tile *nb = t->getNeighbr(dir);
 	if ((!nb->getType()) && nb->getOccupy() &&
 		(nb->getObject())->getDisp()=='P') {
 			t->useItemOn(dir, *this);
@@ -25,14 +25,20 @@ int PC::getMoney() { return money; }
 void PC::move(int dir) {
 	
 	Tile *t = this->getTile();
-	std::shared_ptr<Tile> nb = t->getNeighbr(dir);
+	Tile *nb = t->getNeighbr(dir);
 	if (nb->getType()<=3 && !nb->getOccupy()) t->moveObj(dir);
 	// else throw an exception because it can't go there;
 }
 
 void PC::attach(std::shared_ptr<NPC> ob) {
-	NPCs.emplace_back(ob);
 	++numNPCs;
+	//std::cout << "attaching NPC" <<std::endl;
+	NPCs.resize(numNPCs);
+
+	//std::cout << "resizing NPC" <<std::endl;
+	NPCs.back() = ob;
+
+	//std::cout << "vector stuff" <<std::endl;
 }
 
 void PC::detach(std::shared_ptr<NPC> ob) {
@@ -49,7 +55,13 @@ void PC::notifyNPCs() {
 }
 
 void PC::attach(Display &D) { 
-	this->D = &D; 
+	this->D = &D;
+	D.setRace(*this);
+	D.setGold(*this);
+	D.setHP(*this);
+	D.setAtk(*this);
+	D.setDef(*this); 
+	D.setAction("The player has spawned.");
 	D.update(*getTile(), getType());
 }
 

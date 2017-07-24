@@ -1,2 +1,2 @@
-display.o: display.cc display.h floor.h tile.h info.h pc.h character.h \
- object.h
+display.o: display.cc display.h floor.h tile.h item.h object.h info.h \
+ pc.h character.h

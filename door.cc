@@ -5,8 +5,10 @@ using namespace std;
 // constructor and destructor
 Door::Door(shared_ptr<BasicTile> base) :
 	TileDecorator{base} {
-		setOccupy(false);
-	}
+	setOccupy(false);
+	Info result = base->getInfo();
+	setInfo(result.x, result.y);
+}
 
 Door::~Door() {}
 
@@ -15,7 +17,7 @@ shared_ptr<Item> & Door::getObject() {
 	return base->getObject();
 }
 
-shared_ptr<Tile> & Door::getNeighbr(int index) {
+Tile *Door::getNeighbr(int index) {
 	return base->getNeighbr(index);
 }
 
@@ -24,7 +26,7 @@ void Door::addObject(shared_ptr<Item> o) {
 	base->addObject(o);
 }
 
-void Door::addNeighbr(shared_ptr<Tile> t) {
+void Door::addNeighbr(Tile *t) {
 	base->addNeighbr(t);;
 }
 

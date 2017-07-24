@@ -19,7 +19,7 @@ shared_ptr<Item> & BasicTile::getObject() {
 	return obj;
 }
 
-shared_ptr<Tile> & BasicTile::getNeighbr(int index) {
+Tile *BasicTile::getNeighbr(int index) {
 	return neighbours[index];
 }
 
@@ -31,11 +31,7 @@ void BasicTile::addObject(shared_ptr<Item> o) {
 	d->update(*this, s);
 }
 
-
-
-
-
-void BasicTile::addNeighbr(shared_ptr<Tile> t) {
+void BasicTile::addNeighbr(Tile *t) {
 	neighbours.push_back(t);
 }
 

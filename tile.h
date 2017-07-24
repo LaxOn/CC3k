@@ -26,8 +26,8 @@ class Tile {
 
 protected:
 	Display *d;
+	std::vector<Tile *> neighbours;
 	std::shared_ptr<Item> obj;
-	std::vector<std::shared_ptr<Tile>> neighbours;
 	std::shared_ptr<PC> PCobj;
 	std::shared_ptr<NPC> NPCobj;
 
@@ -66,11 +66,11 @@ public:
 	std::shared_ptr<PC> getPC();
 	
 	virtual std::shared_ptr<Item> & getObject();
-	virtual std::shared_ptr<Tile> & getNeighbr(int index);
+	virtual Tile *getNeighbr(int index);
 
 	// other methods
 	virtual void addObject(std::shared_ptr<Item> o);
-	virtual void addNeighbr(std::shared_ptr<Tile> t);
+	virtual void addNeighbr(Tile *t);
 	virtual void killObject();
 	virtual int getType();
 	virtual void moveObj(int dir);

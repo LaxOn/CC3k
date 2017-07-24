@@ -9,7 +9,7 @@ void NPC::move() {
 	if (canMove) {
 		Tile *t = this->getTile();
 		int count = 0;
-		std::shared_ptr<Tile> nb;
+		Tile *nb;
 		for(int i=0; i<=7; ++i) {
 			nb = t->getNeighbr(i);
 			if (!nb->getType() && !nb->getOccupy()) ++count;

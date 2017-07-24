@@ -5,8 +5,10 @@ using namespace std;
 // constructor and destructor
 Passage::Passage(shared_ptr<BasicTile> base) :
 	TileDecorator{base} {
-		setOccupy(false);
-	}
+	setOccupy(false);
+	Info result = base->getInfo();
+	setInfo(result.x, result.y);
+}
 
 Passage::~Passage() {}
 
@@ -15,7 +17,7 @@ shared_ptr<Item> & Passage::getObject() {
 	return base->getObject();
 }
 
-shared_ptr<Tile> & Passage::getNeighbr(int index) {
+Tile *Passage::getNeighbr(int index) {
 	return base->getNeighbr(index);
 }
 
@@ -24,7 +26,7 @@ void Passage::addObject(shared_ptr<Item> o) {
 	base->addObject(o);
 }
 
-void Passage::addNeighbr(shared_ptr<Tile> t) {
+void Passage::addNeighbr(Tile *t) {
 	base->addNeighbr(t);;
 }
 

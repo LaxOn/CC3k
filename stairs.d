@@ -1,1 +1,2 @@
-stairs.o: stairs.cc stairs.h tiledecorator.h tile.h info.h basictile.h
+stairs.o: stairs.cc stairs.h tiledecorator.h tile.h item.h object.h \
+ info.h basictile.h

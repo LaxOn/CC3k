@@ -74,7 +74,7 @@ void Tile::stealPC(Tile *t) {
 }
 
 void Tile::moveObj(int dir) {
-	std::shared_ptr<Tile> nb = getNeighbr(dir);
+	Tile *nb = getNeighbr(dir);
 	if (PCobj) nb->stealPC(this);
 	else if (NPCobj) nb->stealNPC(this);
 
@@ -83,7 +83,7 @@ void Tile::moveObj(int dir) {
 }
 
 void Tile::useItemOn(int dir, PC &pc) {
-	std::shared_ptr<Tile> nb = getNeighbr(dir);
+	Tile *nb = getNeighbr(dir);
 	nb->useItemTo(pc);
 }
 
@@ -116,14 +116,14 @@ shared_ptr<Item> & Tile::getObject() {
 	return obj;
 }
 
-shared_ptr<Tile> & Tile::getNeighbr(int index) {
+Tile *Tile::getNeighbr(int index) {
 	return neighbours[index];
 }
 
 // other methods
 void Tile::addObject(shared_ptr<Item> o) {}
 
-void Tile::addNeighbr(shared_ptr<Tile> t) {}
+void Tile::addNeighbr(Tile *t) {}
 
 void Tile::killObject() {}
 
@@ -132,5 +132,5 @@ int Tile::getType() {
 }
 
 void Tile::notifyDisplay() {
-	//d->update(*this, "?");
+	d->update(*this, "?");
 }

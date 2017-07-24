@@ -5,8 +5,10 @@ using namespace std;
 // constructor and destructor
 Stairs::Stairs(shared_ptr<BasicTile> base) :
 	TileDecorator{base} {
-		setOccupy(true);
-	}
+	setOccupy(true);
+	Info result = base->getInfo();
+	setInfo(result.x, result.y);
+}
 
 Stairs::~Stairs() {}
 
@@ -15,7 +17,7 @@ shared_ptr<Item> & Stairs::getObject() {
 	return base->getObject();
 }
 
-shared_ptr<Tile> & Stairs::getNeighbr(int index) {
+Tile *Stairs::getNeighbr(int index) {
 	return base->getNeighbr(index);
 }
 
@@ -24,7 +26,7 @@ void Stairs::addObject(shared_ptr<Item> o) {
 	base->addObject(o);
 }
 
-void Stairs::addNeighbr(shared_ptr<Tile> t) {
+void Stairs::addNeighbr(Tile *t) {
 	base->addNeighbr(t);;
 }
 
@@ -38,4 +40,8 @@ void Stairs::moveObj(int direction) {
 
 int Stairs::getType() {
 	return base->getType() + 2;
+}
+
+void Stairs::descend(PC &pc) {
+	
 }
