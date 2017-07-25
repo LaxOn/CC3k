@@ -115,7 +115,7 @@ void Chamber::spawnPotion(Factory *f) {
 }
 
 void Chamber::spawnGold(Factory *f) {
-	cout << "tracker 2 " << endl;
+	//cout << "tracker 2 " << endl;
 	//cout << "spawning gold" << endl;
 	f->addGold(getRandomTile(f));
 	++numTreasure;

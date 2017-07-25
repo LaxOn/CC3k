@@ -24,6 +24,7 @@ int interpretDir(string dir) {
 }
 
 int main(int argc, char* argv[]) {
+	//srand(5);
 	srand(time(NULL));
 	// setting up file input
 	string fileName;
@@ -50,7 +51,6 @@ int main(int argc, char* argv[]) {
 		    cout << "Error in initalializing floor from file name" <<endl;
 			return 1;
 		}
-		cout << "about to start" <<endl;
 		// choosing player's race
 		while (true) {
 			cout << "Welcome to Chamber Crawler 3000!" <<endl;
@@ -132,10 +132,17 @@ int main(int argc, char* argv[]) {
 				cout << "Command not recognized. Try again." <<endl;
 				continue;
 			}
-			current_game->displayFloor(currFloor);
 
 			// NPCs turn
-			
+			try { current_game->nextTurn();
+			} catch(Slap& errMsg){
+				current_game->displayFloor(currFloor);
+				cout<<errMsg.what() <<endl;
+				return 0;
+    		}
+
+			current_game->displayFloor(currFloor);
+
 
 
 		}

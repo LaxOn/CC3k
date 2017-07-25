@@ -5,7 +5,7 @@
 #include "factory.h"
 #include "tile.h"
 
-void NPC::move() {
+void NPC::move(Display &D) {
 	if (canMove) {
 		Tile *t = this->getTile();
 		int count = 0;
@@ -24,7 +24,9 @@ void NPC::move() {
 				++index;
 			}
 			--index;
+			D.update(*getTile(), ".");
 			t->moveObj(index);
+			D.update(*getTile(), getType());
 		} // else there's no space to move out of
 	} // can't move so stays in the same place
 }
@@ -58,6 +60,8 @@ void NPC::addLoot(int money) {
 }
 
 int NPC::getLoot() { return loot; }
+
+void NPC::turnHostile() {}
 
 NPC::NPC() {}
 

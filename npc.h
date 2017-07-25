@@ -21,10 +21,11 @@ class NPC: public Character{
  	Tile *getGold();
  	void justAttacked();
  	void willAttack();
- 	void move();
+ 	void move(Display &D);
  	void cannotMove();
  	void addLoot(int money);
  	int getLoot();
+ 	virtual void turnHostile();
  	virtual void notify(PC &whoNotified)=0;
  	virtual void attack(PC &player)=0;
  	NPC();

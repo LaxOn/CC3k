@@ -14,7 +14,7 @@ void OrcNPC::notify(PC &whoNotified) {
 
 void OrcNPC::attack(PC &player) {
 	Factory f;
-	int notMiss = f.randInt(1);
+	int notMiss = f.randInt(2);
 	if (notMiss) player.defendFrom(*this);
 }
 

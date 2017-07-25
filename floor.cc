@@ -158,6 +158,7 @@ void Floor::spawnEnemy() {
 		//cout << "random number is " << whichChamber << endl;
 		chambers[whichChamber]->spawnEnemy(f.get());
 		++numEnemy;
+		
 	}
 }
 
@@ -177,7 +178,6 @@ void Floor::spawnTreasure() {
 
 	while (numTreasure < maxTreasure) {
 		whichChamber = f->randInt(5);
-		cout << "tracker 1 " << endl;
 		chambers[whichChamber]->spawnGold(f.get());
 		++numTreasure;
 	}
@@ -377,10 +377,7 @@ void Floor::constructFloor(istream &input, int start, string race) {
 		for (int j = 0; j <= 78; ++j) {
 			//cout << "neighbour construction at : " << i << " " << j << endl;
 			// the neighbours can be identified by position in the vector (integer 0-9 inclusive)
-			if (i == 0 && j == 0) {	
-			// north west corner
-				//cout << "tracker 1" << endl;
-
+			
 				// Setting up neighbours to be like below:
 				//	|---|---|---|
 				//	| 0 | 1 | 2 | 
@@ -389,7 +386,9 @@ void Floor::constructFloor(istream &input, int start, string race) {
 				//	|---|---|---|
 				//	| 5 | 6 | 7 | 
 				//	|---|---|---| 
-				
+			if (i == 0 && j == 0) {	
+			// north west corner
+				//cout << "tracker 1" << endl;=
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(nullptr);
@@ -556,7 +555,6 @@ void Floor::constructFloor(istream &input, int start, string race) {
 		//cout << "treasure spawned" << endl;
 	}
 
-	cout << "ALL SETUP COMPLETED" << endl;
 
 	// testing neighbours
 	/*

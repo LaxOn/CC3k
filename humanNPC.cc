@@ -14,7 +14,7 @@ void HumanNPC::notify(PC &whoNotified) {
 
 void HumanNPC::attack(PC &player) {
 	Factory f;
-	int hit = f.randInt(1);
+	int hit = f.randInt(2);
 	if (hit) player.defendFrom(*this);
 }
 

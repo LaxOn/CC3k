@@ -78,7 +78,6 @@ public:
 	virtual void addNeighbr(Tile *t);
 	virtual void killObject();
 	virtual int getType();
-	void notifyDisplay();
 };
 
 #endif

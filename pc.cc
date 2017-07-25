@@ -32,23 +32,18 @@ void PC::useItem(int dir) {
 		 	D->update(*(t->getNeighbr(dir)), ".");
 			notifyDisplay("PC uses the Potion in the " + dirToStr(dir) + ".");
 	} else {
-		throw Slap("There is no Potion int the given direction. Try again.");
+		throw Slap("There is no Potion in the given direction. Try again.");
 	}
 }
 
 void PC::attackDir(int dir) {
-	std::cout <<"initialize attack" <<std::endl;
 	Tile *t = this->getTile();
 	Tile *nb = t->getNeighbr(dir);
 	if ((!nb->getType()) && nb->getOccupy() && nb->getNPC()) {
-
-		std::cout <<"almost attack" <<std::endl;
 		attack(*(nb->getNPC()));
-
-		std::cout <<nb->getNPC()->getHP() <<std::endl;
-		// NPC died
-
-			std::cout <<getMoney() <<std::endl;
+		if ((nb->getNPC())->getType() == "MerchantNPC") {
+			(nb->getNPC())->turnHostile();
+		}
 		if ((nb->getNPC())->getHP() <= 0) {
 			if ((nb->getNPC())->getType() == "DragonNPC") {
 				(((nb->getNPC())->getGold())->getObject())->allowPickup();
@@ -58,8 +53,15 @@ void PC::attackDir(int dir) {
 			addMoney((nb->getNPC())->getLoot());
 			nb->setOccupy(false);
 			nb->resetNPC();
+
+			std::cout <<"ran this" <<std::endl;
+			notifyDisplay("PC attacks an Enemy in the "
+				+ dirToStr(dir) + ". Enemy has died.");
+		} else {
+			notifyDisplay("PC attacks an Enemy in the "
+				+ dirToStr(dir) + ". Enemy has " + 
+				std::to_string(nb->getNPC()->getHP()) + " remaining HP.");
 		}
-		notifyDisplay("PC attacks an Enemy in the " + dirToStr(dir) + ".");
 	} else {
 		throw Slap("No one to attack in the given direction. Try again.");
 	}
@@ -74,11 +76,12 @@ int PC::getMoney() { return money; }
 void PC::move(int dir) {
 	Tile *t = this->getTile();
 	Tile *nb = t->getNeighbr(dir);
-	std::cout << (nb->getType()<=3 && !nb->getOccupy()) <<std::endl;
 	std::shared_ptr<Item> it = nb->getObject();
 	if (nb->getType()<=3 && (!nb->getOccupy())) {
 		t->moveObj(dir);
-		notifyDisplay();
+		notifyDisplay("PC moves " + dirToStr(dir) + ".");
+		notifyNPCs();
+		//std::cout <<NPCs.size() <<std::endl;
 	} else if (it &&  (it->getDisp() == 'G')) {
 		if (!(it->getDrgn()) || (it->getSlain())) {
 			addMoney(it->getValue());
@@ -87,12 +90,14 @@ void PC::move(int dir) {
 		}
 		t->moveObj(dir);
 		notifyDisplay("PC moves " + dirToStr(dir) + ".");
+		notifyNPCs();
 	} else {
 		throw Slap("Can't move in the given direction. Try again.");
 	}
 }
 
 void PC::attach(std::shared_ptr<NPC> ob) {
+	//NPCs.emplace_back(ob)
 	++numNPCs;
 	//std::std::cout << "attaching NPC" <<std::std::endl;
 	NPCs.resize(numNPCs);
@@ -127,8 +132,12 @@ void PC::notifyDisplay(std::string desc) {
 	D->setHP(*this);
 	D->setAtk(*this);
 	D->setDef(*this);
-	if (desc != "") D->setAction(desc);
+	D->setAction(desc);
 	D->update(*getTile(), getType());
+}
+
+Display *PC::getDisplay() {
+	return D;
 }
 
 PC::PC() {

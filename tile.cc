@@ -70,7 +70,6 @@ void Tile::stealNPC(Tile *t) {			// set tile of npc and its coordinates
 }
 
 void Tile::stealPC(Tile *t) {
-	std::cout << "nb tile is : " <<x <<" " <<y <<std::endl;
 	PCobj = t->getPC();
 	setOccupy(true);
 	getPC()->setTile(this);
@@ -80,7 +79,6 @@ void Tile::stealPC(Tile *t) {
 }
 
 void Tile::moveObj(int dir) {
-	std::cout << "origin tile is : " <<x <<" " <<y <<std::endl;
 	Tile *nb = getNeighbr(dir);
 	if (PCobj) nb->stealPC(this);
 	else if (NPCobj) nb->stealNPC(this);
@@ -142,6 +140,4 @@ int Tile::getType() {
 	return -1;
 }
 
-void Tile::notifyDisplay() {
-	d->update(*this, "?");
-}
+

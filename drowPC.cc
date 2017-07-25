@@ -9,7 +9,7 @@ void DrowPC::attack(NPC& enemy) {
 	int hit = 1;
 	if (enemy.getType() == "halflingNPC") {
 		Factory f;
-		hit = f.randInt(1);
+		hit = f.randInt(2);
 	}
 	if (hit) {
 		int damage = calcDmg(this->getAtk(), enemy.getDef());

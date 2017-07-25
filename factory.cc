@@ -57,7 +57,7 @@ void Factory::addDragon(Tile &t) {
 }
 
 void Factory::addGold(Tile &t) {
-	cout << "tracker 3 " << endl;
+	//cout << "tracker 3 " << endl;
 	Info tInfo = t.getInfo();
 	int x = tInfo.x;
 	int y = tInfo.y;

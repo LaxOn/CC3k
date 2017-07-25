@@ -14,10 +14,10 @@ void ElfNPC::notify(PC &whoNotified) {
 
 void ElfNPC::attack(PC &player) {
 	Factory f;
-	int hit = f.randInt(1);
+	int hit = f.randInt(2);
 	if (hit) player.defendFrom(*this);
 	if (player.getType() != "DrowPC") {
-		int hit = f.randInt(1);
+		int hit = f.randInt(2);
 		if (hit) player.defendFrom(*this);
 	}
 }

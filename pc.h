@@ -26,6 +26,7 @@ class PC: public Character {
 	void attach(Display &D);
 	void notifyDisplay(std::string desc="");
 	std::string dirToStr(int dir);
+	Display *getDisplay();
  	virtual void attack(NPC& enemy)=0;
  	virtual void defendFrom(NPC& enemy)=0;
  	PC();
