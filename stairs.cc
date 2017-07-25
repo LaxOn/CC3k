@@ -34,9 +34,6 @@ void Stairs::killObject() {
 	base->killObject();
 }
 
-void Stairs::moveObj(int direction) {
-	base->moveObj(direction);
-}
 
 int Stairs::getType() {
 	return base->getType() + 2;

@@ -34,9 +34,6 @@ void Door::killObject() {
 	base->killObject();
 }
 
-void Door::moveObj(int direction) {
-	base->moveObj(direction);
-}
 
 int Door::getType() {
 	return base->getType() + 3;

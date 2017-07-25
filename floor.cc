@@ -373,11 +373,12 @@ void Floor::constructFloor(istream &input, int start, string race) {
 	//cout << "basic floor constructed" << endl;
 
 	// setting up neigbours for all Tiles
-	for (int i = 0; i < 25; ++i) {
-		for (int j = 0; j < 79; ++j) {
+	for (int i = 0; i <= 24; ++i) {
+		for (int j = 0; j <= 78; ++j) {
 			//cout << "neighbour construction at : " << i << " " << j << endl;
 			// the neighbours can be identified by position in the vector (integer 0-9 inclusive)
-			if (i - 1 < 0 && j - 1 < 0) {
+			if (i == 0 && j == 0) {		
+			// north west corner
 				//cout << "tracker 1" << endl;
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(nullptr);
@@ -387,7 +388,8 @@ void Floor::constructFloor(istream &input, int start, string race) {
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(tiles[i + 1][j].get());
 				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1].get());
-			} else if (i - 1 < 0 && j + 1 > 78) {
+			} else if (i == 0 && j == 78) {
+			// north east corner
 				//cout << "tracker 2" << endl;
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(nullptr);
@@ -397,7 +399,8 @@ void Floor::constructFloor(istream &input, int start, string race) {
 				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1].get());
 				tiles[i][j]->addNeighbr(tiles[i + 1][j].get());
 				tiles[i][j]->addNeighbr(nullptr);
-			} else if (i - 1 < 0) {
+			} else if (i == 0) {
+			// north border
 				//cout << "tracker 3" << endl;
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(nullptr);
@@ -407,7 +410,8 @@ void Floor::constructFloor(istream &input, int start, string race) {
 				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1].get());
 				tiles[i][j]->addNeighbr(tiles[i + 1][j].get());
 				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1].get());
-			} else if (i + 1 > 24 && j - 1 < 0) {
+			} else if (i == 24 && j == 0) {
+			// south west corner
 				//cout << "tracker 4" << endl;
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(tiles[i - 1][j].get());
@@ -417,7 +421,8 @@ void Floor::constructFloor(istream &input, int start, string race) {
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(nullptr);
-			} else if (i + 1 > 24 && j + 1 > 78) {
+			} else if (i == 24 && j == 78) {
+			// south east corner
 				//cout << "tracker 5" << endl;
 				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1].get());
 				tiles[i][j]->addNeighbr(tiles[i - 1][j].get());
@@ -427,7 +432,8 @@ void Floor::constructFloor(istream &input, int start, string race) {
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(nullptr);
-			} else if (i + 1 > 24) {
+			} else if (i == 24) {
+			// south border
 				//cout << "tracker 6" << endl;
 				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1].get());
 				tiles[i][j]->addNeighbr(tiles[i - 1][j].get());
@@ -437,7 +443,8 @@ void Floor::constructFloor(istream &input, int start, string race) {
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(nullptr);
-			} else if (j - 1 < 0) {
+			} else if (j == 0) {
+			// west border
 				//cout << "tracker 7" << endl;
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(tiles[i - 1][j].get());
@@ -447,7 +454,8 @@ void Floor::constructFloor(istream &input, int start, string race) {
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(tiles[i + 1][j].get());
 				tiles[i][j]->addNeighbr(tiles[i + 1][j + 1].get());
-			} else if (j + 1 > 78) {
+			} else if (j == 78) {
+			// east border
 				//cout << "tracker 8" << endl;
 				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1].get());
 				tiles[i][j]->addNeighbr(tiles[i - 1][j].get());
@@ -458,11 +466,12 @@ void Floor::constructFloor(istream &input, int start, string race) {
 				tiles[i][j]->addNeighbr(tiles[i + 1][j].get());
 				tiles[i][j]->addNeighbr(nullptr);
 			} else {
+			// center tiles
 				//cout << "tracker 9" << endl;
 				tiles[i][j]->addNeighbr(tiles[i - 1][j - 1].get());
 				tiles[i][j]->addNeighbr(tiles[i - 1][j].get());
 				tiles[i][j]->addNeighbr(tiles[i - 1][j + 1].get());
-				tiles[i][j]->addNeighbr(tiles[i][j + 1].get());
+				tiles[i][j]->addNeighbr(tiles[i][j - 1].get());
 				tiles[i][j]->addNeighbr(tiles[i][j + 1].get());
 				tiles[i][j]->addNeighbr(tiles[i + 1][j - 1].get());
 				tiles[i][j]->addNeighbr(tiles[i + 1][j].get());

@@ -1,3 +1,4 @@
+#include <utility>
 #include "tile.h"
 #include "display.h"
 #include "npc.h"
@@ -59,24 +60,36 @@ void Tile::setChamberID(int id) {
 }
 
 									// where does display go
-void Tile::stealNPC(Tile *t) {
-	addNPC(t->getNPC());
+void Tile::stealNPC(Tile *t) {			// set tile of npc and its coordinates
+
+	NPCobj = t->getNPC();
 	setOccupy(true);
-	(t->getNPC()).reset();
+	getNPC()->setTile(this);
+	getNPC()->setCoords(x,y);
+	//t->resetNPC();
 	t->setOccupy(false);
 }
 
 void Tile::stealPC(Tile *t) {
-	addNPC(t->getNPC());
+
+	std::cout << "nb tile is : " <<x <<" " <<y <<std::endl;
+	PCobj = t->getPC();
+
 	setOccupy(true);
-	(t->getPC()).reset();
+	getPC()->setTile(this);
+	getPC()->setCoords(x,y);
+	//t->resetPC();
+
 	t->setOccupy(false);
 }
 
 void Tile::moveObj(int dir) {
+	std::cout << "origin tile is : " <<x <<" " <<y <<std::endl;
 	Tile *nb = getNeighbr(dir);
+
 	if (PCobj) nb->stealPC(this);
 	else if (NPCobj) nb->stealNPC(this);
+	d->update(*this, ".");
 
 	//d->update(*this, s);
 	// else throw an exception
@@ -85,6 +98,7 @@ void Tile::moveObj(int dir) {
 void Tile::useItemOn(int dir, PC &pc) {
 	Tile *nb = getNeighbr(dir);
 	nb->useItemTo(pc);
+	// kill item
 }
 
 void Tile::useItemTo(PC &pc) {
@@ -95,7 +109,9 @@ void Tile::useItemTo(PC &pc) {
 
 void Tile::addNPC(shared_ptr<NPC> npc) {
 	NPCobj = npc;
-	d->update(*this, npc->getType());
+
+	//d->update(*this, npc->getType());
+
 	//cout << "update is done " << endl;
 }
 

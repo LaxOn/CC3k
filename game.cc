@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include "game.h"
+#include "pc.h"
 #include "dungeon.h"
 
 using namespace std;
@@ -19,6 +20,28 @@ Game::Game(std::istream &input, string race) :
 }
 
 Game::~Game() {}
+
+void Game::pcMove(int dir) {
+	std::shared_ptr<Floor> f = gameDungeon->getFloor(curFloor);
+	std::shared_ptr<PC> pc = f->getPlayer();
+	pc->move(dir);
+}
+
+void Game::pcUse(int dir) {
+	std::shared_ptr<Floor> f = gameDungeon->getFloor(curFloor);
+	std::shared_ptr<PC> pc = f->getPlayer();
+	pc->useItem(dir);
+}
+
+void Game::pcAtk(int dir) {
+	std::shared_ptr<Floor> f = gameDungeon->getFloor(curFloor);
+	std::shared_ptr<PC> pc = f->getPlayer();
+	pc->attackDir(dir);
+}
+
+void Game::switchFloor(int floor){
+	curFloor = floor;
+}
 
 // accessors and mutators
 int Game::getCurFloor(){

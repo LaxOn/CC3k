@@ -33,11 +33,13 @@
 #include "none.h"
 #include "info.h"
 #include <memory>
+#include <cstdlib>
 #include <iostream>
 
 using namespace std;
 
 int Factory::randInt(int max) {
+	//srand(time(NULL));
 	double rawNum = double(rand()) / double(RAND_MAX);
 	return int(rawNum * double(max));
 }

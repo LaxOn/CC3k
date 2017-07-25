@@ -33,10 +33,6 @@ void Wall::killObject() {
 	base->killObject();
 }
 
-void Wall::moveObj(int direction) {
-	base->moveObj(direction);
-}
-
 int Wall::getType() {
 	return base->getType() + 4;
 }

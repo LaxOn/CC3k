@@ -239,12 +239,12 @@ void Display::displayStats() {
 	cout << "Action: " << action << endl;
 }
 	
-void Display::update(Tile & t, std::string str) {
+void Display::update(Tile &t, std::string str) {
 	//cout << "display update runs" << endl;
 	Info temp = t.getInfo();
 	int x = temp.x;
 	int y = temp.y;
-
+	cout << "this was ran" <<endl;
 	//cout << "the object is " << str << endl;
 	//cout << x << " " << y << endl;
 	//cout << board[x][y] << endl;
@@ -271,13 +271,11 @@ void Display::update(Tile & t, std::string str) {
 	} else if (str == "G") {
 		board[x][y] = 'G';
 	} else if (str == "Stairs") {
-		board[x][y] = 92;
+		board[x][y] = '\\';
+	} else if (str == ".") {
+		board[x][y] = '.';					// Bryan added this. Is this okay?
 	}
 	//cout << board[x][y] << endl;
-}
-
-void Display::update(PC *pc) {
-	// to be implemented later
 }
 
 ostream &operator<<(ostream &out, Display &d) {

@@ -32,10 +32,6 @@ void None::killObject() {
 	base->killObject();
 }
 
-void None::moveObj(int direction) {
-	base->moveObj(direction);
-}
-
 int None::getType() {
 	return base->getType() + 5;
 }

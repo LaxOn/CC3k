@@ -39,10 +39,6 @@ void BasicTile::killObject() {
 	obj.reset();
 }
 
-void BasicTile::moveObj(int direction) {
-
-}
-
 int BasicTile::getType() {
 	return 0;
 }

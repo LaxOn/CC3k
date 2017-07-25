@@ -10,10 +10,20 @@
 void PC::useItem(int dir) {
 	Tile *t = this->getTile();
 	Tile *nb = t->getNeighbr(dir);
-	if ((!nb->getType()) && nb->getOccupy() &&
+	if ((!nb->getType()) && nb->getObject() &&
 		(nb->getObject())->getDisp()=='P') {
 			t->useItemOn(dir, *this);
+			D->update(*getTile(), getType());
 	} // else throw an exception because there are no potions there 
+}
+
+void PC::attackDir(int dir) {
+	Tile *t = this->getTile();
+	Tile *nb = t->getNeighbr(dir);
+	if ((!nb->getType()) && nb->getOccupy() && nb->getNPC()) {
+		attack(*(nb->getNPC()));
+		D->update(*getTile(), getType());
+	} // else throw an exception because there are no NPCs here
 }
 
 void PC::addMoney(int money) {
@@ -23,22 +33,34 @@ void PC::addMoney(int money) {
 int PC::getMoney() { return money; }
 
 void PC::move(int dir) {
-	
+	std::cout << "before moving: " <<x <<" " <<y <<std::endl;
 	Tile *t = this->getTile();
 	Tile *nb = t->getNeighbr(dir);
-	if (nb->getType()<=3 && !nb->getOccupy()) t->moveObj(dir);
+
+	std::cout << (nb->getType()<=3 && !nb->getOccupy()) <<std::endl;
+	if (nb->getType()<=3 && !nb->getOccupy()) {
+
+		std::cout << "before moveObj" <<std::endl;
+		t->moveObj(dir);
+
+		std::cout << "after moveObj" <<std::endl;
+		notifyDisplay();
+
+		//D->update(*nb, ".");
+	}
+	std::cout << "after moving: " <<x <<" " <<y <<std::endl;
 	// else throw an exception because it can't go there;
 }
 
 void PC::attach(std::shared_ptr<NPC> ob) {
 	++numNPCs;
-	//std::cout << "attaching NPC" <<std::endl;
+	//std::std::cout << "attaching NPC" <<std::std::endl;
 	NPCs.resize(numNPCs);
 
-	//std::cout << "resizing NPC" <<std::endl;
+	//std::std::cout << "resizing NPC" <<std::std::endl;
 	NPCs.back() = ob;
 
-	//std::cout << "vector stuff" <<std::endl;
+	//std::std::cout << "vector stuff" <<std::std::endl;
 }
 
 void PC::detach(std::shared_ptr<NPC> ob) {
@@ -57,16 +79,16 @@ void PC::notifyNPCs() {
 void PC::attach(Display &D) { 
 	this->D = &D;
 	D.setRace(*this);
-	D.setGold(*this);
-	D.setHP(*this);
-	D.setAtk(*this);
-	D.setDef(*this); 
-	D.setAction("The player has spawned.");
-	D.update(*getTile(), getType());
+	notifyDisplay();
 }
 
-void PC::notifyDisplay() {
-	D->update(this);
+void PC::notifyDisplay(std::string desc) {
+	D->setGold(*this);
+	D->setHP(*this);
+	D->setAtk(*this);
+	D->setDef(*this);
+	if (desc != "") D->setAction(desc);
+	D->update(*getTile(), getType());
 }
 
 PC::PC() {

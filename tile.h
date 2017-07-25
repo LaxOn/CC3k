@@ -57,7 +57,11 @@ public:
 	void stealNPC(Tile *t);
 	void stealPC(Tile *t);
 	void useItemOn(int dir, PC &pc);
+	void moveObj(int dir);
 	void useItemTo(PC &pc);
+	void resetItem() {obj.reset();}
+	void resetPC() {PCobj.reset();}
+	void resetNPC(){NPCobj.reset();}
 
 	void addNPC(std::shared_ptr<NPC> npc);
 	std::shared_ptr<NPC> getNPC();
@@ -69,11 +73,11 @@ public:
 	virtual Tile *getNeighbr(int index);
 
 	// other methods
+
 	virtual void addObject(std::shared_ptr<Item> o);
 	virtual void addNeighbr(Tile *t);
 	virtual void killObject();
 	virtual int getType();
-	virtual void moveObj(int dir);
 	void notifyDisplay();
 };
 

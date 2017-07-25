@@ -57,8 +57,7 @@ public:
 	void displayFloor();
 	void displayStats();
 
-	void update(Tile & t, std::string str);
-	void update(PC *pc);
+	void update(Tile &t, std::string str);
 
 };
 

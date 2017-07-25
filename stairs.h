@@ -18,7 +18,6 @@ public:
 	void addObject(std::shared_ptr<Item> o) override;
 	void addNeighbr(Tile *t) override;
 	void killObject() override;
-	void moveObj(int direction) override;
 	int getType() override;
 
 	void descend(PC &pc);

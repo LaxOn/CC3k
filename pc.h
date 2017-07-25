@@ -19,11 +19,12 @@ class PC: public Character{
 	int getMoney();
 	void addMoney(int money);
 	void move(int dir);
+	void attackDir(int dir);
 	void attach(std::shared_ptr<NPC> ob);
 	void detach(std::shared_ptr<NPC> ob);
 	void notifyNPCs();
 	void attach(Display &D);
-	void notifyDisplay();
+	void notifyDisplay(std::string desc="");
  	virtual void attack(NPC& enemy)=0;
  	virtual void defendFrom(NPC& enemy)=0;
  	PC();

@@ -34,10 +34,6 @@ void Passage::killObject() {
 	base->killObject();
 }
 
-void Passage::moveObj(int direction) {
-	base->moveObj(direction);
-}
-
 int Passage::getType() {
 	return base->getType() + 1;
 }
