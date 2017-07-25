@@ -7,6 +7,7 @@
 class PC;
 class Gold;
 class Tile;
+class Display;
 
 class NPC: public Character{
 	bool canMove = true;
@@ -17,12 +18,13 @@ class NPC: public Character{
  public:
  	bool pcInRange();
  	void guardGold(Tile &goldTile);
+ 	Tile *getGold();
  	void justAttacked();
  	void willAttack();
  	void move();
  	void cannotMove();
  	void addLoot(int money);
- 	int getMoney();
+ 	int getLoot();
  	virtual void notify(PC &whoNotified)=0;
  	virtual void attack(PC &player)=0;
  	NPC();

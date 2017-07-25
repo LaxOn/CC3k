@@ -13,13 +13,14 @@ class Display {
 	Floor * f;
 
 	std::vector<std::vector<char>> board;
-
 	std::string race;
 	int hp;
 	int atk;
 	int def;
 	int gold;
 	std::string action;
+	int PCx;
+	int PCy;
 
 	int floorNum;
 

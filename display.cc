@@ -2,6 +2,7 @@
 #include "tile.h"
 #include "pc.h"
 #include "info.h"
+#include <vector>
 
 using namespace std;
 
@@ -55,7 +56,7 @@ int Display::getGold() {
 }
 
 void Display::setGold(PC &pc) {
-
+	gold = pc.getMoney();
 }
 
 string Display::getAction() {
@@ -134,7 +135,7 @@ void Display::defaultFloor() {
 				} else if (c_id == 5) {
 					board[i][j] = '5';
 				} else {
-					board[i][j] = 92;
+					board[i][j] = '\\';
 				}
 
 				//board[i][j] = 92;
@@ -221,10 +222,12 @@ void Display::defaultFloor() {
 	}
 }
 
+
 void Display::displayFloor() {
 	for (int i = 0; i < 25; ++i) {
 		for (int j = 0; j < 79; ++j) {
-			cout << board[i][j];
+			if (i == PCx && j == PCy) cout <<'@'; 	// Bryan added this. Is this okay?
+			else cout << board[i][j];
 		}
 		cout << endl;
 	}
@@ -238,20 +241,22 @@ void Display::displayStats() {
 	cout << "Def: " << def << endl;
 	cout << "Action: " << action << endl;
 }
-	
+
+
+
 void Display::update(Tile &t, std::string str) {
 	//cout << "display update runs" << endl;
 	Info temp = t.getInfo();
 	int x = temp.x;
 	int y = temp.y;
-	cout << "this was ran" <<endl;
 	//cout << "the object is " << str << endl;
 	//cout << x << " " << y << endl;
 	//cout << board[x][y] << endl;
 
 	if (str == "ShadePC" || str == "DrowPC" || str == "VampirePC" ||
 		str == "TrollPC" || str == "GoblinPC") {
-		board[x][y] = '@';
+		PCx = x;
+		PCy = y;
 	} else if (str == "HumanNPC") {
 		board[x][y] = 'H';
 	} else if (str == "DwarfNPC") {
@@ -273,9 +278,9 @@ void Display::update(Tile &t, std::string str) {
 	} else if (str == "Stairs") {
 		board[x][y] = '\\';
 	} else if (str == ".") {
-		board[x][y] = '.';					// Bryan added this. Is this okay?
-	}
+		board[x][y] = '.';
 	//cout << board[x][y] << endl;
+	}
 }
 
 ostream &operator<<(ostream &out, Display &d) {

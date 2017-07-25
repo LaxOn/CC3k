@@ -1,11 +1,26 @@
 #include <algorithm>
 #include <vector>
 #include <memory>
+#include <string>
 #include <iostream>
 #include "pc.h"
 #include "npc.h"
 #include "display.h"
-#include "tile.h"				
+#include "tile.h"
+#include "slap.h"	
+
+std::string PC::dirToStr(int dir) {
+	if (dir == 0) return "North West";
+	else if (dir == 1) return "North";
+	else if (dir == 2) return "North East";
+	else if (dir == 3) return "West";
+	else if (dir == 4) return "East";
+	else if (dir == 5) return "South West";
+	else if (dir == 6) return "South";
+	else if (dir == 7) return "South East";
+	else return "";
+}
+
 
 void PC::useItem(int dir) {
 	Tile *t = this->getTile();
@@ -13,17 +28,41 @@ void PC::useItem(int dir) {
 	if ((!nb->getType()) && nb->getObject() &&
 		(nb->getObject())->getDisp()=='P') {
 			t->useItemOn(dir, *this);
-			D->update(*getTile(), getType());
-	} // else throw an exception because there are no potions there 
+			nb->resetItem();
+		 	D->update(*(t->getNeighbr(dir)), ".");
+			notifyDisplay("PC uses the Potion in the " + dirToStr(dir) + ".");
+	} else {
+		throw Slap("There is no Potion int the given direction. Try again.");
+	}
 }
 
 void PC::attackDir(int dir) {
+	std::cout <<"initialize attack" <<std::endl;
 	Tile *t = this->getTile();
 	Tile *nb = t->getNeighbr(dir);
 	if ((!nb->getType()) && nb->getOccupy() && nb->getNPC()) {
+
+		std::cout <<"almost attack" <<std::endl;
 		attack(*(nb->getNPC()));
-		D->update(*getTile(), getType());
-	} // else throw an exception because there are no NPCs here
+
+		std::cout <<nb->getNPC()->getHP() <<std::endl;
+		// NPC died
+
+			std::cout <<getMoney() <<std::endl;
+		if ((nb->getNPC())->getHP() <= 0) {
+			if ((nb->getNPC())->getType() == "DragonNPC") {
+				(((nb->getNPC())->getGold())->getObject())->allowPickup();
+			}
+			D->update(*nb, ".");
+			
+			addMoney((nb->getNPC())->getLoot());
+			nb->setOccupy(false);
+			nb->resetNPC();
+		}
+		notifyDisplay("PC attacks an Enemy in the " + dirToStr(dir) + ".");
+	} else {
+		throw Slap("No one to attack in the given direction. Try again.");
+	}
 }
 
 void PC::addMoney(int money) {
@@ -33,23 +72,24 @@ void PC::addMoney(int money) {
 int PC::getMoney() { return money; }
 
 void PC::move(int dir) {
-	std::cout << "before moving: " <<x <<" " <<y <<std::endl;
 	Tile *t = this->getTile();
 	Tile *nb = t->getNeighbr(dir);
-
 	std::cout << (nb->getType()<=3 && !nb->getOccupy()) <<std::endl;
-	if (nb->getType()<=3 && !nb->getOccupy()) {
-
-		std::cout << "before moveObj" <<std::endl;
+	std::shared_ptr<Item> it = nb->getObject();
+	if (nb->getType()<=3 && (!nb->getOccupy())) {
 		t->moveObj(dir);
-
-		std::cout << "after moveObj" <<std::endl;
 		notifyDisplay();
-
-		//D->update(*nb, ".");
+	} else if (it &&  (it->getDisp() == 'G')) {
+		if (!(it->getDrgn()) || (it->getSlain())) {
+			addMoney(it->getValue());
+			nb->resetItem();
+		 	D->update(*(t->getNeighbr(dir)), ".");
+		}
+		t->moveObj(dir);
+		notifyDisplay("PC moves " + dirToStr(dir) + ".");
+	} else {
+		throw Slap("Can't move in the given direction. Try again.");
 	}
-	std::cout << "after moving: " <<x <<" " <<y <<std::endl;
-	// else throw an exception because it can't go there;
 }
 
 void PC::attach(std::shared_ptr<NPC> ob) {

@@ -18,8 +18,8 @@ public:
 
 	// accessors and mutators
 	std::string getDescript();
-	bool getDrgn();
-	bool getSlain();
+	bool getDrgn() override;
+	bool getSlain() override;
 	bool getSteal();
 	NPC *& getNPC();
 
@@ -27,7 +27,7 @@ public:
 	void useItem(PC &pc) override;
 
 	void assignNPC(NPC *npc);
-	void allowPickup();
+	void allowPickup() override;
 	void allowSteal();
 };
 

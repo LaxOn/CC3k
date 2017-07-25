@@ -14,8 +14,7 @@ Tile::~Tile() {}
 
 // accessors and mutators
 Info Tile::getInfo() {
-	Info result{x, y};
-	return result;
+	return Info{x, y};
 }
 
 void Tile::setInfo(int x, int y) {
@@ -66,33 +65,25 @@ void Tile::stealNPC(Tile *t) {			// set tile of npc and its coordinates
 	setOccupy(true);
 	getNPC()->setTile(this);
 	getNPC()->setCoords(x,y);
-	//t->resetNPC();
-	t->setOccupy(false);
+	t->resetNPC();
+	if (!(t->getObject())) t->setOccupy(false);
 }
 
 void Tile::stealPC(Tile *t) {
-
 	std::cout << "nb tile is : " <<x <<" " <<y <<std::endl;
 	PCobj = t->getPC();
-
 	setOccupy(true);
 	getPC()->setTile(this);
 	getPC()->setCoords(x,y);
-	//t->resetPC();
-
-	t->setOccupy(false);
+	t->resetPC();
+	if (!(t->getObject())) t->setOccupy(false);
 }
 
 void Tile::moveObj(int dir) {
 	std::cout << "origin tile is : " <<x <<" " <<y <<std::endl;
 	Tile *nb = getNeighbr(dir);
-
 	if (PCobj) nb->stealPC(this);
 	else if (NPCobj) nb->stealNPC(this);
-	d->update(*this, ".");
-
-	//d->update(*this, s);
-	// else throw an exception
 }
 
 void Tile::useItemOn(int dir, PC &pc) {
@@ -135,6 +126,10 @@ shared_ptr<Item> & Tile::getObject() {
 Tile *Tile::getNeighbr(int index) {
 	return neighbours[index];
 }
+
+void Tile::resetItem() { obj.reset(); }
+void Tile::resetPC() { PCobj.reset(); }
+void Tile::resetNPC(){ NPCobj.reset(); }
 
 // other methods
 void Tile::addObject(shared_ptr<Item> o) {}

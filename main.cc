@@ -5,7 +5,9 @@
 #include <vector>
 
 #include "game.h"
+#include "slap.h"
 #include "floor.h"
+#include "slap.h"
 
 using namespace std;
 
@@ -22,7 +24,7 @@ int interpretDir(string dir) {
 }
 
 int main(int argc, char* argv[]) {
-
+	srand(time(NULL));
 	// setting up file input
 	string fileName;
 	if (argc == 1) {
@@ -48,7 +50,7 @@ int main(int argc, char* argv[]) {
 		    cout << "Error in initalializing floor from file name" <<endl;
 			return 1;
 		}
-
+		cout << "about to start" <<endl;
 		// choosing player's race
 		while (true) {
 			cout << "Welcome to Chamber Crawler 3000!" <<endl;
@@ -98,7 +100,11 @@ int main(int argc, char* argv[]) {
 				cin >> cmd;
 				dir = interpretDir(cmd);
 				if (dir != -1) {
-					current_game->pcUse(dir);
+					try { current_game->pcUse(dir);
+					} catch(Slap& errMsg){
+						cout<<errMsg.what() <<endl;
+						continue;
+  					}
 				} else {
 					cout << "Command not recognized. Try again." <<endl;
 					continue;
@@ -107,19 +113,29 @@ int main(int argc, char* argv[]) {
 				cin >> cmd;
 				dir = interpretDir(cmd);
 				if (dir != -1) {
-					current_game->pcAtk(dir);
+					try { current_game->pcAtk(dir);
+					} catch(Slap& errMsg){
+    					cout<<errMsg.what() <<endl;
+    					continue;
+  					}
 				} else {
 					cout << "Command not recognized. Try again." <<endl;
 					continue;
 				}
 			} else if (dir != -1) {							// move
-				current_game->pcMove(dir);
+				try { current_game->pcMove(dir);
+				} catch(Slap& errMsg){
+    				cout<<errMsg.what() <<endl;
+    				continue;
+  				}
 			} else {
 				cout << "Command not recognized. Try again." <<endl;
 				continue;
 			}
 			current_game->displayFloor(currFloor);
+
 			// NPCs turn
+			
 
 
 		}

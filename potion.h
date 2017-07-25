@@ -22,6 +22,7 @@ public:
 	virtual void resetEffect(PC &pc);
 
 	// other methods
+	void allowPickup() override;
 	void useItem(PC &pc) override;
 };
 

@@ -19,7 +19,11 @@ public:
 	int getValue();
 	void setValue(int value);
 
+	virtual bool getDrgn();
+	virtual bool getSlain();
+
 	// other methods
+	virtual void allowPickup();
 	virtual void useItem(PC &pc);
 };
 

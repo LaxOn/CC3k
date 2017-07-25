@@ -16,5 +16,10 @@ void Item::setValue(int value) {
 	this->value = value;
 }
 
+bool Item::getDrgn() { return false; }
+bool Item::getSlain() { return false; }
+
 // other methods
 void Item::useItem(PC &pc) {};
+
+void Item::allowPickup() {}

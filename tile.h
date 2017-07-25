@@ -59,9 +59,9 @@ public:
 	void useItemOn(int dir, PC &pc);
 	void moveObj(int dir);
 	void useItemTo(PC &pc);
-	void resetItem() {obj.reset();}
-	void resetPC() {PCobj.reset();}
-	void resetNPC(){NPCobj.reset();}
+	void resetItem();
+	void resetPC();
+	void resetNPC();
 
 	void addNPC(std::shared_ptr<NPC> npc);
 	std::shared_ptr<NPC> getNPC();

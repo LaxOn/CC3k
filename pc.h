@@ -9,7 +9,7 @@ class Potion;
 class NPC;
 class Gold;
 
-class PC: public Character{
+class PC: public Character {
   	std::vector<std::shared_ptr<NPC>> NPCs;
   	int numNPCs = 0;
   	Display *D = nullptr;
@@ -25,6 +25,7 @@ class PC: public Character{
 	void notifyNPCs();
 	void attach(Display &D);
 	void notifyDisplay(std::string desc="");
+	std::string dirToStr(int dir);
  	virtual void attack(NPC& enemy)=0;
  	virtual void defendFrom(NPC& enemy)=0;
  	PC();

@@ -1,13 +1,16 @@
 #include "door.h"
+#include "info.h"
 
 using namespace std;
 
 // constructor and destructor
 Door::Door(shared_ptr<BasicTile> base) :
 	TileDecorator{base} {
+		
 	setOccupy(false);
 	Info result = base->getInfo();
 	setInfo(result.x, result.y);
+
 }
 
 Door::~Door() {}

@@ -377,9 +377,19 @@ void Floor::constructFloor(istream &input, int start, string race) {
 		for (int j = 0; j <= 78; ++j) {
 			//cout << "neighbour construction at : " << i << " " << j << endl;
 			// the neighbours can be identified by position in the vector (integer 0-9 inclusive)
-			if (i == 0 && j == 0) {		
+			if (i == 0 && j == 0) {	
 			// north west corner
 				//cout << "tracker 1" << endl;
+
+				// Setting up neighbours to be like below:
+				//	|---|---|---|
+				//	| 0 | 1 | 2 | 
+				//	|---|---|---|
+				//	| 3 |   | 4 | 
+				//	|---|---|---|
+				//	| 5 | 6 | 7 | 
+				//	|---|---|---| 
+				
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(nullptr);
 				tiles[i][j]->addNeighbr(nullptr);

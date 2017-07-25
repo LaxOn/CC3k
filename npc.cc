@@ -16,7 +16,7 @@ void NPC::move() {
 		}
 		if (count) {
 			Factory f;
-			int randNum = f.randInt(count - 1) + 1;
+			int randNum = f.randInt(count) + 1;
 			int index = 0;
 			while (randNum) {
 				nb = t->getNeighbr(index);
@@ -28,6 +28,8 @@ void NPC::move() {
 		} // else there's no space to move out of
 	} // can't move so stays in the same place
 }
+
+Tile *NPC::getGold() { return goldTile; }
 
 bool NPC::pcInRange() { return attackPC; }
 
@@ -55,7 +57,7 @@ void NPC::addLoot(int money) {
 	loot += money;
 }
 
-int NPC::getMoney() { return loot; }
+int NPC::getLoot() { return loot; }
 
 NPC::NPC() {}
 

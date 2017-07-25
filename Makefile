@@ -10,5 +10,5 @@ $(EXEC): $(OBJECTS)
 -include $(DEPENDS)
 
 clean:
-	rm *.o cc3k
+	rm *.o cc3k *.d
 .PHONY: clean
