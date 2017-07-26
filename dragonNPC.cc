@@ -10,10 +10,13 @@
 
 void DragonNPC::notify(PC &whoNotified) {
 	Info DragonInfo = this->getInfo();
-	Info DHoardInfo = (goldTile->getObject())->getInfo();
-	if (this->isNear(DragonInfo, whoNotified.getInfo()) || 
+	Info DHoardInfo; 
+	if (!(goldTile == nullptr)) {
+		DHoardInfo = (goldTile->getObject())->getInfo();
+		if (this->isNear(DragonInfo, whoNotified.getInfo()) || 
 	 	(this->isNear(DHoardInfo, whoNotified.getInfo()))) {
 			willAttack();
+		}
 	}
 }
 

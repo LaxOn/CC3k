@@ -8,7 +8,6 @@ class Gold: public Item {
 	std::string description;
 	bool dragonHoard;
 	bool slain = false; // whether or not Dragon is slain
-	bool steal = false;
 	NPC * npc;
 
 public:

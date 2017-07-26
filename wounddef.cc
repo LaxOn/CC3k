@@ -19,10 +19,6 @@ bool WoundDef::getLifetime() {
 	return lifetime;
 } 
 
-void WoundDef::resetEffect(PC &pc) {
-	pc.changeDef(-defense);
-}
-
 int WoundDef::getDefense() {
 	return defense;
 }

@@ -14,6 +14,8 @@ class PC: public Character {
   	int numNPCs = 0;
   	Display *D = nullptr;
 	int money = 0;
+
+	Dungeon *dungeon;
  public:
 	void useItem(int dir);
 	int getMoney();
@@ -24,6 +26,7 @@ class PC: public Character {
 	void detach(std::shared_ptr<NPC> ob);
 	void notifyNPCs();
 	void attach(Display &D);
+	void setDungeon(Dungeon *d);
 	void notifyDisplay(std::string desc="");
 	std::string dirToStr(int dir);
 	Display *getDisplay();

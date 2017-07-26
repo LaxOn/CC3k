@@ -55,6 +55,13 @@ void NPC::cannotMove() {
 	canMove = false;
 }
 
+void NPC::freeze(bool b) {
+	if (this->getType() != "DragonNPC" &&
+		this->getType() != "MerchantNPC") {
+		canMove = b;
+	}
+}
+
 void NPC::addLoot(int money) {
 	loot += money;
 }
@@ -66,22 +73,3 @@ void NPC::turnHostile() {}
 NPC::NPC() {}
 
 NPC::~NPC() {}
-
-/*
-takeNPC(Tile *) {}
-takePC(Tile *) {}
-t->moveObj(index);
-	std::shared_ptr<Tile> nb = getNeighbr(index);
-	if (PCobj) {
-		nb->takeNPC(this)
-	
-	} else if (NPCobj) {
-	
-	}
-			 	// calls Tile it currently in with the directions to go
- 	// Tile call the neighbour
- 	// set Nieghbours ptr to character
- 	// oldTIle = nullptr
- 	// newTile call character with itself
-*/
-

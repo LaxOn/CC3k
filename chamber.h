@@ -67,8 +67,6 @@ public:
 	bool getHasStairs();
 	void setHasStairs(bool b);
 
-	std::shared_ptr<Factory> & getFactory();
-
 	// other methods
 	Tile &getRandomTile(Factory *f);
 	void spawnPC(Factory *f, std::string race);

@@ -15,7 +15,6 @@ public:
 
 	// accessors and mutators
 	bool getLifetime() override;
-	void resetEffect(PC &pc) override;
 	int getAttack();
 
 

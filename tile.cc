@@ -99,7 +99,7 @@ void Tile::useItemTo(PC &pc) {
 void Tile::addNPC(shared_ptr<NPC> npc) {
 	NPCobj = npc;
 
-	//d->update(*this, npc->getType());
+	d->update(*this, npc->getType());
 
 	//cout << "update is done " << endl;
 }
@@ -110,7 +110,7 @@ shared_ptr<NPC> Tile::getNPC() {
 
 void Tile::addPC(std::shared_ptr<PC> pc) {
 	PCobj = pc;
-	//d->update(*this, pc->getType());
+	d->update(*this, pc->getType());
 }
 
 shared_ptr<PC> Tile::getPC() {

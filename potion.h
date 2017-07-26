@@ -19,7 +19,6 @@ public:
 	std::string getEffect();
 	void setEffect(std::string effect);
 	virtual bool getLifetime();
-	virtual void resetEffect(PC &pc);
 
 	// other methods
 	void allowPickup() override;

@@ -22,6 +22,10 @@ void VampirePC::attack(NPC& enemy){
 void VampirePC::defendFrom(NPC& enemy){
 	int damage = calcDmg(enemy.getAtk(), this->getDef());
 	this->changeHP(-damage, false);
+
+	string temp = enemy.getType();
+	string attacker = temp.substr(0, temp.length() - 3);
+	this->notifyDisplay(attacker + " attacks PC!");
 }
 
 void VampirePC::nextTurn(){

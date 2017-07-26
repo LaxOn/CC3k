@@ -19,8 +19,6 @@ bool PoisonHealth::getLifetime() {
 	return lifetime;
 } 
 
-void PoisonHealth::resetEffect(PC &pc) {}
-
 int PoisonHealth::getHealth() {
 	return health;
 }

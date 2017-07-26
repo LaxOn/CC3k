@@ -38,7 +38,3 @@ void Stairs::killObject() {
 int Stairs::getType() {
 	return base->getType() + 2;
 }
-
-void Stairs::descend(PC &pc) {
-	
-}

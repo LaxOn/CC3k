@@ -23,22 +23,6 @@ Tile *Chamber::getTile(int index) {
 	return tiles[index];
 }
 
-//std::shared_ptr<Stairs> & getStairs(int index);
-/*
-shared_ptr<NPC> & Chamber::getNPC(int index) {
-	return enemies[index];
-}
-
-shared_ptr<Potion> & Chamber::getPotion(int index) {
-	return potions[index];
-}
-
-shared_ptr<Gold> & Chamber::getGold(int index) {
-	return treasure[index];
-}
-*/
-//std::shared_ptr<PC> & getPlayer();
-
 bool Chamber::getHas_Player() {
 	return has_player;
 }

@@ -12,7 +12,6 @@ class PC;
 class Game {
 	int curFloor;
 	std::unique_ptr<Dungeon> gameDungeon;
-	void near();
 	std::istream &input;
 
  public:
@@ -20,11 +19,10 @@ class Game {
  	void switchFloor(int floor);
  	void displayFloor(int floor);
  	void nextTurn();
- 	void spawn(int x, int y, std::string str);
 
- 	void descend(PC &pc);
+ 	void descend();
 
- 	void freezeEnemy();
+ 	void freezeEnemy(bool canMove);
  	void pcMove(int dir);
  	void pcUse(int dir);
  	void pcAtk(int dir);

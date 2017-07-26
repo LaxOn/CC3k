@@ -13,7 +13,6 @@ public:
 
 	// accessors and mutators
 	bool getLifetime() override;
-	void resetEffect(PC &pc) override;
 
 	// other methods
 	void useItem(PC &pc) override;

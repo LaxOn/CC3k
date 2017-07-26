@@ -20,8 +20,6 @@ bool Potion::getLifetime() {
 	return lifetime;
 }
 
-void Potion::resetEffect(PC &pc) {}
-
 void Potion::allowPickup() {}
 // other methods
 void Potion::useItem(PC &pc) {}

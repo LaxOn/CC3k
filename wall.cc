@@ -7,6 +7,9 @@ Wall::Wall(shared_ptr<BasicTile> base, bool sideWall) :
 	TileDecorator{base} {
 	setOccupy(true);
 	setSideWall(sideWall);
+
+	Info result = base->getInfo();
+	setInfo(result.x, result.y);
 }
 
 Wall::~Wall() {}

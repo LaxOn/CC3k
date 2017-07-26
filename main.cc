@@ -38,9 +38,11 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 
+	bool restart = false;
+
 	//restart point
 	while (true) {
-		int restart = false;
+		restart = false;
 
 		// initalialize game
 		unique_ptr<Game> current_game;
@@ -69,12 +71,13 @@ int main(int argc, char* argv[]) {
 				continue;
 			}
 		}
-
+		
 		// displaying first floor
 		int currFloor = 1;
 		current_game->displayFloor(currFloor);
 		bool endGame = false;
 		bool win = false;
+		bool freezeNPCs = false;
 
 		// game starts
 		while (true) {
@@ -88,7 +91,13 @@ int main(int argc, char* argv[]) {
 
 			// player's action
 			if (cmd == "f") {							// stops enemy from moving
-
+				if (freezeNPCs == false) {
+					freezeNPCs= true;
+				} else {
+					freezeNPCs = false;
+				}
+				current_game->freezeEnemy(freezeNPCs);
+				continue;
 			} else if (cmd == "r") {	// restarts game
 				cout << "Restarting game..." <<endl;
 				restart = true;
@@ -102,7 +111,7 @@ int main(int argc, char* argv[]) {
 				if (dir != -1) {
 					try { current_game->pcUse(dir);
 					} catch(Slap& errMsg){
-						cout<<errMsg.what() <<endl;
+						cout<<errMsg.get() <<endl;
 						continue;
   					}
 				} else {
@@ -115,7 +124,7 @@ int main(int argc, char* argv[]) {
 				if (dir != -1) {
 					try { current_game->pcAtk(dir);
 					} catch(Slap& errMsg){
-    					cout<<errMsg.what() <<endl;
+    					cout<<errMsg.get() <<endl;
     					continue;
   					}
 				} else {
@@ -125,8 +134,17 @@ int main(int argc, char* argv[]) {
 			} else if (dir != -1) {							// move
 				try { current_game->pcMove(dir);
 				} catch(Slap& errMsg){
-    				cout<<errMsg.what() <<endl;
-    				continue;
+					if (errMsg.get() == "Win") {
+						cout << "YOU WIN THE GAME!!!" << endl;
+    					cout << "Restart? (y/n) " << endl;
+    					char answer;
+	    				cin >> answer;
+	    				if (answer == 'y') restart = true;
+	    				break;
+					} else {
+	    				cout<<errMsg.get() <<endl;
+	    				continue;
+    				}
   				}
 			} else {
 				cout << "Command not recognized. Try again." <<endl;
@@ -137,18 +155,18 @@ int main(int argc, char* argv[]) {
 			try { current_game->nextTurn();
 			} catch(Slap& errMsg){
 				current_game->displayFloor(currFloor);
-				cout<<errMsg.what() <<endl;
+				cout<<errMsg.get() <<endl;
 				return 0;
     		}
 
-			current_game->displayFloor(currFloor);
-
-
-
+    		currFloor = current_game->getCurFloor();
+    		current_game->displayFloor(currFloor);
 		}
+
 		if (win) {
 			
 		}
+
 		if (restart) continue;
 		break;
 	}

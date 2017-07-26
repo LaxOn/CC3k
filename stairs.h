@@ -19,8 +19,6 @@ public:
 	void addNeighbr(Tile *t) override;
 	void killObject() override;
 	int getType() override;
-
-	void descend(PC &pc);
 };
 
 #endif

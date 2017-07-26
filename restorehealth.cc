@@ -19,8 +19,6 @@ bool RestoreHealth::getLifetime() {
 	return lifetime;
 } 
 
-void RestoreHealth::resetEffect(PC &pc) {}
-
 int RestoreHealth::getHealth() {
 	return health;
 }

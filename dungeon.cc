@@ -1,10 +1,12 @@
 #include "dungeon.h"
-
+#include "game.h"
+#include "slap.h"
 using namespace std;
 
 // constructor and destructor
-Dungeon::Dungeon(int size) :
-	size{size}, floors{nullptr} {}
+Dungeon::Dungeon(int size, Game *g, istream &input) :
+	g{g}, current_floor{1},
+	size{size}, floors{nullptr}, input{input} {}
 
 Dungeon::~Dungeon() {
 }
@@ -19,16 +21,20 @@ shared_ptr<Floor> & Dungeon::getFloor(int whichFloor) {
 }
 
 // other methods
-
-/*
-void Dungeon::constructFloor() {
-	for (int i = 0; i < 5; ++i) {
-		floors.emplace_back(make_shared<Floor> (i + 1));
+void Dungeon::constructFloor(string race) {
+	this->race = race;
+	floors.emplace_back(make_shared<Floor> (current_floor, this));
+	(floors.back())->constructFloor(input, (current_floor - 1)*25, race, nullptr);
 }
-*/
 
-void Dungeon::constructFloor(istream &input, int index, string race) {
-	floors.emplace_back(make_shared<Floor> (index));
-	(floors.back())->constructFloor(input, (index - 1)*25, race);
-	//cout << "FLOOR CONSTRUCTION COMPLETE: " << index << endl; 
+void Dungeon::constructFloor(string race, PC *pc) {
+	++current_floor;
+	floors.emplace_back(make_shared<Floor> (current_floor, this));
+	(floors.back())->constructFloor(input, (current_floor - 1)*25, race, pc);
+}
+
+void Dungeon::descend(PC *pc) {
+	if (current_floor < 5) constructFloor(race, pc);
+	else throw Slap("Win");
+	g->descend();
 }

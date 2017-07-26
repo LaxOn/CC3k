@@ -20,6 +20,10 @@ void ShadePC::attack(NPC& enemy){
 void ShadePC::defendFrom(NPC& enemy){
 	int damage = calcDmg(enemy.getAtk(), this->getDef());
 	this->changeHP(-damage, false);
+
+	string temp = enemy.getType();
+	string attacker = temp.substr(0, temp.length() - 3);
+	this->notifyDisplay(attacker + " attacks PC!");
 }
 
 void ShadePC::nextTurn(){

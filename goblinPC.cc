@@ -22,6 +22,10 @@ void GoblinPC::defendFrom(NPC& enemy){
 	int damage = calcDmg(enemy.getAtk(), this->getDef());
 	if (enemy.getType() == "orcNPC") damage *= 1.5;
 	this->changeHP(-damage, false);
+
+	string temp = enemy.getType();
+	string attacker = temp.substr(0, temp.length() - 3);
+	this->notifyDisplay(attacker + " attacks PC!");
 }
 
 void GoblinPC::nextTurn(){

@@ -5,11 +5,10 @@ class Tile;
 class Info;
 
 class Object {
+	int x, y;
 	char charDisp;
 	Tile *address = nullptr;
  public:
- 	
-	int x, y;
 	void setCoords(int x, int y);
 	void setDisp(char charDisp);
 	char getDisp();

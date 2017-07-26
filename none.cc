@@ -6,6 +6,9 @@ using namespace std;
 None::None(shared_ptr<BasicTile> base) :
 	TileDecorator{base} {
 	setOccupy(true);
+
+	Info result = base->getInfo();
+	setInfo(result.x, result.y);
 }
 
 None::~None() {}

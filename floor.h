@@ -7,6 +7,7 @@
 #include <fstream>
 #include <string>
 
+class Dungeon;
 class Chamber;
 class Tile;
 class Stairs;
@@ -26,6 +27,8 @@ class Floor {
 	std::shared_ptr<Stairs> st;
 	bool hasStairs = false;
 
+	std::vector<std::string> enemyPosn;
+
 	// list of vectors containing Characters and Items
 	std::vector<std::shared_ptr<NPC>> enemies;
 	std::vector<std::shared_ptr<Potion>> potions;
@@ -33,6 +36,8 @@ class Floor {
 
 	std::shared_ptr<PC> player;
 	bool hasPlayer = false;
+
+	Dungeon *dungeon;
 
 	int position;
 	int numChambers;
@@ -51,7 +56,7 @@ class Floor {
 
 public:
 	// constructor and destructors
-	Floor(int position);
+	Floor(int position, Dungeon *dungeon);
 	~Floor();
 
 	// accessors and mutators
@@ -80,7 +85,7 @@ public:
 	int getNumEnemy();
 
 	// all spawning functions
-	void spawnPC(std::string race);
+	void spawnPC(std::string race, PC *existing);
 	void spawnStairs();
 	void spawnEnemy();
 	void spawnPotion();
@@ -92,7 +97,7 @@ public:
 	void oneChamber(int id, Tile *t);
 	void constructChamber(int id);
 
-	void constructFloor(std::istream &input, int start, std::string race);
+	void constructFloor(std::istream &input, int start, std::string race, PC *existing);
 };
 
 std::ostream &operator<<(std::ostream &out, const Floor &f);

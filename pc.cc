@@ -7,7 +7,8 @@
 #include "npc.h"
 #include "display.h"
 #include "tile.h"
-#include "slap.h"	
+#include "slap.h"
+#include "dungeon.h"	
 
 std::string PC::dirToStr(int dir) {
 	if (dir == 0) return "North West";
@@ -76,8 +77,14 @@ int PC::getMoney() { return money; }
 void PC::move(int dir) {
 	Tile *t = this->getTile();
 	Tile *nb = t->getNeighbr(dir);
-	std::shared_ptr<Item> it = nb->getObject();
-	if (nb->getType()<=3 && (!nb->getOccupy())) {
+	std::shared_ptr<Item> it;
+	if (nb->getType() != 2) it = nb->getObject();
+	//std::cout << nb->getOccupy() << std::endl;
+	if (nb->getType() == 2) {
+		notifyDisplay("PC descends to the next floor");
+		notifyNPCs();
+		dungeon->descend(this);
+	} else if (nb->getType()<=3 && (!nb->getOccupy())) {
 		t->moveObj(dir);
 		notifyDisplay("PC moves " + dirToStr(dir) + ".");
 		notifyNPCs();
@@ -89,7 +96,7 @@ void PC::move(int dir) {
 		 	D->update(*(t->getNeighbr(dir)), ".");
 		}
 		t->moveObj(dir);
-		notifyDisplay("PC moves " + dirToStr(dir) + ".");
+		notifyDisplay("PC moves " + dirToStr(dir) + " and gains Gold.");
 		notifyNPCs();
 	} else {
 		throw Slap("Can't move in the given direction. Try again.");
@@ -125,6 +132,10 @@ void PC::attach(Display &D) {
 	this->D = &D;
 	D.setRace(*this);
 	notifyDisplay();
+}
+
+void PC::setDungeon(Dungeon *d) {
+	this->dungeon = d;
 }
 
 void PC::notifyDisplay(std::string desc) {

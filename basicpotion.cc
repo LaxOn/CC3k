@@ -17,7 +17,5 @@ bool BasicPotion::getLifetime() {
 	return lifetime;
 }
 
-void BasicPotion::resetEffect(PC &pc) {}
-
 // other methods
 void BasicPotion::useItem(PC &pc) {}

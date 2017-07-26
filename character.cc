@@ -23,11 +23,16 @@ void Character::changeHP(int num, bool forPotion) {
 	if (forPotion) hp += potionMult * num;
 	else hp += num;
 	if (hpMax && (hp > hpMax)) hp = hpMax;
+	if (hp < 0) hp = 0;
 }
 
-void Character::changeAtk(int num) { atk += potionMult * num; }
+void Character::changeAtk(int num) { 
+	atk += potionMult * num; 
+}
 
-void Character::changeDef(int num) { def += potionMult * num; }
+void Character::changeDef(int num) { 
+	def += potionMult * num; 
+}
 
 int Character::getHP() { return hp; }
 

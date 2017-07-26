@@ -15,6 +15,7 @@
 #include "door.h"
 #include "wall.h"
 #include "none.h"
+#include "dungeon.h"
 
 #include "humanNPC.h"
 #include "dwarfNPC.h"
@@ -35,7 +36,8 @@
 using namespace std;
 
 // constructor and destructors
-Floor::Floor(int position) :
+Floor::Floor(int position, Dungeon *dungeon) :
+	dungeon{dungeon},
 	position{position}, numChambers{5},
 	d{make_shared<Display>()}, f{make_shared<Factory> (*d)},
 	maxPotion{10}, numPotion{0},
@@ -113,7 +115,7 @@ int Floor::getNumEnemy() {
 }
 
 // all spawning functions
-void Floor::spawnPC(string race) {
+void Floor::spawnPC(string race, PC *existing) {
 	if (position == 1 && hasPlayer == false) {
 		int whichChamber = f->randInt(5);
 		chambers[whichChamber]->spawnPC(f.get(), race);
@@ -127,7 +129,27 @@ void Floor::spawnPC(string race) {
 			}
 		}
 		hasPlayer = true;
+	} else if (position == 1 && hasPlayer == false) {
+		int whichChamber = f->randInt(5);
+		chambers[whichChamber]->spawnPC(f.get(), race);
+		chambers[whichChamber]->setHas_Player(true);
+		//cout << "player successfully spawned" << endl;
+		int number_tiles = chambers[whichChamber]->getNumTiles();
+		for (int i = 0; i < number_tiles; ++i) {
+			if ((chambers[whichChamber]->getTile(i))->getPC() != nullptr) {
+				player = (chambers[whichChamber]->getTile(i))->getPC();
+				(chambers[whichChamber]->getTile(i))->setOccupy(true);
+			}
+		}
+		hasPlayer = true;
+
+		int baseAtk = player->getAtk();
+		int baseDef = player->getDef();
+
+		player->setStats(existing->getHP(), baseAtk, baseDef);
+		player->addMoney(existing->getMoney());
 	}
+	player->setDungeon(dungeon);
 }
 
 void Floor::spawnStairs() {
@@ -143,7 +165,7 @@ void Floor::spawnStairs() {
 
 		tiles[x][y] = make_shared<Stairs> (make_shared<BasicTile> (x, y, *d));
 
-		d->update(*tiles[temp.x][temp.y], "Stairs");
+		d->update(*tiles[x][y], "Stairs");
 		hasStairs = true;
 		break;
 	}
@@ -237,32 +259,32 @@ void Floor::constructObject(int x, int y, char input) {
 		++numPotion;
 	} else if (input == '0') {
 		//cout << "constructing 9" << endl;
-		tiles[x][y]->addObject(make_shared<RestoreHealth> (make_shared<BasicPotion>(0,"", true, x, y)));
+		tiles[x][y]->addObject(make_shared<RestoreHealth> (make_shared<BasicPotion>(0,"Restore Health", true, x, y)));
 		tiles[x][y]->setOccupy(true);
 		++numPotion;
 	} else if (input == '1') {
 		//cout << "constructing 10" << endl;
-		tiles[x][y]->addObject(make_shared<BoostAtk> (make_shared<BasicPotion>(0,"", true, x, y)));
+		tiles[x][y]->addObject(make_shared<BoostAtk> (make_shared<BasicPotion>(0,"Boost Attack", true, x, y)));
 		tiles[x][y]->setOccupy(true);
 		++numPotion;
 	} else if (input == '2') {
 		//cout << "constructing 11" << endl;
-		tiles[x][y]->addObject(make_shared<BoostDef> (make_shared<BasicPotion>(0,"", true, x, y)));
+		tiles[x][y]->addObject(make_shared<BoostDef> (make_shared<BasicPotion>(0,"Boost Defense", true, x, y)));
 		tiles[x][y]->setOccupy(true);
 		++numPotion;
 	} else if (input == '3') {
 		//cout << "constructing 12" << endl;
-		tiles[x][y]->addObject(make_shared<PoisonHealth> (make_shared<BasicPotion>(0,"", true, x, y)));
+		tiles[x][y]->addObject(make_shared<PoisonHealth> (make_shared<BasicPotion>(0,"Poison Health", true, x, y)));
 		tiles[x][y]->setOccupy(true);
 		++numPotion;
 	} else if (input == '4') {
 		//cout << "constructing 13" << endl;
-		tiles[x][y]->addObject(make_shared<WoundAtk> (make_shared<BasicPotion>(0,"", true, x, y)));
+		tiles[x][y]->addObject(make_shared<WoundAtk> (make_shared<BasicPotion>(0,"Wound Attack", true, x, y)));
 		tiles[x][y]->setOccupy(true);
 		++numPotion;
 	} else if (input == '5') {
 		//cout << "constructing 14" << endl;
-		tiles[x][y]->addObject(make_shared<WoundDef> (make_shared<BasicPotion>(0,"", true, x, y)));
+		tiles[x][y]->addObject(make_shared<WoundDef> (make_shared<BasicPotion>(0,"Wound Defense", true, x, y)));
 		tiles[x][y]->setOccupy(true);
 		++numPotion;
 	} else if (input == 'G') {
@@ -334,14 +356,16 @@ void Floor::constructChamber(int id) {
 	}
 }
 
-void Floor::constructFloor(istream &input, int start, string race) {
+void Floor::constructFloor(istream &input, int start, string race, PC *existing) {
 	string line;
 
 	// construct all Tiles accordingly
+	enemyPosn.resize(25);
 	tiles.resize(25);
 	for (int i = 0; i < 25; ++i) {
 		tiles[i].resize(79);
 		getline(input, line);
+		enemyPosn[i] = line;
 		//cout << line << endl;
 		for (int j = 0; j < 79; ++j) {
 			if (line[j] == '|') {
@@ -356,10 +380,16 @@ void Floor::constructFloor(istream &input, int start, string race) {
 				tiles[i][j] = make_shared<Door> (make_shared<BasicTile> (i, j, *d));
 			} else if (line[j] == '@') {
 				tiles[i][j] = make_shared<BasicTile> (i, j, *d);
-				if (position == 1) {
-					hasPlayer = true;
-					tiles[i][j]->addPC(make_shared<ShadePC>(i,j, tiles[i][j].get()));
-					player = (tiles[i][j]->getPC());
+				hasPlayer = true;
+				f->addPC(*(tiles[i][j].get()), race);
+				player = (tiles[i][j]->getPC());
+				player->setDungeon(dungeon);
+				if (position != 1) {
+					int baseAtk = player->getAtk();
+					int baseDef = player->getDef();
+
+					player->setStats(existing->getHP(), baseAtk, baseDef);
+					player->addMoney(existing->getMoney());
 				}
 			} else if (line[j] == 92) {
 				hasStairs = true;
@@ -502,23 +532,18 @@ void Floor::constructFloor(istream &input, int start, string race) {
 	d->defaultFloor();
 	//cout << &d << endl;
 
-	spawnPC(race);
+	spawnPC(race, existing);
 	//cout << "player spawned" << endl;
 
-	//if (position == 1) {
-		player->attach(*d);
-		//cout << "the player is a " << player->getType() << endl;
-	//}
+	player->attach(*d);
 
 	//cout << start << endl;
 
 	bool predetermined = false;
 
 	// add all other Objects
-	input.clear();
-	input.seekg(start, ios::beg);
 	for (int i = 0; i < 25; ++i) {
-		getline(input, line);
+		line = enemyPosn[i];
 		for (int j = 0; j < 79; ++j) {
 			//cout << "tracker" << endl;
 			if (line[j] == '|' ||
@@ -529,7 +554,7 @@ void Floor::constructFloor(istream &input, int start, string race) {
 				line[j] == '@' ||
 				line[j] == '+' ||
 				line[j] == 92) {
-				continue;
+				// do nothing...
 			} else {
 				predetermined = true;
 				//cout << "next object is " << line[j] << endl;
@@ -554,36 +579,6 @@ void Floor::constructFloor(istream &input, int start, string race) {
 		spawnTreasure();
 		//cout << "treasure spawned" << endl;
 	}
-
-
-	// testing neighbours
-	/*
-	int a = 24; 
-	int b = 78;
-	for (int i = 0; i < 8; ++ i) {
-		if ((tiles[a][b]->getNeighbr(i)) == nullptr) {
-			cout << "?";
-		} else if ((tiles[a][b]->getNeighbr(i))->getType() == 0) {
-			cout << '.';
-		} else if ((tiles[a][b]->getNeighbr(i))->getType() == 1) {
-			cout << '#';
-		} else if ((tiles[a][b]->getNeighbr(i))->getType() == 2) {
-			cout << 92;
-		} else if ((tiles[a][b]->getNeighbr(i))->getType() == 3) {
-			cout << '+';
-		} else if ((tiles[a][b]->getNeighbr(i))->getType() == 4 
-					&& (tiles[a][b]->getNeighbr(i))->getSideWall() == 1) {
-			cout << '|';
-		} else if ((tiles[a][b]->getNeighbr(i))->getType() == 4 
-					&& (tiles[a][b]->getNeighbr(i))->getSideWall() == 0){
-			cout << '-';
-		} else if ((tiles[a][b]->getNeighbr(i))->getType() == 5) {
-			cout << ' ';
-		}
-		if (i == 3) cout << "*";
-		if (i == 2 || i == 4 || i == 7) cout << endl;
-	}
-	*/
 }
 
 std::ostream & operator<<(ostream &out, const Floor &f) {

@@ -19,10 +19,6 @@ bool BoostAtk::getLifetime() {
 	return lifetime;
 } 
 
-void BoostAtk::resetEffect(PC &pc) {
-	pc.changeAtk(-attack);
-}
-
 int BoostAtk::getAttack() {
 	return attack;
 }

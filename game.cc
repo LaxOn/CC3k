@@ -18,8 +18,8 @@ Game::Game(std::istream &input, string race) :
 	input{input} {
 	curFloor = 1;
 	// constructs the dungeons
-	gameDungeon = make_unique<Dungeon> (5); // put args of the constructor of dungeon in the parenthesis)
-	gameDungeon->constructFloor(input, curFloor, race);
+	gameDungeon = make_unique<Dungeon> (5, this, input); // put args of the constructor of dungeon in the parenthesis)
+	gameDungeon->constructFloor(race);
 }
 
 Game::~Game() {}
@@ -77,25 +77,23 @@ void Game::nextTurn() {
 	}
 	if (pc->getHP() <= 0) throw Slap("You died. Game over... ");
 }
-/*
-	std::shared_ptr<Tile> & getTile(int x, int y);
 
-	int numEnemy = f->getNumEnemy();
-	for (int i=0; i<numEnemy; ++i) {
-		std::shared_ptr<NPC> npc = f->getNPC(i);
-		//cout << "npc about to move";
-		if (npc->pcInRange()) npc->attack(*pc);
-		else npc->move();
-		//cout << "npc attacked/ moved";
+void Game::freezeEnemy(bool canMove) {
+	std::shared_ptr<Floor> f = gameDungeon->getFloor(curFloor);
+	std::shared_ptr<PC> pc = f->getPlayer();
+	for (int j=0; j<=78; ++j) {
+		for (int i=0; i<=24; ++i) {
+			std::shared_ptr<Tile> t = f->getTile(i, j);
+			if (t->getNPC()) {
+				std::shared_ptr<NPC> npc = t->getNPC();
+				npc->freeze(canMove);
+			}
+		}
 	}
-	*/
+}
 
-	
-
-
-void Game::spawn(int x, int y, std::string str) {
-	// call spawn on a floor
-		// call constructor of the object with that string name
+void Game::descend() {
+	++curFloor;
 }
 
 #endif

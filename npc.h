@@ -23,6 +23,7 @@ class NPC: public Character{
  	void willAttack();
  	void move(Display &D);
  	void cannotMove();
+ 	void freeze(bool b);
  	void addLoot(int money);
  	int getLoot();
  	virtual void turnHostile();

@@ -19,10 +19,6 @@ bool BoostDef::getLifetime() {
 	return lifetime;
 } 
 
-void BoostDef::resetEffect(PC &pc) {
-	pc.changeDef(-defense);
-}
-
 int BoostDef::getDefense() {
 	return defense;
 }

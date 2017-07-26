@@ -19,10 +19,6 @@ bool WoundAtk::getLifetime() {
 	return lifetime;
 } 
 
-void WoundAtk::resetEffect(PC &pc) {
-	pc.changeAtk(-attack);
-}
-
 int WoundAtk::getAttack() {
 	return attack;
 }

@@ -26,10 +26,6 @@ bool Gold::getSlain() {
 	return slain;
 }
 
-bool Gold::getSteal() {
-	return steal;
-}
-
 NPC *& Gold::getNPC() {
 	return npc;
 }
@@ -45,8 +41,4 @@ void Gold::assignNPC(NPC *npc) {
 
 void Gold::allowPickup() {
 	slain = true;
-}
-
-void Gold::allowSteal() {
-	steal = true;
 }
